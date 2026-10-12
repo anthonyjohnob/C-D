@@ -253,6 +253,29 @@ h2 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: 
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .micro { --s: #7CC99A; --i: #F0B866; --r: #FF8E7A; } }
 :root[data-theme="dark"] .micro { --s: #7CC99A; --i: #F0B866; --r: #FF8E7A; }
 .org-add { position: relative; }
+.quick-orgs { display: grid; gap: 8px; }
+.quick-orgs .seg { max-width: 330px; }
+.qo-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.qo-chips button { border: 1.5px solid var(--line); background: var(--surface); border-radius: 999px; padding: 7px 13px; font-size: 14px; cursor: pointer; color: var(--ink); min-height: 38px; }
+.qo-chips button i { font-style: italic; }
+.qo-chips button:hover { border-color: var(--focus); }
+.qo-chips button[aria-pressed="true"] { background: var(--navy); border-color: var(--navy); color: var(--surface); }
+.micro.pulse { animation: pulse 1.6s ease-out 1; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--navy) 55%, transparent); } 100% { box-shadow: 0 0 0 16px transparent; } }
+@media (prefers-reduced-motion: reduce) { .micro.pulse { animation: none; outline: 2.5px solid var(--navy); } }
+.flow { border: 1.5px solid color-mix(in srgb, var(--navy) 45%, var(--line)); background: var(--chip-bg); border-radius: 16px; padding: 12px 14px; display: grid; gap: 10px; }
+.flow-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.flow-step { font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--navy); letter-spacing: .04em; text-transform: uppercase; }
+.flow h3 { margin: 2px 0 0; font-size: 18px; line-height: 1.25; }
+.flow p { margin: 0; font-size: 14px; color: var(--ink-2); }
+.flow-opts { display: flex; flex-wrap: wrap; gap: 6px; }
+.flow-opts button { min-width: 58px; min-height: 46px; padding: 6px 12px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--surface); font-weight: 700; font-size: 16px; cursor: pointer; color: var(--ink); font-family: var(--font-mono); }
+.flow-opts button:hover { border-color: var(--focus); }
+.flow-opts button[aria-pressed="true"] { background: var(--navy); border-color: var(--navy); color: var(--surface); }
+.flow-opts button.word { font-family: var(--font-ui); }
+.flow-acts { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.flow-next { border: 0; border-radius: 12px; padding: 10px 16px; min-height: 44px; font-weight: 700; font-size: 15px; cursor: pointer; color: #fff; background: linear-gradient(180deg, var(--red-hi), var(--red-lo)); }
+.flow-skip { border: 0; background: transparent; color: var(--muted); font-weight: 700; cursor: pointer; padding: 6px 8px; }
 #orgIn { width: 100%; border: 1.5px solid var(--line); border-radius: 12px; padding: 11px 14px; background: var(--surface-2); font-size: 16px; }
 #orgIn:focus { outline: none; border-color: var(--focus); box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus) 20%, transparent); }
 .org-list { position: absolute; z-index: 5; left: 0; right: 0; top: calc(100% + 4px); margin: 0; padding: 4px; list-style: none; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); max-height: 280px; overflow: auto; }
@@ -383,6 +406,7 @@ kbd { font-family: var(--font-mono); font-size: 11.5px; border: 1px solid var(--
       </div>
 
       <div class="insp" id="insp" hidden></div>
+      <section class="flow" id="flow" hidden aria-live="polite"></section>
 
       <div class="pal">
         <div class="pal-head"><h2>Add to the cornea</h2><p id="palNote">Tap a finding, then tap where it sits. Ulcer: trace it with your finger.</p></div>
@@ -416,6 +440,7 @@ kbd { font-family: var(--font-mono); font-size: 11.5px; border: 1px solid var(--
           <ul class="org-list" id="orgList" role="listbox" hidden></ul>
         </div>
         <div class="chips" id="microQuick" aria-label="Smear and culture status"></div>
+        <div class="quick-orgs" id="quickOrgs"></div>
         <div class="org-cards" id="orgCards"></div>
       </div>
 
@@ -543,7 +568,7 @@ const spanH = (h1, h2) => { const s = ((h2 - h1) % 12 + 12) % 12; return s < 0.0
 const fmtH = h => { h = norm12(Math.round(h * 2) / 2); const w = Math.floor(h); return (h % 1 ? (w === 0 ? 12 : w) + ':30' : String(w)); };
 
 function makeObj(type, x = 0, y = 0) {
-  const o = Object.assign({ id: uid(), type, seed: (Math.random() * 1e9) | 0, x, y }, JSON.parse(JSON.stringify(T[type].d)));
+  const o = Object.assign({ id: uid(), type, seed: 1 + ((Math.random() * 99990) | 0), x, y }, JSON.parse(JSON.stringify(T[type].d)));
   if (T[type].kind === 'arc') { const h = Math.round(hourOf(x, y) * 2) / 2; o.h1 = norm12(h - 1); o.h2 = norm12(h + 1); o.x = 0; o.y = 0; }
   if (type === 'suture') o.rot = deg(Math.atan2(y, x)) - 90;
   if (T[type].kind === 'ac') { o.x = 0; o.y = 0; }
@@ -1085,7 +1110,7 @@ let wiz = null;
 function wizHint() {
   if (!wiz) return;
   $('#hint').hidden = false;
-  $('#hintText').textContent = wiz.step === 1 ? '1 of 3 · Trace the epithelial defect' : '2 of 3 · Trace the infiltrate around it';
+  $('#hintText').textContent = wiz.step === 1 ? 'Step 1 · Trace the epithelial defect' : 'Step 2 · Trace the infiltrate around it';
   $('#hintSkip').textContent = wiz.step === 1 ? 'No defect' : 'Same as defect';
 }
 function resample(pts, n) {
@@ -1098,11 +1123,11 @@ function finishTrace() {
   const c = wiz && wiz.cur; if (!wiz || !c) return; wiz.cur = null;
   let len = 0; for (let i = 1; i < c.length; i++) len += Math.hypot(c[i][0] - c[i - 1][0], c[i][1] - c[i - 1][1]);
   if (len < .6) { // a tap, not a trace: drop a ready-made ulcer there
-    if (wiz.step === 1 && !wiz.target) { const n = place('ulcer', c[0][0], c[0][1]); if (n) afterUlcer(); }
+    if (wiz.step === 1 && !wiz.target) { const n = place('ulcer', c[0][0], c[0][1]); if (n) afterUlcer(true); }
     else render();
     return;
   }
-  const poly = resample(c, 44);
+  const poly = resample(c, 28);
   if (wiz.step === 1) { wiz.dPts = poly; wiz.step = 2; wizHint(); render(); return; }
   wiz.iPts = poly; buildUlcer();
 }
@@ -1133,15 +1158,17 @@ function buildUlcer() {
       o.dPoly = unit(D, o.dRx, o.dRy, o.dOx, o.dOy);
     } else { o.dPoly = null; o.dOx = 0; o.dOy = 0; o.dRx = Math.min(o.dRx, rx); o.dRy = Math.min(o.dRy, ry); }
   }
+  const isNew = !target;
   sel = o.id; wiz = null; setTool('select'); commitView();
-  afterUlcer();
+  afterUlcer(isNew);
 }
-function afterUlcer() {
+function afterUlcer(isNew) {
   profMode = 'thin';
+  if (isNew) { flow = { step: 'thin' }; renderFlow(); }
   buildInspector();
   const o = getSel(); if (!o || !('thin' in o)) return;
   $('#hint').hidden = false; $('#hintSkip').hidden = true; $('#hintDone').textContent = 'Done';
-  $('#hintText').textContent = '3 of 3 · Drag down on the cross-section to set thinning';
+  $('#hintText').textContent = 'Step 3 · Drag down on the cross-section to set thinning';
   const dp = $('#insp .depth');
   if (dp) setTimeout(() => dp.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' }), 60);
 }
@@ -1338,8 +1365,9 @@ function addOrg(i, freeText) {
   S.micro = [...(S.micro || []), m];
   microActive = drugsOf(m).length ? { id: m.id, i: 0 } : null;
   S.microNotes = (S.microNotes || []).filter(n => n !== 'Cultures pending' && n !== 'No growth');
+  if (flow && flow.step === 'micro') flow = { step: 'done' };
   commitView();
-  setTimeout(() => { const gEl = document.querySelector(`.sens-grid[data-id="${m.id}"]`); if (gEl && matchMedia('(pointer: fine)').matches) gEl.focus({ preventScroll: true }); if (gEl) gEl.scrollIntoView({ block: 'nearest' }); }, 30);
+  setTimeout(() => { const gEl = document.querySelector(`.sens-grid[data-id="${m.id}"]`); if (gEl && matchMedia('(pointer: fine)').matches) gEl.focus({ preventScroll: true }); if (gEl) smoothTo(gEl.closest('.org-card'), 'start'); }, 30);
 }
 function setSens(m, drug, v, advance = true) {
   checkpoint();
@@ -1357,6 +1385,7 @@ function renderMicro(keepFocus) {
   const box = $('#orgCards'); if (!box) return;
   const focusedId = keepFocus && document.activeElement && document.activeElement.classList && document.activeElement.classList.contains('sens-grid') ? document.activeElement.dataset.id : null;
   box.innerHTML = '';
+  renderQuickOrgs();
   const quick = $('#microQuick'); quick.innerHTML = '';
   MICRO_QUICK.forEach(q => { const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = q; b.setAttribute('aria-pressed', String((S.microNotes || []).includes(q)));
     b.onclick = () => { checkpoint(); const cur = S.microNotes || []; S.microNotes = cur.includes(q) ? cur.filter(x => x !== q) : [...cur, q]; commitView(); }; quick.append(b); });
@@ -1419,7 +1448,7 @@ function microLines() {
     if (by.I.length) parts.push('intermediate to ' + by.I.join(', '));
     if (by.R.length) parts.push('resistant to ' + by.R.join(', '));
     const pending = drugsOf(m).length && !parts.length ? '; sensitivities pending' : '';
-    out.push(`- ${m.org} (${METHODS[m.method || 0].toLowerCase()})${parts.length ? ': ' + parts.join('; ') : ''}${pending}.`);
+    out.push(`- ${m.org} (${(m.method || 0) === 1 ? 'PCR' : METHODS[m.method || 0].toLowerCase()})${parts.length ? ': ' + parts.join('; ') : ''}${pending}.`);
   });
   return out;
 }
@@ -1446,8 +1475,93 @@ function microLines() {
   inp.addEventListener('blur', () => setTimeout(close, 120));
 })();
 
+/* ---------- follow-through: thinning → AC cells → hypopyon → organism ---------- */
+let flow = null;
+const COMMON_ORGS = {
+  Bacteria: [['Pseudomonas aeruginosa', 'Pseudomonas'], ['Staphylococcus aureus (MSSA)', 'MSSA'], ['Staphylococcus aureus (MRSA)', 'MRSA'], ['Coagulase-negative staphylococci', 'CoNS'],
+    ['Streptococcus pneumoniae', 'S. pneumoniae'], ['Serratia marcescens', 'Serratia'], ['Moraxella spp.', 'Moraxella'], ['Corynebacterium spp.', 'Corynebacterium']],
+  Fungus: [['Fusarium spp.', 'Fusarium'], ['Aspergillus fumigatus', 'Aspergillus'], ['Candida albicans', 'Candida'], ['Curvularia spp.', 'Curvularia'], ['Alternaria spp.', 'Alternaria']],
+  Other: [['Acanthamoeba spp.', 'Acanthamoeba'], ['Herpes simplex virus 1', 'HSV'], ['Nocardia spp.', 'Nocardia'], ['Mycobacterium chelonae', 'M. chelonae'], ['Varicella zoster virus', 'VZV']],
+};
+let quickTab = 'Bacteria';
+const HYPO_OPTS = [0, 0.5, 1, 1.5, 2, 3];
+function smoothTo(el, block) { if (el) el.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: block || 'center' }); }
+function goMicro() {
+  const card = $('#microCard'); smoothTo(card, 'start');
+  card.classList.remove('pulse'); void card.offsetWidth; card.classList.add('pulse');
+  setTimeout(() => card.classList.remove('pulse'), 1700);
+}
+function renderFlow() {
+  const el = $('#flow'); if (!el) return;
+  if (!flow) { el.hidden = true; el.innerHTML = ''; return; }
+  el.hidden = false; el.innerHTML = '';
+  const head = (step, title, note) => {
+    const h = document.createElement('div'); h.className = 'flow-head';
+    h.innerHTML = `<div><div class="flow-step"></div><h3></h3></div><button type="button" class="flow-skip">End</button>`;
+    h.querySelector('.flow-step').textContent = step; h.querySelector('h3').textContent = title;
+    h.querySelector('.flow-skip').onclick = () => { flow = null; $('#hint').hidden = true; renderFlow(); };
+    el.append(h);
+    if (note) { const p = document.createElement('p'); p.textContent = note; el.append(p); }
+  };
+  const opts = (list, isOn, onPick, word) => {
+    const d = document.createElement('div'); d.className = 'flow-opts';
+    list.forEach(([v, label]) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = label; if (word) b.className = 'word'; b.setAttribute('aria-pressed', String(isOn(v))); b.onclick = () => onPick(v); d.append(b); });
+    el.append(d);
+  };
+  const acts = (...btns) => { const d = document.createElement('div'); d.className = 'flow-acts'; btns.forEach(([label, fn, cls]) => { const b = document.createElement('button'); b.type = 'button'; b.className = cls || 'flow-next'; b.textContent = label; b.onclick = fn; d.append(b); }); el.append(d); };
+  const hypo = S.objs.find(o => o.type === 'hypopyon');
+  if (flow.step === 'thin') {
+    head('Step 3 of the ulcer', 'Set the thinning', 'Drag down on the cross-section above, or tap a chip. Then carry on.');
+    acts(['Next: AC cells →', () => { flow.step = 'ac'; $('#hint').hidden = true; renderFlow(); smoothTo(el); }]);
+  } else if (flow.step === 'ac') {
+    head('Step 4', 'Anterior chamber cells', 'SUN grade. Tap one to move on.');
+    opts(AC_GRADES.map(g => [g, g]), v => S.ac === v, v => { checkpoint(); S.ac = v; syncAc(); flow.step = 'hypo'; commitView(); smoothTo($('#flow')); });
+  } else if (flow.step === 'hypo') {
+    head('Step 5', 'Hypopyon', 'Height in mm. Tap None if there isn’t one.');
+    opts(HYPO_OPTS.map(h => [h, h ? h + ' mm' : 'None']), v => hypo ? Math.abs(hypo.h - v) < .01 : v === 0, v => {
+      checkpoint(); dismissExample();
+      if (!v) { S.objs = S.objs.filter(o => o.type !== 'hypopyon'); flow.step = 'done'; }
+      else { const h = S.objs.find(o => o.type === 'hypopyon') || (() => { const n = makeObj('hypopyon'); S.objs.push(n); return n; })(); h.h = v; flow.step = 'micro'; }
+      commitView(); if (flow && flow.step === 'micro') { quickTab = 'Bacteria'; renderMicro(); goMicro(); } else smoothTo($('#flow'));
+    }, true);
+  } else if (flow.step === 'micro') {
+    head('Step 6', 'What grew?', 'A hypopyon is drawn. Pick the organism in Microbiology below, or mark cultures pending.');
+    acts(['Go to Microbiology ↓', goMicro], ['Cultures pending', () => { checkpoint(); const n = S.microNotes || []; if (!n.includes('Cultures pending')) S.microNotes = [...n, 'Cultures pending']; flow = { step: 'done' }; commitView(); }, 'flow-skip']);
+  } else if (flow.step === 'done') {
+    const orgs = (S.micro || []).length;
+    head('All set', 'Ulcer documented', `${S.ac === '0' ? 'No AC cells' : 'AC ' + S.ac}${hypo ? ` · hypopyon ${mm(hypo.h)} mm` : ' · no hypopyon'}${orgs ? ` · ${orgs} organism${orgs > 1 ? 's' : ''}` : ''}. Everything is in the note, the summary sheet and the QR code.`);
+    acts(['Finish', () => { flow = null; renderFlow(); }], ['Add an organism', () => { flow = null; renderFlow(); goMicro(); }, 'flow-skip']);
+  }
+}
+function renderQuickOrgs() {
+  const box = $('#quickOrgs'); if (!box) return; box.innerHTML = '';
+  const seg = document.createElement('div'); seg.className = 'seg'; seg.setAttribute('role', 'group'); seg.setAttribute('aria-label', 'Common organisms');
+  Object.keys(COMMON_ORGS).forEach(k => { const b = document.createElement('button'); b.type = 'button'; b.textContent = k; b.setAttribute('aria-pressed', String(quickTab === k)); b.onclick = () => { quickTab = k; renderQuickOrgs(); }; seg.append(b); });
+  const chips = document.createElement('div'); chips.className = 'qo-chips';
+  const have = new Set((S.micro || []).map(m => m.org));
+  COMMON_ORGS[quickTab].forEach(([full, short]) => {
+    const i = ORGS.findIndex(o => o[0] === full); if (i < 0) return;
+    const b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-pressed', String(have.has(full))); b.title = full;
+    b.innerHTML = /^(MSSA|MRSA|CoNS|HSV|VZV)$/.test(short) ? short : `<i>${short}</i>`;
+    b.onclick = () => {
+      if (have.has(full)) { const m = S.micro.find(x => x.org === full); const g = m && document.querySelector(`.sens-grid[data-id="${m.id}"]`); if (g) { g.focus({ preventScroll: true }); smoothTo(g); } return; }
+      if (flow && (flow.step === 'micro' || flow.step === 'done')) flow = { step: 'done' };
+      addOrg(i);
+    };
+    chips.append(b);
+  });
+  box.append(seg, chips);
+}
+
+// keep every finding at exactly the precision the QR code carries, so a scanned copy is identical
+function normalizeObj(o) {
+  ['x', 'y', 'rx', 'ry', 'dRx', 'dRy', 'dOx', 'dOy', 'len', 'r', 'w', 'reach', 'h', 'rot', 'h1', 'h2'].forEach(k => { if (typeof o[k] === 'number') o[k] = r2(o[k]); });
+  ['iPoly', 'dPoly'].forEach(k => { if (Array.isArray(o[k]) && o[k].length > 2) o[k] = (o[k].length > 28 ? resample([...o[k], o[k][0]], 28) : o[k]).map(p => [Math.round(p[0] * 100) / 100, Math.round(p[1] * 100) / 100]); });
+  if (Array.isArray(o.pts)) o.pts = o.pts.map(p => [Math.round(p[0] * 10) / 10, Math.round(p[1] * 10) / 10]);
+}
 function commitView(persist = true) {
-  render(); buildInspector(); buildList(); buildNote(rule123()); renderMicro(); syncUndo();
+  if (persist) S.objs.forEach(normalizeObj);
+  render(); buildInspector(); buildList(); buildNote(rule123()); renderMicro(); renderFlow(); syncUndo();
   $('#exampleFlag').hidden = !isExample;
   if (persist) save();
 }
@@ -1480,7 +1594,7 @@ function buildInspector() {
   head.querySelector('strong').textContent = T[o.type].name;
   head.querySelector('.where').textContent = where(o);
   head.querySelector('[data-a=del]').onclick = () => { checkpoint(); S.objs = S.objs.filter(q => q.id !== o.id); sel = null; commitView(); };
-  head.querySelector('[data-a=dup]').onclick = () => { checkpoint(); const c = JSON.parse(JSON.stringify(o)); c.id = uid(); c.seed = (Math.random() * 1e9) | 0; if (T[o.type].kind === 'arc') { c.h1 = norm12(c.h1 + 3); c.h2 = norm12(c.h2 + 3); } else if (c.pts) c.pts = c.pts.map(p => [p[0] + .6, p[1] - .6]); else { c.x += .8; c.y -= .8; } S.objs.push(c); sel = c.id; commitView(); };
+  head.querySelector('[data-a=dup]').onclick = () => { checkpoint(); const c = JSON.parse(JSON.stringify(o)); c.id = uid(); c.seed = 1 + ((Math.random() * 99990) | 0); if (T[o.type].kind === 'arc') { c.h1 = norm12(c.h1 + 3); c.h2 = norm12(c.h2 + 3); } else if (c.pts) c.pts = c.pts.map(p => [p[0] + .6, p[1] - .6]); else { c.x += .8; c.y -= .8; } S.objs.push(c); sel = c.id; commitView(); };
   head.querySelector('[data-a=done]').onclick = () => { sel = null; $('#hint').hidden = true; commitView(false); };
   if (o.type === 'ulcer' || o.type === 'infiltrate') {
     const rt = document.createElement('button'); rt.type = 'button'; rt.className = 'mini'; rt.textContent = 'Retrace';
@@ -1970,10 +2084,10 @@ function packState() {
     const keys = Object.keys(T[o.type].d);
     return [TYPE_KEYS.indexOf(o.type), r2(o.x || 0), r2(o.y || 0), ...keys.map(k => {
       const v = o[k];
-      if (k === 'iPoly' || k === 'dPoly') return Array.isArray(v) && v.length > 2 ? (v.length > 26 ? resample([...v, v[0]], 26) : v).flatMap(p => [Math.round(p[0] * 100), Math.round(p[1] * 100)]) : 0;
+      if (k === 'iPoly' || k === 'dPoly') return Array.isArray(v) && v.length > 2 ? (v.length > 28 ? resample([...v, v[0]], 28) : v).flatMap(p => [Math.round(p[0] * 100), Math.round(p[1] * 100)]) : 0;
       if (k === 'pts') return v.flatMap(p => [Math.round(p[0] * 10) / 10, Math.round(p[1] * 10) / 10]);
       return typeof v === 'number' ? r2(v) : typeof v === 'boolean' ? (v ? 1 : 0) : v;
-    })];
+    }), o.seed >>> 0];
   }), notes, micro];
 }
 function unpackState(a) {
@@ -1992,7 +2106,7 @@ function unpackState(a) {
       else if (typeof def === 'boolean') o[k] = !!v;
       else o[k] = String(v).slice(0, 200);
     });
-    o.seed = 7919 * (i + 1);
+    const sd = row[3 + Object.keys(T[type].d).length]; o.seed = Number.isFinite(+sd) && +sd > 0 ? +sd >>> 0 : 7919 * (i + 1);
     objs.push(o);
   });
   const micro = (Array.isArray(a[5]) ? a[5] : []).map(r => {
