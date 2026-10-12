@@ -64,6 +64,9 @@ img{max-width:100%}
   --sel-line: #C9B22A;
   --sel-ink: #5E5208;
   --paper: #FFFDF8;
+  --danger: #C8372D;
+  --danger-bg: #FDECEA;
+  --danger-ink: #8E1F16;
   --logo-script: #0D5E59;
   --shadow: 0 1px 2px rgba(13, 70, 66, 0.06), 0 8px 24px rgba(13, 70, 66, 0.07);
   --font-ui: "Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, sans-serif;
@@ -72,6 +75,7 @@ img{max-width:100%}
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
+    --danger: #D9463A; --danger-bg: #3A1714; --danger-ink: #FFC9C1;
     --bg: #0B1A1B; --surface: #112628; --surface-2: #163033; --ink: #E4F3F1; --ink-2: #B4CECB; --muted: #86A2A0;
     --line: #24413F; --line-2: #1C3634; --navy: #7FDCD1; --coral: #E3D25A; --focus: #6FD3E0; --ok: #7CC99A; --ok-bg: #16301F; --warn: #F0B866; --warn-bg: #2E2414;
     --chip-bg: #183634; --sel-bg: #33300F; --sel-line: #D9C93A; --sel-ink: #F2E99A; --logo-script: #CFF3EE;
@@ -80,6 +84,7 @@ img{max-width:100%}
   }
 }
 :root[data-theme="dark"] {
+  --danger: #D9463A; --danger-bg: #3A1714; --danger-ink: #FFC9C1;
   --bg: #0B1A1B; --surface: #112628; --surface-2: #163033; --ink: #E4F3F1; --ink-2: #B4CECB; --muted: #86A2A0;
   --line: #24413F; --line-2: #1C3634; --navy: #7FDCD1; --coral: #E3D25A; --focus: #6FD3E0; --ok: #7CC99A; --ok-bg: #16301F; --warn: #F0B866; --warn-bg: #2E2414;
   --chip-bg: #183634; --sel-bg: #33300F; --sel-line: #D9C93A; --sel-ink: #F2E99A; --logo-script: #CFF3EE;
@@ -139,6 +144,11 @@ h2 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: 
 .bar button { border: 0; background: var(--navy); color: var(--surface); border-radius: 999px; padding: 5px 12px; cursor: pointer; font-size: 13px; font-weight: 700; }
 .bar button.ghost { background: transparent; color: var(--navy); border: 1px solid var(--line); }
 .bar.info { background: var(--chip-bg); color: var(--ink-2); }
+.bar.danger { background: var(--danger-bg); color: var(--danger-ink); border: 2px solid var(--danger); }
+.bar.danger .cc-text { display: grid; gap: 2px; min-width: 0; }
+.bar.danger .cc-text b { font-size: 17px; }
+.bar.danger #clearYes { background: var(--danger); color: #fff; padding: 8px 18px; font-size: 15px; }
+.bar.danger #clearNo { background: var(--surface); color: var(--ink); border: 1px solid var(--line); padding: 8px 16px; font-size: 15px; }
 .bar.review { background: var(--warn-bg); color: var(--warn); }
 .bar.ai { background: var(--chip-bg); color: var(--ink); }
 .spin { width: 16px; height: 16px; border-radius: 50%; border: 2.5px solid var(--line); border-top-color: var(--coral); animation: spin 0.9s linear infinite; flex: none; }
@@ -275,6 +285,19 @@ h2 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: 
 .flow-opts button.word { font-family: var(--font-ui); }
 .flow-acts { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 .flow-next { border: 0; border-radius: 12px; padding: 10px 16px; min-height: 44px; font-weight: 700; font-size: 15px; cursor: pointer; color: #fff; background: linear-gradient(180deg, var(--red-hi), var(--red-lo)); }
+@keyframes nextGlow { 0%, 100% { box-shadow: 0 0 0 0 rgba(201, 223, 62, 0); } 50% { box-shadow: 0 0 0 6px rgba(201, 223, 62, .6); } }
+.s-next { animation: nextGlow 1.6s ease-in-out infinite; }
+.pulse-group { border-radius: 16px; animation: nextGlow 1.8s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .s-next, .pulse-group { animation: none; box-shadow: 0 0 0 4px rgba(201, 223, 62, .6); } }
+.big-steps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.big-step { display: grid; gap: 4px; min-width: 0; }
+.big-step .bs-l { font-size: 13px; font-weight: 700; color: var(--muted); }
+.bs-row { display: flex; align-items: stretch; border: 1.5px solid var(--line); border-radius: 14px; background: var(--surface); overflow: hidden; height: 54px; }
+.bs-row button { width: 46px; flex: none; border: 0; background: transparent; font-size: 24px; font-weight: 700; color: var(--navy); cursor: pointer; }
+.bs-row button:active { background: var(--chip-bg); }
+.bs-row input { flex: 1; min-width: 0; width: 100%; border: 0; background: transparent; text-align: center; font: 600 22px var(--font-mono); color: var(--ink); }
+.bs-row input:focus { outline: none; }
+.bs-row .bs-u { align-self: center; font-size: 13px; color: var(--muted); padding-right: 2px; }
 .flow-skip { border: 0; background: transparent; color: var(--muted); font-weight: 700; cursor: pointer; padding: 6px 8px; }
 #orgIn { width: 100%; border: 1.5px solid var(--line); border-radius: 12px; padding: 11px 14px; background: var(--surface-2); font-size: 16px; }
 #orgIn:focus { outline: none; border-color: var(--focus); box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus) 20%, transparent); }
@@ -335,6 +358,186 @@ kbd { font-family: var(--font-mono); font-size: 11.5px; border: 1px solid var(--
 #snipCv { max-width: 100%; max-height: 100%; cursor: crosshair; touch-action: none; box-shadow: 0 0 0 1px rgba(255,255,255,0.3); }
 .snip-box { position: absolute; border: 2px solid #43C9BC; background: rgba(67, 201, 188, 0.15); pointer-events: none; }
 .qr-meta span { font-family: var(--font-mono); font-size: 12px; background: var(--chip-bg); color: var(--ink-2); border-radius: 999px; padding: 3px 10px; }
+
+/* ================= Simplified shell ================= */
+body.simple { overflow-x: hidden; }
+body.simple .app { max-width: none; padding-inline: 0; padding-block: 0; }
+#sApp { min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; }
+#sTop { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; height: 56px; padding: 0 6px 0 14px; display: flex; align-items: center; gap: 6px; background: color-mix(in srgb, var(--bg) 92%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+#sTop .s-logo { height: 40px; width: auto; display: block; flex: none; }
+#sTop .s-gap { flex: 1; }
+#sTop .eye-switch { box-shadow: none; padding: 3px; }
+#sTop .eye-switch button { padding: 7px 13px; font-size: 14px; }
+#sTop .eye-switch button span { display: none; }
+.s-icon { width: 44px; height: 44px; border: 0; background: transparent; border-radius: 12px; display: grid; place-items: center; color: var(--ink); cursor: pointer; flex: none; }
+.s-icon svg { width: 22px; height: 22px; }
+.s-icon:hover { background: var(--chip-bg); }
+
+#sMain { flex: 1; width: 100%; max-width: 660px; margin: 0 auto; padding: 0 8px calc(170px + env(safe-area-inset-bottom, 0px)); box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; }
+body.simple .chart-card { background: transparent; border: 0; box-shadow: none; padding: 0; gap: 8px; }
+body.simple .chart-tools, body.simple #exampleFlag { display: none !important; }
+body.simple #chart { border-radius: 18px; box-shadow: 0 0 0 1px var(--line); }
+.s-fab { position: absolute; left: 10px; bottom: 30px; z-index: 2; width: 46px; height: 46px; padding: 0; border-radius: 999px !important; justify-content: center; background: color-mix(in srgb, var(--surface) 92%, transparent) !important; box-shadow: 0 2px 10px rgba(13, 70, 66, .12); }
+.s-fab .lbl { display: none !important; }
+.s-fab svg { width: 20px !important; height: 20px !important; }
+#sEmpty { position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); width: max-content; max-width: calc(100% - 120px); text-align: center; pointer-events: none; font-size: 14px; color: var(--ink-2); background: color-mix(in srgb, var(--surface) 90%, transparent); border-radius: 999px; padding: 7px 14px; box-shadow: 0 1px 6px rgba(13, 70, 66, .08); }
+#sEmpty b { color: var(--navy); }
+
+#sStrip { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding: 2px 2px 2px; -webkit-overflow-scrolling: touch; }
+#sStrip::-webkit-scrollbar { display: none; }
+.s-chip { flex: none; height: 38px; padding: 0 13px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: 600 13px var(--font-mono); cursor: pointer; white-space: nowrap; }
+.s-chip i { font: italic 400 14.5px var(--font-ui); }
+.s-chip.quiet { color: var(--muted); border-style: dashed; }
+.s-chip.warn { background: var(--warn-bg); color: var(--warn); border-color: color-mix(in srgb, var(--warn) 40%, var(--line)); }
+.s-chip.ok { background: var(--ok-bg); color: var(--ok); border-color: color-mix(in srgb, var(--ok) 35%, var(--line)); }
+.s-chip.res { border-color: color-mix(in srgb, #C8372D 45%, var(--line)); }
+
+body.simple .command { padding: 0; border: 0; background: transparent; gap: 6px; }
+body.simple .command > label, body.simple .command .cmd-actions .small { display: none; }
+body.simple .command .cmd-actions { display: contents; }
+body.simple #askBtn:not([hidden]) { justify-self: start; }
+.s-cmd { position: relative; display: flex; align-items: center; }
+body.simple #cmd { min-height: 50px; height: 50px; max-height: 140px; resize: none; padding: 13px 58px 13px 16px; border-radius: 14px; font-size: 16px; background: var(--surface); border: 1px solid var(--line); overflow: hidden; }
+body.simple #drawBtn { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); min-height: 0; width: 40px; height: 40px; padding: 0; border-radius: 11px; justify-content: center; border: 0; box-shadow: none; text-shadow: none; }
+body.simple #drawBtn::before { display: none; }
+body.simple #drawBtn svg { width: 20px; height: 20px; }
+body.simple .cmd-out { padding: 0 4px; }
+
+#sDock { position: fixed; z-index: 15; left: 0; right: 0; bottom: 0; padding: 12px 12px calc(14px + env(safe-area-inset-bottom, 0px)); background: var(--surface); border-radius: 22px 22px 0 0; box-shadow: 0 -8px 26px rgba(13, 70, 66, .08); border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 8px; }
+#sDock > * { width: 100%; max-width: 636px; margin: 0 auto; }
+.s-trace { height: 54px; border: 0; border-radius: 15px; background: linear-gradient(180deg, var(--red-hi), var(--red-lo)); color: #fff; font: 700 17px var(--font-ui); display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; box-shadow: 0 6px 16px rgba(14, 139, 131, .26); }
+.s-trace svg { width: 20px; height: 20px; }
+.s-trace.on { background: var(--glow); color: #2F3A05; box-shadow: 0 0 0 3px color-mix(in srgb, var(--glow) 45%, transparent); }
+.s-tools { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; }
+.s-tools button { height: 58px; border: 0; background: transparent; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; font: 700 11.5px var(--font-ui); color: var(--ink-2); cursor: pointer; }
+.s-tools button[aria-pressed="true"] { background: var(--sel-bg); color: var(--sel-ink); box-shadow: inset 0 0 0 1.5px var(--sel-line); }
+.s-tools .sw { width: 22px; height: 18px; border-radius: 50%; display: block; }
+.s-tools .s-more { background: var(--chip-bg); color: var(--navy); }
+.s-tools .s-more svg { width: 20px; height: 18px; }
+body.sheet-open #sDock { transform: translateY(110%); }
+#sDock { transition: transform .22s ease; }
+
+#sScrim { position: fixed; inset: 0; z-index: 25; background: rgba(6, 30, 30, .32); }
+#sApp .sheet { position: fixed; z-index: 30; left: 0; right: 0; bottom: 0; max-height: 82vh; max-height: 82dvh; overflow-y: auto; overscroll-behavior: contain; background: var(--surface); border-radius: 24px 24px 0 0; box-shadow: 0 -12px 34px rgba(13, 70, 66, .16); padding: 0 14px calc(18px + env(safe-area-inset-bottom, 0px)); box-sizing: border-box; display: flex; flex-direction: column; gap: 12px; transform: translateY(105%); visibility: hidden; transition: transform .24s ease, visibility 0s linear .24s; }
+#sApp .sheet.open { transform: none; visibility: visible; transition: transform .24s ease; }
+#sApp .sheet > * { width: 100%; max-width: 640px; margin-inline: auto; box-sizing: border-box; }
+#sApp #shEdit { max-height: none; top: 50vh; border-radius: 20px 20px 0 0; box-shadow: 0 -10px 28px rgba(13, 70, 66, .14); }
+.sh-grab { width: 40px !important; height: 5px; border-radius: 3px; background: var(--line); margin: 8px auto 0 !important; flex: none; }
+.sh-head { display: flex; align-items: center; position: sticky; top: 0; background: var(--surface); padding: 2px 0 4px; z-index: 1; }
+.sh-head h3 { flex: 1; margin: 0; font-size: 21px; }
+.sh-close { border: 0; background: transparent; color: var(--navy); font: 700 15px var(--font-ui); padding: 10px 6px; cursor: pointer; }
+#sApp .sheet .card { border: 0; padding: 4px 2px; background: transparent; }
+#sApp .sheet .insp { border: 0; padding: 0; background: transparent; }
+#sApp .sheet .flow { margin-top: 2px; }
+#shEdit .flow:not([hidden]) + .insp:not([hidden]) { border-top: 1px solid var(--line-2); padding-top: 12px; }
+body.simple .pal-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+body.simple .pal-head p { display: none; }
+body.simple .micro { box-shadow: none !important; }
+
+.s-share { display: grid; gap: 12px; justify-items: center; }
+.s-qrbox { padding: 12px; border-radius: 22px; background: #fff; box-shadow: 0 0 0 1px var(--line), 0 10px 30px rgba(13, 70, 66, .10); }
+#sQr { width: min(250px, 64vw); height: auto; display: block; image-rendering: pixelated; }
+.s-qrnote { margin: 0; text-align: center; color: var(--ink-2); font-size: 14.5px; max-width: 34ch; }
+.s-grid3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; width: 100%; }
+.s-grid3 > button, .s-grid3 > label { position: relative; min-height: 82px; border: 1px solid var(--line); background: var(--surface); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 8px 6px; font: 700 13.5px var(--font-ui); color: var(--ink); cursor: pointer; box-shadow: none; text-shadow: none; text-align: center; }
+.s-grid3 svg { width: 22px !important; height: 22px !important; color: var(--navy); }
+.s-grid3 .lbl { display: inline !important; }
+.s-grid3 .tool.photo { background: var(--surface); color: var(--ink); border-color: var(--line); }
+.s-grid3 .tool[aria-pressed="true"] { background: var(--sel-bg); border-color: var(--sel-line); color: var(--sel-ink); }
+.s-grid3 .tool:disabled { opacity: .45; }
+.s-hypo .flow-opts { margin-top: 8px; }
+
+/* desktop: tools as a left rail, sheets as a right-hand panel */
+@media (min-width: 1000px) {
+  #sMain { max-width: 700px; padding: 8px 24px 32px; }
+  #sDock { top: 56px; bottom: auto; right: auto; width: 104px; height: calc(100vh - 56px); border-radius: 0; border-top: 0; border-right: 1px solid var(--line); box-shadow: none; padding: 16px 10px; justify-content: flex-start; background: var(--surface); }
+  #sDock > * { max-width: none; }
+  .s-trace { height: 76px; flex-direction: column; gap: 6px; font-size: 13px; }
+  .s-tools { grid-template-columns: 1fr; }
+  .s-tools button { height: 64px; }
+  body.sheet-open #sDock { transform: none; }
+  #sApp { padding-left: 104px; }
+  #sApp .sheet { left: auto; top: 56px; width: 440px; max-height: none !important; height: calc(100vh - 56px); border-radius: 0; border-left: 1px solid var(--line); box-shadow: -10px 0 30px rgba(13, 70, 66, .08); transform: translateX(105%); }
+  #sApp .sheet.open { transform: none; }
+  body.sheet-open #sMain { margin-right: 440px; margin-left: auto; }
+}
+@media (prefers-reduced-motion: reduce) { #sApp .sheet, #sDock { transition: none !important; } }
+
+body.simple .insp-head { order: -3; }
+body.simple .insp > .depth { order: -2; border-top: 0; padding-top: 0; }
+body.simple .insp > .fields { order: -1; }
+body.simple #shEdit .flow.thin p { display: none; }
+body.simple #shEdit .flow.thin { padding: 10px 12px; gap: 8px; }
+body.simple #shEdit .flow.thin .flow-head h3 { font-size: 16px; }
+.s-grid3 .tool.photo, .s-grid3 .tool { box-shadow: none !important; text-shadow: none !important; }
+.s-share .s-grid3 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.s-share .s-grid3 > button { min-height: 78px; font-size: 12.5px; }
+#shMicro .micro > .row:first-child h2 { display: none; }
+#shMicro .micro > .row:first-child { justify-content: flex-end; min-height: 0; }
+@media (min-width: 1000px) { #sApp #shEdit { max-height: none; } }
+
+#sTop .s-icon.s-next { background: var(--chip-bg); }
+
+/* the chart is never covered: the guide sheet starts where it ends, and the chart shrinks a little on short phones */
+@media (max-width: 999px) {
+  body.edit-open { overflow: hidden; }
+  body.edit-open .stage { max-width: max(250px, calc(100dvh - 56px - 300px)); margin-inline: auto; width: 100%; }
+}
+/* the step hint sits in the bottom bar */
+#sDock .hint { position: static; transform: none; width: 100%; max-width: 636px; margin: 0 auto; box-sizing: border-box; justify-content: space-between; padding: 10px 8px 10px 16px; border-radius: 15px; font-size: 15px; min-height: 54px; pointer-events: auto; }
+#sDock .hint:not([hidden]) ~ .s-trace { display: none; }
+#sDock .hint button { padding: 8px 12px; font-size: 14px; }
+.s-foot { position: sticky; bottom: calc(-18px - env(safe-area-inset-bottom, 0px)); margin-top: auto; padding: 10px 0 calc(4px + env(safe-area-inset-bottom, 0px)); background: linear-gradient(to bottom, transparent, var(--surface) 30%); }
+.s-foot .flow-next { width: 100%; min-height: 52px; font-size: 16px; }
+@media (min-width: 1000px) {
+  #sDock .hint { position: fixed; top: 64px; left: calc(104px + (100vw - 104px) / 2); transform: translateX(-50%); width: auto; max-width: 560px; min-height: 0; z-index: 16; }
+  body.sheet-open #sDock .hint { left: calc(104px + (100vw - 104px - 440px) / 2); }
+  #sMain { padding-top: 60px; }
+}
+
+/* clear: one tap from the header, confirmed on a red card */
+.s-clear { color: var(--danger); }
+.s-clear:disabled { color: var(--muted); opacity: .45; cursor: default; }
+.s-clear:not(:disabled):hover { background: var(--danger-bg); }
+#sClearScrim { position: fixed; inset: 0; z-index: 44; background: rgba(40, 8, 6, .42); }
+body.simple #clearConfirm:not([hidden]) { position: fixed; z-index: 45; left: 12px; right: 12px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); max-width: 480px; margin: 0 auto; padding: 18px; border-radius: 20px; display: grid; gap: 14px; box-shadow: 0 16px 44px rgba(120, 20, 10, .35); font-size: 15px; }
+body.simple #clearConfirm .cc-text b { font-size: 20px; }
+body.simple #clearConfirm .acts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+body.simple #clearConfirm .acts button { min-height: 52px; border-radius: 14px; font-size: 16px; font-weight: 700; }
+@media (min-width: 1000px) { body.simple #clearConfirm:not([hidden]) { top: 50%; bottom: auto; transform: translateY(-50%); } }
+
+/* versions: the version chip, the "updated" note, the update list and the update-available bar (as in R/D) */
+.ver { display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); font: 600 12px/1.6 var(--font-mono); text-decoration: none; vertical-align: 3px; white-space: nowrap; }
+.ver:hover { color: var(--ink); border-color: var(--focus); }
+#updates > summary { display: flex; align-items: baseline; gap: 10px; cursor: pointer; list-style: none; padding: 2px 0; }
+#updates > summary::-webkit-details-marker { display: none; }
+#updates > summary::after { content: "›"; margin-left: auto; color: var(--muted); font-size: 18px; transition: transform .15s; }
+#updates[open] > summary::after { transform: rotate(90deg); }
+#updates .count { font: 600 12px var(--font-mono); color: var(--muted); }
+.updates { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 14px; }
+.updates > li { border-top: 1px solid var(--line-2); padding-top: 10px; }
+.updates > li:first-child { border-top: 0; padding-top: 0; }
+.up-h { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.up-h strong { font-size: 14.5px; }
+.up-t { color: var(--ink-2); font-size: 14px; flex: 1; min-width: 10ch; }
+.up-d { color: var(--muted); font-size: 12.5px; white-space: nowrap; }
+.updates ul { margin: 6px 0 0; padding-left: 20px; display: grid; gap: 4px; color: var(--ink-2); font-size: 13.5px; line-height: 1.45; }
+#wnScrim { position: fixed; inset: 0; z-index: 46; background: rgba(6, 30, 30, .4); }
+.whatsnew { position: fixed; z-index: 47; left: 12px; right: 12px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); max-width: 520px; max-height: min(80vh, 640px); overflow-y: auto; margin: 0 auto; padding: 18px; border-radius: 20px; background: var(--surface); border: 2px solid color-mix(in srgb, var(--navy) 55%, var(--line)); box-shadow: 0 16px 44px rgba(13, 70, 66, .3); box-sizing: border-box; }
+.whatsnew[hidden] { display: none; }
+.wn-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.wn-head h2 { margin: 0; font-size: 19px; flex: 1; min-width: 12ch; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.wn-badge { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #2F3A05; background: var(--glow); border-radius: 999px; padding: 3px 10px; }
+.wn-list { margin: 12px 0 14px; padding-left: 20px; display: grid; gap: 7px; color: var(--ink-2); font-size: 14.5px; line-height: 1.45; }
+.wn-list strong { color: var(--ink); }
+.wn-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; position: sticky; bottom: -18px; background: var(--surface); padding: 8px 0 2px; }
+.wn-actions .flow-next { min-height: 48px; padding: 10px 22px; font-size: 16px; }
+.update-bar { position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 170px); transform: translateX(-50%); z-index: 41; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; width: max-content; max-width: calc(100% - 32px); padding: 10px 12px 10px 16px; border-radius: 14px; background: var(--ink); color: var(--bg); box-shadow: 0 10px 30px rgba(0,0,0,0.25); font-size: 14px; box-sizing: border-box; }
+.update-bar[hidden] { display: none; }
+.update-bar .flow-next { min-height: 36px; padding: 6px 14px; font-size: 14px; }
+.ub-x { border: 0; background: transparent; color: inherit; font-size: 20px; line-height: 1; width: 30px; height: 30px; border-radius: 8px; cursor: pointer; opacity: 0.8; }
+.ub-x:hover { opacity: 1; background: rgba(255,255,255,0.12); }
+@media (min-width: 1000px) { .whatsnew { top: 50%; bottom: auto; transform: translateY(-50%); } .update-bar { bottom: 24px; left: calc(104px + (100vw - 104px) / 2); } }
 </style>
 
 <div class="app">
@@ -388,7 +591,7 @@ kbd { font-family: var(--font-mono); font-size: 11.5px; border: 1px solid var(--
         <button type="button" class="tool" id="clearBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg><span class="lbl">Clear</span></button>
       </div>
 
-      <div class="bar confirm-bar info" id="clearConfirm" hidden><span>Clear the whole drawing? You can undo this.</span><span class="acts"><button type="button" id="clearYes">Clear</button><button type="button" class="ghost" id="clearNo">Keep</button></span></div>
+      <div class="bar confirm-bar danger" id="clearConfirm" role="alertdialog" aria-labelledby="clearTitle" hidden><span class="cc-text"><b id="clearTitle">Clear everything?</b><span>The drawing, AC grade and cultures will be removed. You can undo this.</span></span><span class="acts"><button type="button" id="clearYes">Clear</button><button type="button" class="ghost" id="clearNo">Keep</button></span></div>
       <div class="bar ai" id="aiBar" hidden><span class="ai-msg"><span class="spin" aria-hidden="true"></span><span id="aiText">Reading the photo…</span></span><span class="acts"><button type="button" class="ghost" id="aiStop">Stop</button></span></div>
       <div class="bar review" id="reviewBar" hidden><span id="reviewText">Drawn from your photo. Check each finding against the photo underneath.</span><span class="acts"><button type="button" class="ghost" id="reviewUndo">Undo</button><button type="button" id="reviewOk">Looks right</button></span></div>
       <div class="bar info" id="exampleFlag" hidden><span>Example drawing. Clear it to start your own.</span><span class="acts"><button type="button" id="exampleClear">Start blank</button></span></div>
@@ -838,6 +1041,7 @@ function paint(g, Wd, dpr, interactive) {
   const list = [...S.objs].sort((a, b) => (ORDER[a.type] ?? 5) - (ORDER[b.type] ?? 5));
   list.forEach(o => drawObj(g, o, px));
   if (wiz && interactive === true) {
+    if (wiz.iPts) { polyPath(g, wiz.iPts, 1, 1); g.fillStyle = 'rgba(244,196,48,0.55)'; g.fill(); g.strokeStyle = COL.inf; g.lineWidth = px * 1.6; g.stroke(); }
     if (wiz.dPts) { polyPath(g, wiz.dPts, 1, 1); g.fillStyle = COL.defectFill; g.fill(); g.strokeStyle = COL.defect; g.lineWidth = px * 2.4; g.stroke(); }
     const c = wiz.cur;
     if (c && c.length > 1) {
@@ -867,7 +1071,21 @@ function paint(g, Wd, dpr, interactive) {
     const tag = thinTag(o); if (tag) { const [mx, my] = tagPos(o); const [x, y] = P(mx, my); g.font = '700 12px "IBM Plex Mono", monospace'; pill(g, x, y, tag, '#fff', '#1F2328'); }
   });
   if (interactive === true) { const so = getSel(); if (so) drawDims(g, so, P, Kk, false); drawSelection(g, P, Kk); }
-  else S.objs.forEach(o => drawDims(g, o, P, Kk, true));
+  if (interactive === true && wiz) {
+    if (wiz.step === 1.5 || wiz.step === 2.5) { const wo = wizObj(); if (wo) drawDims(g, wo, P, Kk, true); }
+    const c = wiz.cur;
+    if (c && c.length > 1) {   // live width × height beside the stroke
+      const b = bboxOf(c), [x1, y1] = P(b[2], b[3]), [x0, y0] = P(b[0], b[1]);
+      const txt = `${mm(b[2] - b[0])} × ${mm(b[3] - b[1])} mm`;
+      g.font = '700 16px "IBM Plex Mono", ui-monospace, monospace'; g.textAlign = 'center'; g.textBaseline = 'middle';
+      const tw = g.measureText(txt).width + 20; let x = x1 + tw / 2 + 10, y = y1 - 16;
+      if (x + tw / 2 > Wd - 4) x = x0 - tw / 2 - 10; if (x - tw / 2 < 4) x = Math.min(Wd - tw / 2 - 4, Math.max(tw / 2 + 4, (x0 + x1) / 2));
+      if (y < 16) y = y0 + 22;
+      g.fillStyle = wiz.step === 1 ? '#1E7F3E' : '#8A5E00'; g.beginPath(); g.roundRect ? g.roundRect(x - tw / 2, y - 15, tw, 30, 15) : g.rect(x - tw / 2, y - 15, tw, 30); g.fill();
+      g.fillStyle = '#fff'; g.fillText(txt, x, y + 1);
+    }
+  }
+  if (interactive !== true) S.objs.forEach(o => drawDims(g, o, P, Kk, true));   // the summary sheet shows every lesion's calipers
 }
 function pill(g, x, y, text, fg, bg) {
   const w = g.measureText(text).width + 12, h = 20;
@@ -904,7 +1122,9 @@ function dimSets(o) {
 /* horizontal width and vertical height, measured on the page, drawn outside the lesion */
 function drawDims(g, o, P, Kk, big) {
   if (!DIM_TYPES[o.type]) return;
-  const sets = dimSets(o), out = sets[0];
+  let sets = dimSets(o); const out = sets[0];
+  const near = (a, b) => Math.abs(a.L[0] - b.L[0]) < .06 && Math.abs(a.R[0] - b.R[0]) < .06 && Math.abs(a.B[1] - b.B[1]) < .06 && Math.abs(a.Tp[1] - b.Tp[1]) < .06;
+  if (sets.length === 2 && near(sets[0], sets[1])) sets = [sets[0]];
   const gap = (big ? 22 : 14) / Kk, step = (big ? 30 : 20) / Kk, over = (big ? 5 : 4) / Kk, ah = big ? 8 : 6;
   const cxw = (out.L[0] + out.R[0]) / 2, cyw = (out.B[1] + out.Tp[1]) / 2;
   const below = cyw > -3.4, right = cxw < 3;   // keep the lines on the roomy side of the cornea
@@ -1001,7 +1221,7 @@ cv.addEventListener('pointerdown', e => {
   if (alignMode && under) { drag = { mode: 'under', sx: px, sy: py, ox: under.ox, oy: under.oy }; return; }
   if (tool === 'pen') { checkpoint(); const o = makeObj('ink'); o.color = penColor; o.pts = [[x, y]]; S.objs.push(o); drag = { mode: 'ink', o }; dismissExample(); return; }
   if (tool === 'erase') { const o = pick(x, y); if (o) { checkpoint(); S.objs = S.objs.filter(q => q !== o); if (sel === o.id) sel = null; commitView(); } drag = { mode: 'erase' }; return; }
-  if (tool === 'ulcer' && wiz) { wiz.cur = [[x, y]]; drag = { mode: 'trace' }; render(); return; }
+  if (tool === 'ulcer' && wiz) { if (wiz.step === 1.5 || wiz.step === 2.5) { if (wiz.step === 1.5) wiz.dPts = null; else wiz.iPts = null; wiz.step = Math.floor(wiz.step); flow = null; renderFlow(); wizHint(); } wiz.cur = [[x, y]]; drag = { mode: 'trace' }; render(); return; }
   if (tool !== 'select') { const n = place(tool, x, y); if (n && T[n.type].kind !== 'ac') drag = { mode: 'move', o: n, sx: x, sy: y, ox: n.x, oy: n.y, oh1: n.h1, oh2: n.h2, a0: Math.atan2(y, x), moved: true }; return; }
   const o = getSel();
   if (o) {
@@ -1110,8 +1330,9 @@ let wiz = null;
 function wizHint() {
   if (!wiz) return;
   $('#hint').hidden = false;
-  $('#hintText').textContent = wiz.step === 1 ? 'Step 1 · Trace the epithelial defect' : 'Step 2 · Trace the infiltrate around it';
+  $('#hintText').textContent = { 1: 'Step 1 · Trace the epithelial defect', 1.5: 'Step 1 · Check the defect size below', 2: 'Step 2 · Trace the infiltrate around it', 2.5: 'Step 2 · Check the infiltrate size below' }[wiz.step];
   $('#hintSkip').textContent = wiz.step === 1 ? 'No defect' : 'Same as defect';
+  $('#hintSkip').hidden = wiz.step !== 1 && !(wiz.step === 2 && wiz.dPts);
 }
 function resample(pts, n) {
   const d = [0]; for (let i = 1; i < pts.length; i++) d.push(d[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
@@ -1119,6 +1340,48 @@ function resample(pts, n) {
   for (let k = 0; k < n; k++) { const t = L * k / n; while (j < d.length - 2 && d[j + 1] < t) j++; const s = (t - d[j]) / Math.max(1e-9, d[j + 1] - d[j]); out.push([pts[j][0] + (pts[j + 1][0] - pts[j][0]) * s, pts[j][1] + (pts[j + 1][1] - pts[j][1]) * s]); }
   return out;
 }
+/* keep only the outer border of a trace: inner loops and scribbles are ignored */
+function outerEnvelope(c) {
+  const xs = c.map(p => p[0]), ys = c.map(p => p[1]);
+  const cx = (Math.min(...xs) + Math.max(...xs)) / 2, cy = (Math.min(...ys) + Math.max(...ys)) / 2;
+  const dense = resample([...c, c[0]], Math.max(180, c.length * 4));
+  const N = 72, best = new Array(N).fill(null);
+  dense.forEach(p => {
+    const a = Math.atan2(p[1] - cy, p[0] - cx), r = Math.hypot(p[0] - cx, p[1] - cy);
+    const k = ((Math.floor((a + Math.PI) / (2 * Math.PI) * N)) % N + N) % N;
+    if (!best[k] || r > best[k]) best[k] = r;
+  });
+  const filled = best.map((r, k) => r == null ? null : k); if (!filled.some(v => v != null)) return c;
+  const R = best.map((r, k) => {
+    if (r != null) return r;
+    let a = k, b = k, da = 0, db = 0;
+    while (best[a] == null) { a = (a - 1 + N) % N; da++; }
+    while (best[b] == null) { b = (b + 1) % N; db++; }
+    return (best[a] * db + best[b] * da) / (da + db);
+  });
+  const sm = R.map((r, k) => (R[(k - 1 + N) % N] + 2 * r + R[(k + 1) % N]) / 4);
+  const out = sm.map((r, k) => { const a = -Math.PI + (k + .5) / N * 2 * Math.PI; return [cx + Math.cos(a) * r, cy + Math.sin(a) * r]; });
+  return resample([...out, out[0]], 28);
+}
+const bboxOf = a => { const xs = a.map(p => p[0]), ys = a.map(p => p[1]); return [Math.min(...xs), Math.min(...ys), Math.max(...xs), Math.max(...ys)]; };
+function scalePoly(pts, axis, len) {
+  const b = bboxOf(pts), i = axis === 'w' ? 0 : 1, lo = b[i], hi = b[i + 2], old = hi - lo, c = (lo + hi) / 2;
+  if (old < 1e-6) return pts; const k = clamp(len, .1, 11) / old;
+  return pts.map(p => { const q = p.slice(); q[i] = c + (p[i] - c) * k; return q; });
+}
+/* the shape being traced, as a temporary lesion so it can show its calipers */
+function wizObj() {
+  if (!wiz) return null;
+  const base = wiz.iPts || wiz.dPts; if (!base) return null;
+  const ib = bboxOf(base), ox = (ib[0] + ib[2]) / 2, oy = (ib[1] + ib[3]) / 2, rx = Math.max(.05, (ib[2] - ib[0]) / 2), ry = Math.max(.05, (ib[3] - ib[1]) / 2);
+  const unit = (a, sx, sy, x0, y0) => a.map(p => [(p[0] - x0) / sx, (p[1] - y0) / sy]);
+  if (wiz.iPts && wiz.dPts) {
+    const db = bboxOf(wiz.dPts), dRx = Math.max(.05, (db[2] - db[0]) / 2), dRy = Math.max(.05, (db[3] - db[1]) / 2), dOx = (db[0] + db[2]) / 2 - ox, dOy = (db[1] + db[3]) / 2 - oy;
+    return { type: 'ulcer', x: ox, y: oy, rot: 0, rx, ry, iPoly: unit(wiz.iPts, rx, ry, ox, oy), dOx, dOy, dRx, dRy, dPoly: unit(wiz.dPts, dRx, dRy, ox + dOx, oy + dOy) };
+  }
+  return { type: wiz.iPts ? 'infiltrate' : 'defect', x: ox, y: oy, rot: 0, rx, ry, iPoly: unit(base, rx, ry, ox, oy) };
+}
+function wizAdjust(step) { wiz.step = step; flow = { step: step === 1.5 ? 'defAdj' : 'infAdj' }; wizHint(); renderFlow(); render(); }
 function finishTrace() {
   const c = wiz && wiz.cur; if (!wiz || !c) return; wiz.cur = null;
   let len = 0; for (let i = 1; i < c.length; i++) len += Math.hypot(c[i][0] - c[i - 1][0], c[i][1] - c[i - 1][1]);
@@ -1127,14 +1390,14 @@ function finishTrace() {
     else render();
     return;
   }
-  const poly = resample(c, 28);
-  if (wiz.step === 1) { wiz.dPts = poly; wiz.step = 2; wizHint(); render(); return; }
-  wiz.iPts = poly; buildUlcer();
+  const poly = outerEnvelope(c);
+  if (wiz.step === 1) { wiz.dPts = poly; wizAdjust(1.5); return; }
+  wiz.iPts = poly; wizAdjust(2.5);
 }
 function buildUlcer() {
   const { dPts, target } = wiz; let { iPts } = wiz;
   if (!dPts && !iPts) { setTool('select'); return; }
-  if (!iPts) { let cx = 0, cy = 0; dPts.forEach(p => { cx += p[0]; cy += p[1]; }); cx /= dPts.length; cy /= dPts.length; iPts = dPts.map(p => [cx + (p[0] - cx) * 1.25, cy + (p[1] - cy) * 1.25]); }
+  if (!iPts) iPts = dPts.map(p => p.slice());
   // principal axis of the infiltrate gives the lesion its frame (longest × perpendicular)
   let cx = 0, cy = 0; iPts.forEach(p => { cx += p[0]; cy += p[1]; }); cx /= iPts.length; cy /= iPts.length;
   let sxx = 0, syy = 0, sxy = 0; iPts.forEach(p => { const dx = p[0] - cx, dy = p[1] - cy; sxx += dx * dx; syy += dy * dy; sxy += dx * dy; });
@@ -1177,7 +1440,7 @@ $('#hintDone').onclick = () => { setTool('select'); $('#hint').hidden = true; };
 $('#hintSkip').onclick = () => {
   if (!wiz) return;
   if (wiz.step === 1) { wiz.dPts = null; wiz.step = 2; wizHint(); render(); }
-  else { if (!wiz.dPts) { setTool('select'); return; } wiz.iPts = null; buildUlcer(); }
+  else if (wiz.step === 2) { if (!wiz.dPts) { setTool('select'); return; } wiz.iPts = wiz.dPts.map(p => p.slice()); wizAdjust(2.5); }
 };
 function iconCanvas(type) {
   const c = document.createElement('canvas'); const s = 34, d = 2; c.width = s * d; c.height = s * d; const g = c.getContext('2d');
@@ -1365,17 +1628,27 @@ function addOrg(i, freeText) {
   S.micro = [...(S.micro || []), m];
   microActive = drugsOf(m).length ? { id: m.id, i: 0 } : null;
   S.microNotes = (S.microNotes || []).filter(n => n !== 'Cultures pending' && n !== 'No growth');
-  if (flow && flow.step === 'micro') flow = { step: 'done' };
+  if (flow && (flow.step === 'micro' || flow.step === 'done' || flow.step === 'sens')) flow = { step: drugsOf(m).length ? 'sens' : 'done' };
   commitView();
+  if (flow && flow.step === 'done') setTimeout(() => document.dispatchEvent(new Event('cd:micro-done')), 350);
   setTimeout(() => { const gEl = document.querySelector(`.sens-grid[data-id="${m.id}"]`); if (gEl && matchMedia('(pointer: fine)').matches) gEl.focus({ preventScroll: true }); if (gEl) smoothTo(gEl.closest('.org-card'), 'start'); }, 30);
 }
 function setSens(m, drug, v, advance = true) {
   checkpoint();
+  const wasFull = drugsOf(m).every(d => m.sens[d]);
   if (m.sens[drug] === v && !advance) delete m.sens[drug]; else if (m.sens[drug] === v) delete m.sens[drug]; else m.sens[drug] = v;
   const list = drugsOf(m), at = list.indexOf(drug);
   if (advance && m.sens[drug]) { let n = list.findIndex((d, k) => k > at && !m.sens[d]); if (n < 0) n = Math.min(at + 1, list.length - 1); microActive = { id: m.id, i: n }; }
   else microActive = { id: m.id, i: at };
   buildNote(rule123()); save(); syncUndo(); renderMicro(true);
+  sensMaybeDone(m, wasFull);
+}
+function sensMaybeDone(m, wasFull) {
+  if (!flow || (flow.step !== 'sens' && flow.step !== 'done')) return;
+  const list = drugsOf(m), n = list.filter(d => m.sens[d]).length;
+  if (n && flow.step === 'sens') flow = { step: 'done' };
+  renderFlow();
+  if (n === list.length && !wasFull) setTimeout(() => document.dispatchEvent(new Event('cd:micro-done')), 450);
 }
 function sensSummary(m) {
   const by = { S: [], I: [], R: [] }; drugsOf(m).forEach(d => { if (m.sens[d]) by[m.sens[d]].push(d[0].toLowerCase() + d.slice(1)); });
@@ -1405,7 +1678,7 @@ function renderMicro(keepFocus) {
     if (list.length) {
       const head = document.createElement('div'); head.className = 'sens-head';
       head.innerHTML = `<span class="count">${done} of ${list.length} entered</span><span class="chips"><button type="button" class="chip" data-a="rest">Rest S</button><button type="button" class="chip" data-a="clr">Clear</button></span>`;
-      head.querySelector('[data-a=rest]').onclick = () => { checkpoint(); list.forEach(d => { if (!m.sens[d]) m.sens[d] = 'S'; }); commitView(); };
+      head.querySelector('[data-a=rest]').onclick = () => { checkpoint(); const wasFull = list.every(d => m.sens[d]); list.forEach(d => { if (!m.sens[d]) m.sens[d] = 'S'; }); commitView(); sensMaybeDone(m, wasFull); };
       head.querySelector('[data-a=clr]').onclick = () => { checkpoint(); m.sens = {}; microActive = { id: m.id, i: 0 }; commitView(); };
       card.append(head);
       const grid = document.createElement('div'); grid.className = 'sens-grid'; grid.tabIndex = 0; grid.dataset.id = m.id; grid.setAttribute('aria-label', `Sensitivities for ${m.org}. Press S, I or R; arrows move.`);
@@ -1485,6 +1758,17 @@ const COMMON_ORGS = {
 };
 let quickTab = 'Bacteria';
 const HYPO_OPTS = [0, 0.5, 1, 1.5, 2, 3];
+function openShare() { showQR(); }
+let thinTimer = 0;
+function thinChosen(delay) {
+  clearTimeout(thinTimer);
+  if (!flow || flow.step !== 'thin') return;
+  thinTimer = setTimeout(() => {
+    if (!flow || flow.step !== 'thin') return;
+    flow.step = 'ac'; $('#hint').hidden = true; renderFlow();
+    const f = $('#flow'); if (f) smoothTo(f, 'start');
+  }, delay);
+}
 function smoothTo(el, block) { if (el) el.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: block || 'center' }); }
 function goMicro() {
   const card = $('#microCard'); smoothTo(card, 'start');
@@ -1499,7 +1783,7 @@ function renderFlow() {
     const h = document.createElement('div'); h.className = 'flow-head';
     h.innerHTML = `<div><div class="flow-step"></div><h3></h3></div><button type="button" class="flow-skip">End</button>`;
     h.querySelector('.flow-step').textContent = step; h.querySelector('h3').textContent = title;
-    h.querySelector('.flow-skip').onclick = () => { flow = null; $('#hint').hidden = true; renderFlow(); };
+    h.querySelector('.flow-skip').onclick = () => { flow = null; if (wiz) setTool('select'); $('#hint').hidden = true; renderFlow(); };
     el.append(h);
     if (note) { const p = document.createElement('p'); p.textContent = note; el.append(p); }
   };
@@ -1510,12 +1794,39 @@ function renderFlow() {
   };
   const acts = (...btns) => { const d = document.createElement('div'); d.className = 'flow-acts'; btns.forEach(([label, fn, cls]) => { const b = document.createElement('button'); b.type = 'button'; b.className = cls || 'flow-next'; b.textContent = label; b.onclick = fn; d.append(b); }); el.append(d); };
   const hypo = S.objs.find(o => o.type === 'hypopyon');
-  if (flow.step === 'thin') {
-    head('Step 3 of the ulcer', 'Set the thinning', 'Drag down on the cross-section above, or tap a chip. Then carry on.');
-    acts(['Next: AC cells →', () => { flow.step = 'ac'; $('#hint').hidden = true; renderFlow(); smoothTo(el); }]);
+  const sizer = (pts, onSet) => {
+    const b = bboxOf(pts), box = document.createElement('div'); box.className = 'big-steps';
+    [['w', 'Width', b[2] - b[0]], ['h', 'Height', b[3] - b[1]]].forEach(([ax, label, val]) => {
+      const f = document.createElement('div'); f.className = 'big-step';
+      f.innerHTML = `<span class="bs-l">${label}</span><div class="bs-row"><button type="button" aria-label="${label} smaller">−</button><input inputmode="decimal" aria-label="${label} in mm"><span class="bs-u">mm</span><button type="button" aria-label="${label} larger">+</button></div>`;
+      const inp = f.querySelector('input'); inp.value = mm(val);
+      const set = v => { if (!isFinite(v)) { inp.value = mm(val); return; } onSet(ax, Math.round(clamp(v, .1, 11) * 10) / 10); };
+      const [minus, plus] = f.querySelectorAll('button');
+      minus.onclick = () => set(Math.round(val * 10) / 10 - .1); plus.onclick = () => set(Math.round(val * 10) / 10 + .1);
+      inp.onchange = () => set(parseFloat(inp.value));
+      box.append(f);
+    });
+    el.append(box);
+  };
+  if (flow.step === 'defAdj' && wiz && wiz.dPts) {
+    head('Step 1 · Epithelial defect', 'Check the size', 'Width and height, measured on the chart. Adjust if needed, or touch the chart to redraw.');
+    sizer(wiz.dPts, (ax, v) => { wiz.dPts = scalePoly(wiz.dPts, ax, v); renderFlow(); render(); });
+    acts(['Next: trace the infiltrate →', () => { flow = null; wiz.step = 2; renderFlow(); wizHint(); render(); }, 'flow-next s-next'], ['Redraw', () => { wiz.dPts = null; wiz.step = 1; flow = null; renderFlow(); wizHint(); render(); }, 'flow-skip']);
+  } else if (flow.step === 'infAdj' && wiz && wiz.iPts) {
+    head('Step 2 · Infiltrate', 'Check the size', 'Width and height of the infiltrate. Adjust if needed, or touch the chart to redraw.');
+    sizer(wiz.iPts, (ax, v) => { wiz.iPts = scalePoly(wiz.iPts, ax, v); renderFlow(); render(); });
+    acts(['Next: set the thinning →', () => { flow = null; buildUlcer(); }, 'flow-next s-next'], ['Redraw', () => { wiz.iPts = null; wiz.step = 2; flow = null; renderFlow(); wizHint(); render(); }, 'flow-skip']);
+  } else if (flow.step === 'sens') {
+    const m = (S.micro || [])[(S.micro || []).length - 1], list = m ? drugsOf(m) : [], done = m ? list.filter(d => m.sens[d]).length : 0;
+    head('Step 7', 'Sensitivities', m ? `${m.org}: ${done} of ${list.length} entered. Tap S, I or R for each drug, or Rest S to fill the remaining ones.` : 'Enter them in Microbiology.');
+    acts(['Enter sensitivities ↓', goMicro, 'flow-next s-next'], ['Later', () => { flow = { step: 'done' }; renderFlow(); }, 'flow-skip']);
+  } else if (flow.step === 'thin') {
+    head('Step 3 of the ulcer', 'Set the thinning', 'Tap a chip or drag down on the cross-section. AC cells come up next.');
+    acts(['Next: AC cells →', () => { flow.step = 'ac'; $('#hint').hidden = true; renderFlow(); smoothTo(el); }, 'flow-next s-next']);
   } else if (flow.step === 'ac') {
     head('Step 4', 'Anterior chamber cells', 'SUN grade. Tap one to move on.');
     opts(AC_GRADES.map(g => [g, g]), v => S.ac === v, v => { checkpoint(); S.ac = v; syncAc(); flow.step = 'hypo'; commitView(); smoothTo($('#flow')); });
+    el.lastChild.classList.add('pulse-group');
   } else if (flow.step === 'hypo') {
     head('Step 5', 'Hypopyon', 'Height in mm. Tap None if there isn’t one.');
     opts(HYPO_OPTS.map(h => [h, h ? h + ' mm' : 'None']), v => hypo ? Math.abs(hypo.h - v) < .01 : v === 0, v => {
@@ -1524,13 +1835,19 @@ function renderFlow() {
       else { const h = S.objs.find(o => o.type === 'hypopyon') || (() => { const n = makeObj('hypopyon'); S.objs.push(n); return n; })(); h.h = v; flow.step = 'micro'; }
       commitView(); if (flow && flow.step === 'micro') { quickTab = 'Bacteria'; renderMicro(); goMicro(); } else smoothTo($('#flow'));
     }, true);
+    el.lastChild.classList.add('pulse-group');
   } else if (flow.step === 'micro') {
     head('Step 6', 'What grew?', 'A hypopyon is drawn. Pick the organism in Microbiology below, or mark cultures pending.');
-    acts(['Go to Microbiology ↓', goMicro], ['Cultures pending', () => { checkpoint(); const n = S.microNotes || []; if (!n.includes('Cultures pending')) S.microNotes = [...n, 'Cultures pending']; flow = { step: 'done' }; commitView(); }, 'flow-skip']);
+    acts(['Pick the organism ↓', goMicro, 'flow-next s-next'], ['Cultures pending', () => { checkpoint(); const n = S.microNotes || []; if (!n.includes('Cultures pending')) S.microNotes = [...n, 'Cultures pending']; flow = { step: 'done' }; commitView(); }, 'flow-skip']);
   } else if (flow.step === 'done') {
     const orgs = (S.micro || []).length;
-    head('All set', 'Ulcer documented', `${S.ac === '0' ? 'No AC cells' : 'AC ' + S.ac}${hypo ? ` · hypopyon ${mm(hypo.h)} mm` : ' · no hypopyon'}${orgs ? ` · ${orgs} organism${orgs > 1 ? 's' : ''}` : ''}. Everything is in the note, the summary sheet and the QR code.`);
-    acts(['Finish', () => { flow = null; renderFlow(); }], ['Add an organism', () => { flow = null; renderFlow(); goMicro(); }, 'flow-skip']);
+    head('All set', 'Ulcer documented', `${S.ac === '0' ? 'No AC cells' : 'AC ' + S.ac}${hypo ? ` · hypopyon ${mm(hypo.h)} mm` : ' · no hypopyon'}${orgs ? ` · ${orgs} organism${orgs > 1 ? 's' : ''}` : ''}. ${flow.saved ? 'Summary sheet made.' : 'Download the summary sheet: chart, cross-section, cultures and note on one image.'}`);
+    const finish = () => { flow = null; renderFlow(); document.dispatchEvent(new Event('cd:finish')); };
+    const share = () => { flow = null; renderFlow(); openShare(); };
+    const download = () => { flow.saved = true; renderFlow(); exportPNG(); };
+    if (!flow.saved) acts(['Download summary sheet ↓', download, 'flow-next s-next'], ['QR code', share, 'flow-skip'], ['Finish', finish, 'flow-skip']);
+    else acts(['Finish', finish, 'flow-next s-next'], ['Download again', download, 'flow-skip'], ['QR code', share, 'flow-skip']);
+    acts(['Add an organism', () => { flow = null; renderFlow(); goMicro(); }, 'flow-skip']);
   }
 }
 function renderQuickOrgs() {
@@ -1551,6 +1868,7 @@ function renderQuickOrgs() {
     chips.append(b);
   });
   box.append(seg, chips);
+  chips.classList.toggle('pulse-group', !!flow && flow.step === 'micro' && !(S.micro || []).length);
 }
 
 // keep every finding at exactly the precision the QR code carries, so a scanned copy is identical
@@ -1679,9 +1997,9 @@ function depthPanel(o, mode) {
     render(); drawProfile(); buildNote(rule123()); syncChips(o);
   };
   const buzz = v => { const b = Math.floor(v / 10); if (last !== null && b !== last) { try { navigator.vibrate && navigator.vibrate(6); } catch (e) {} } last = b; };
-  pc.addEventListener('pointerdown', e => { pc.setPointerCapture(e.pointerId); active = true; last = null; checkpoint(); dismissExample(); setFrom(e); });
+  pc.addEventListener('pointerdown', e => { clearTimeout(thinTimer); pc.setPointerCapture(e.pointerId); active = true; last = null; checkpoint(); dismissExample(); setFrom(e); });
   pc.addEventListener('pointermove', e => { if (active) setFrom(e); });
-  const end = () => { if (active) { active = false; commitView(); } };
+  const end = () => { if (active) { active = false; const wasThin = profMode === 'thin'; commitView(); if (wasThin) thinChosen(900); } };
   pc.addEventListener('pointerup', end); pc.addEventListener('pointercancel', end);
   return d;
 }
@@ -1689,7 +2007,7 @@ function buildChips(o) {
   const c = $('#depthChips'); if (!c) return; c.innerHTML = '';
   const opts = profMode === 'thin' ? [[0, '0'], [25, '25%'], [50, '50%'], [75, '75%'], [90, '90%'], [100, 'DMC'], ['perf', 'Perf']] : [[20, 'Anterior'], [50, 'Mid'], [80, 'Deep'], [100, 'Full']];
   opts.forEach(([v, t]) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = t; b.dataset.v = v;
-    b.onclick = () => { checkpoint(); dismissExample(); if (profMode === 'thin') { if (v === 'perf') { o.perf = true; o.thin = 100; } else { o.perf = false; o.thin = v; } } else o.infDepth = v; commitView(); };
+    b.onclick = () => { checkpoint(); dismissExample(); const wasThin = profMode === 'thin'; if (wasThin) { if (v === 'perf') { o.perf = true; o.thin = 100; } else { o.perf = false; o.thin = v; } } else o.infDepth = v; commitView(); if (wasThin) thinChosen(550); };
     c.append(b); });
   syncChips(o);
   $('#depthNote').textContent = profMode === 'thin' ? 'Drag down on the section to carve the thinning; past Descemet it perforates. The bed of the ulcer is drawn under the epithelial defect.' : 'Drag down to show how deep the infiltrate reaches into the stroma.';
@@ -2298,7 +2616,7 @@ $('#undo').onclick = () => { if (!undoStack.length) return; redoStack.push(snaps
 $('#redo').onclick = () => { if (!redoStack.length) return; undoStack.push(snapshot()); restore(redoStack.pop()); syncEye(); syncAc(); };
 $('#clearBtn').onclick = () => { $('#clearConfirm').hidden = false; };
 $('#clearNo').onclick = () => { $('#clearConfirm').hidden = true; };
-$('#clearYes').onclick = () => { checkpoint(); S.objs = []; S.micro = []; S.microNotes = []; S.ac = '0'; sel = null; isExample = false; $('#clearConfirm').hidden = true; syncAc(); commitView(); };
+$('#clearYes').onclick = () => { checkpoint(); S.objs = []; S.micro = []; S.microNotes = []; S.ac = '0'; sel = null; isExample = false; flow = null; if (wiz) setTool('select'); $('#clearConfirm').hidden = true; syncAc(); commitView(); };
 $('#exampleClear').onclick = () => { checkpoint(); S.objs = []; S.micro = []; S.microNotes = []; S.ac = '0'; sel = null; isExample = false; syncAc(); commitView(); };
 $('#zoneBtn').onclick = () => { showZone = !showZone; $('#zoneBtn').setAttribute('aria-pressed', String(showZone)); render(); };
 $('#exportBtn').onclick = exportPNG;
@@ -2441,7 +2759,8 @@ function exampleState() {
 }
 let loaded = null;
 try { loaded = JSON.parse(localStorage.getItem(STORE) || 'null'); } catch (e) { loaded = null; }
-if (loaded && loaded.S && Array.isArray(loaded.S.objs)) { S = loaded.S; isExample = !!loaded.isExample; } else { S = exampleState(); isExample = true; }
+if (loaded && loaded.S && Array.isArray(loaded.S.objs) && !loaded.isExample) { S = loaded.S; isExample = false; }
+else { S = { eye: 'OS', ac: '0', objs: [], micro: [], microNotes: [] }; isExample = false; }  // always open on a blank chart
 S.micro = S.micro || []; S.microNotes = S.microNotes || [];
 buildPalette(); syncEye(); syncAc(); setTool('select');
 new ResizeObserver(() => { resize(); if ($('#prof')) drawProfile(); }).observe(cv);
@@ -2452,6 +2771,329 @@ $('#qrClose').onclick = () => { $('#qrModal').hidden = true; };
 $('#qrCopy').onclick = async () => { const t = $('#qrText'); try { await navigator.clipboard.writeText(t.value); $('#qrCopy').textContent = 'Copied'; setTimeout(() => { $('#qrCopy').textContent = 'Copy code'; }, 1500); } catch (e) { t.focus(); t.select(); $('#qrCopy').textContent = 'Selected, copy it'; } };
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => render());
 claudeReady = initClaude();
+
+/* ================= Simplified shell: chart first, everything else in sheets ================= */
+(() => {
+  document.body.classList.add('simple');
+  const el = (tag, attrs = {}, html = '') => { const e = document.createElement(tag); Object.entries(attrs).forEach(([k, v]) => e.setAttribute(k, v)); if (html) e.innerHTML = html; return e; };
+  const app = $('.app'), top = $('.top'), layout = $('.layout'), card = $('.chart-card');
+  const ICON = {
+    share: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM20 20v.01M17 20h.01M20 14v3"/></svg>',
+    more: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="19" cy="12" r="1.9"/></svg>',
+    trace: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20c3-1 4-5 7-8s6-3 9-8"/><circle cx="7" cy="17" r="1.5" fill="currentColor"/></svg>',
+    plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>',
+    go: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+    dl: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg>',
+    copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg>',
+    scan: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M4 12h16"/></svg>',
+    trash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg>',
+    text: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7V5h16v2M9 19h6M12 5v14"/></svg>',
+  };
+
+  /* ---- header ---- */
+  const sApp = el('div', { id: 'sApp' });
+  app.append(sApp);
+  const sTop = el('header', { id: 'sTop' });
+  const logo = top.querySelector('.logo'); logo.classList.add('s-logo');   // the real brush logo, moved so its gradients still render
+  const eye = top.querySelector('.eye-switch');
+  const shareBtn = el('button', { type: 'button', class: 's-icon', id: 'sShareBtn', 'aria-label': 'Share: QR code, summary sheet, note' }, ICON.share);
+  const menuBtn = el('button', { type: 'button', class: 's-icon', id: 'sMenuBtn', 'aria-label': 'More options' }, ICON.more);
+  const clearTop = el('button', { type: 'button', class: 's-icon s-clear', id: 'sClearBtn', 'aria-label': 'Clear the drawing' }, ICON.trash);
+  clearTop.onclick = () => { showSheet(null); $('#clearBtn').click(); };
+  sTop.append(logo, el('span', { class: 's-gap' }), eye, clearTop, shareBtn, menuBtn);
+
+  /* ---- main: chart, status strip, describe line ---- */
+  const sMain = el('main', { id: 'sMain' }); sApp.append(sTop, sMain);
+  const stage = card.querySelector('.stage');
+  const undo = $('#undo'); undo.classList.add('s-fab'); stage.append(undo);
+  stage.append(el('div', { id: 'sEmpty', hidden: '' }, '<b>Trace an ulcer</b> to begin, or describe the cornea below.'));
+  const strip = el('div', { id: 'sStrip', role: 'group', 'aria-label': 'Exam summary' });
+  const cmdCard = $('.command');
+  $('#cmd').setAttribute('rows', '1'); $('#cmd').setAttribute('placeholder', 'Describe: ulcer 3×2 at 5, 40% thin');
+  $('#drawBtn').innerHTML = ICON.go; $('#drawBtn').setAttribute('aria-label', 'Draw it');
+  const cmdRow = el('div', { class: 's-cmd' }); cmdRow.append($('#cmd'), $('#drawBtn'));
+  cmdCard.prepend(cmdRow);
+  sMain.append(card, strip, cmdCard);
+
+  /* ---- bottom dock ---- */
+  const dock = el('nav', { id: 'sDock', 'aria-label': 'Draw' });
+  const traceBtn = el('button', { type: 'button', class: 's-trace', 'data-t': 'ulcer' }, ICON.trace + '<span>Trace an ulcer</span>');
+  const tools = el('div', { class: 's-tools' });
+  const DOCK = [['infiltrate', 'Infiltrate', '<i class="sw" style="background:rgba(244,196,48,.75);border:1.5px solid #C98F12"></i>'], ['defect', 'Defect', '<i class="sw" style="background:rgba(46,170,90,.2);border:2px solid #1E9B4A"></i>'],
+    ['thinning', 'Thinning', '<i class="sw" style="border:1.5px dashed #1F2328;background:repeating-linear-gradient(45deg,#1F2328 0 1.4px,transparent 1.4px 4px)"></i>'], ['scar', 'Scar', '<i class="sw" style="border-radius:45% 55% 50% 50%;background:rgba(70,74,80,.5)"></i>']];
+  DOCK.forEach(([t, name, sw]) => tools.append(el('button', { type: 'button', 'data-t': t, 'aria-pressed': 'false' }, `${sw}<span>${name}</span>`)));
+  const moreBtn = el('button', { type: 'button', class: 's-more', 'aria-label': 'All findings' }, ICON.plus + '<span>More</span>');
+  tools.append(moreBtn);
+  dock.append($('#hint'), traceBtn, tools);
+
+  /* ---- sheets ---- */
+  const sheet = (id, title, ...kids) => {
+    const s = el('section', { class: 'sheet', id, 'aria-label': title || 'Panel' });
+    s.append(el('div', { class: 'sh-grab', 'aria-hidden': 'true' }));
+    if (title) { const h = el('div', { class: 'sh-head' }, `<h3></h3><button type="button" class="sh-close">Done</button>`); h.querySelector('h3').textContent = title; s.append(h); }
+    kids.forEach(k => k && s.append(k));
+    return s;
+  };
+  const shEdit = sheet('shEdit', '', $('#flow'), $('#insp'));
+  const palWrap = card.querySelector('.pal'); palWrap.querySelector('.pal-head h2').textContent = 'All findings';
+  const shMore = sheet('shMore', 'Add a finding', palWrap, $('#penColors'));
+  const microFoot = el('div', { class: 's-foot', hidden: '' }, '<button type="button" class="flow-next s-next">Done: back to the summary</button>');
+  const shMicro = sheet('shMicro', 'Microbiology', $('#microCard'), microFoot);
+  const acCard = $('.ac-row');
+  const hypoBox = el('div', { class: 'card s-hypo' }, '<h2>Hypopyon</h2><div class="flow-opts" id="sHypo"></div>');
+  const shAc = sheet('shAc', 'Anterior chamber', acCard, hypoBox);
+  const shRule = sheet('shRule', '1-2-3 rule', $('#rule'));
+  const qrImg = el('img', { id: 'sQr', alt: 'QR code that redraws this cornea in C/D' });
+  const shareBody = el('div', { class: 's-share' });
+  shareBody.append(el('div', { class: 's-qrbox' }), el('p', { class: 's-qrnote' }, 'Any phone camera opens it, with or without internet. Ulcer, thinning, AC, hypopyon and cultures included.'));
+  shareBody.querySelector('.s-qrbox').append(qrImg);
+  const shareActs = el('div', { class: 's-grid3' });
+  [['sum', ICON.dl, 'Summary sheet'], ['note', ICON.copy, 'Copy note'], ['scan', ICON.scan, 'Scan a code'], ['text', ICON.text, 'Text code']].forEach(([a, i, t]) => shareActs.append(el('button', { type: 'button', 'data-a': a }, `${i}<span>${t}</span>`)));
+  shareBody.append(shareActs);
+  const shShare = sheet('shShare', 'Share this cornea', shareBody);
+
+  const menuGrid = el('div', { class: 's-grid3 s-menu' });
+  ['photoBtn', 'pickBtn', 'scanBtn', 'redo', 'zoneBtn'].forEach(id => { const n = $('#' + id); n.classList.add('s-mi'); menuGrid.append(n); });
+  const noteCard = $('#note').closest('.card'), findCard = $('#findList').closest('.card'), legendCard = $('.legend').closest('.card');
+  const exCard = el('div', { class: 'card' }, '<h2>Try a description</h2>'); exCard.append($('#examples'));
+  const about = $('.intended');
+  const shMenu = sheet('shMenu', 'More', menuGrid, noteCard, findCard, exCard, legendCard, about);
+  const scrim = el('div', { id: 'sScrim', hidden: '' });
+  const clearScrim = el('div', { id: 'sClearScrim', hidden: '' });
+  const cc = $('#clearConfirm');
+  new MutationObserver(() => { clearScrim.hidden = cc.hidden; if (!cc.hidden) setTimeout(() => $('#clearNo').focus({ preventScroll: true }), 30); }).observe(cc, { attributes: true, attributeFilter: ['hidden'] });
+  clearScrim.onclick = () => { cc.hidden = true; };
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !cc.hidden) cc.hidden = true; });
+  sApp.append(sTop, sMain, dock, scrim, clearScrim, cc, shEdit, shMore, shMicro, shAc, shRule, shShare, shMenu);
+  top.hidden = true; layout.hidden = true;
+
+  /* ---- sheet manager ---- */
+  let openId = null;
+  const desk = () => matchMedia('(min-width: 1000px)').matches;
+  function placeEdit() {
+    if (desk()) { shEdit.style.top = ''; return; }
+    const r = stage.getBoundingClientRect();
+    shEdit.style.top = Math.round(Math.max(r.bottom + window.scrollY, 160) - window.scrollY + 6) + 'px';
+  }
+  new ResizeObserver(() => { if (openId === 'shEdit') placeEdit(); }).observe(stage);
+  window.addEventListener('scroll', () => { if (openId === 'shEdit' && !desk() && window.scrollY) window.scrollTo(0, 0); }, { passive: true });
+  function showSheet(id) {
+    openId = id;
+    if (id === 'shEdit') { window.scrollTo(0, 0); placeEdit(); requestAnimationFrame(placeEdit); }
+    document.querySelectorAll('#sApp .sheet').forEach(s => s.classList.toggle('open', s.id === id));
+    document.body.classList.toggle('sheet-open', !!id);
+    document.body.classList.toggle('edit-open', id === 'shEdit');
+    scrim.hidden = !id || id === 'shEdit' || desk();
+    if (id && id !== 'shEdit') { const s = $('#' + id); s.scrollTop = 0; }
+    if (id === 'shShare') buildShare();
+    if (id === 'shAc') renderHypo();
+  }
+  const editWanted = () => !$('#insp').hidden || !$('#flow').hidden;
+  function syncEdit() { if (editWanted()) { if (!openId || openId === 'shEdit') showSheet('shEdit'); } else if (openId === 'shEdit') showSheet(null); }
+  function closeSheet() { showSheet(null); syncEdit(); }
+  new MutationObserver(() => { if (editWanted() && openId !== 'shMicro' && openId !== 'shShare') showSheet('shEdit'); else syncEdit(); })
+    .observe($('#insp'), { attributes: true, attributeFilter: ['hidden'] });
+  new MutationObserver(() => syncEdit()).observe($('#flow'), { attributes: true, attributeFilter: ['hidden'] });
+  scrim.onclick = closeSheet;
+  document.querySelectorAll('#sApp .sh-close').forEach(b => b.onclick = closeSheet);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && openId && openId !== 'shEdit') closeSheet(); });
+  smoothTo = (e, block) => {
+    if (!e) return; const sc = e.closest('.sheet'); const beh = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+    if (!sc) { e.scrollIntoView({ behavior: beh, block: block || 'center' }); return; }
+    const off = e.getBoundingClientRect().top - sc.getBoundingClientRect().top + sc.scrollTop;
+    sc.scrollTo({ top: Math.max(0, block === 'start' ? off - 8 : off - sc.clientHeight / 2 + e.offsetHeight / 2), behavior: beh });
+  };
+  goMicro = () => showSheet('shMicro');
+  openShare = () => showSheet('shShare');
+  function syncMicroFoot() {
+    const any = (S.micro || []).some(m => Object.keys(m.sens).length || !drugsOf(m).length);
+    microFoot.hidden = !any;
+  }
+  microFoot.querySelector('button').onclick = () => { if (flow && (flow.step === 'sens' || flow.step === 'micro')) { flow = { step: 'done' }; renderFlow(); } closeSheet(); };
+  const _rm = renderMicro; renderMicro = function (...a) { _rm(...a); syncMicroFoot(); };
+  document.addEventListener('cd:micro-done', () => { if (openId === 'shMicro') closeSheet(); });
+  document.addEventListener('cd:finish', () => { shareBtn.classList.remove('s-next'); void shareBtn.offsetWidth; shareBtn.classList.add('s-next'); setTimeout(() => shareBtn.classList.remove('s-next'), 6000); });
+
+  shareBtn.onclick = () => { shareBtn.classList.remove('s-next'); showSheet(openId === 'shShare' ? null : 'shShare'); };
+  menuBtn.onclick = () => showSheet(openId === 'shMenu' ? null : 'shMenu');
+  moreBtn.onclick = () => showSheet('shMore');
+  // picking anything in a sheet that hands control back to the chart closes it
+  palWrap.addEventListener('click', e => { if (e.target.closest('.pal-tile')) { showSheet(null); if (tool === 'pen') $('#penColors').hidden = false; } });
+  menuGrid.addEventListener('click', e => { const t = e.target.closest('.s-mi'); if (t && t.id !== 'zoneBtn') setTimeout(closeSheet, 0); });
+  findCard.addEventListener('click', e => { if (e.target.closest('button')) setTimeout(closeSheet, 0); });
+  $('#examples').addEventListener('click', e => { if (e.target.closest('button')) setTimeout(closeSheet, 0); });
+  shareActs.addEventListener('click', async e => {
+    const b = e.target.closest('button'); if (!b) return;
+    const a = b.dataset.a;
+    if (a === 'sum') $('#exportBtn').click();
+    else if (a === 'note') { $('#copyNote').click(); const s = b.querySelector('span'); s.textContent = 'Copied'; setTimeout(() => s.textContent = 'Copy note', 1400); }
+    else if (a === 'scan') { showSheet(null); openScan(); }
+    else if (a === 'text') { showSheet(null); showQR(); }
+  });
+  async function buildShare() {
+    try { const q = makeQR(CD_URL + '#' + await encodeState()); if (q) { qrImg.src = qrCanvas(q, 640).toDataURL('image/png'); qrImg.hidden = false; } else qrImg.hidden = true; } catch (e) { qrImg.hidden = true; }
+  }
+
+  /* ---- dock tools ---- */
+  function syncDock() {
+    traceBtn.classList.toggle('on', tool === 'ulcer');
+    tools.querySelectorAll('[data-t]').forEach(b => b.setAttribute('aria-pressed', String(tool === b.dataset.t)));
+    renderEmpty();
+  }
+  [traceBtn, ...tools.querySelectorAll('[data-t]')].forEach(b => b.onclick = () => { setTool(tool === b.dataset.t ? 'select' : b.dataset.t); });
+  const _setTool = setTool; setTool = function (t) { _setTool(t); syncDock(); };
+
+  /* ---- status strip ---- */
+  const shortOrg = o => { const m = o.match(/\((MSSA|MRSA)\)/); if (m) return m[1]; if (/^(Herpes simplex|Varicella zoster|Coagulase-negative)/.test(o)) return { H: 'HSV', V: 'VZV', C: 'CoNS' }[o[0]]; o = o.replace(/ \(.*\)$/, ''); if (/ spp\.$/.test(o)) return o.replace(/ spp\.$/, ''); const w = o.split(' '); return w.length === 2 && /^[A-Z][a-z]+$/.test(w[0]) && /^[a-z]/.test(w[1]) ? w[0][0] + '. ' + w[1] : o; };
+  function chip(text, cls, onClick, italic) { const b = el('button', { type: 'button', class: 's-chip ' + (cls || '') }); if (italic) { const i = el('i'); i.textContent = text; b.append(i); } else b.textContent = text; b.onclick = onClick; return b; }
+  function renderStrip() {
+    strip.innerHTML = '';
+    const hypo = S.objs.find(o => o.type === 'hypopyon');
+    strip.append(chip(S.ac === '0' ? 'AC 0' : 'AC ' + S.ac, S.ac === '0' ? 'quiet' : '', () => showSheet('shAc')));
+    strip.append(chip(hypo ? `Hypopyon ${mm(hypo.h)} mm` : 'No hypopyon', hypo ? '' : 'quiet', () => showSheet('shAc')));
+    const ms = S.micro || [];
+    if (ms.length) ms.forEach(m => { const nR = Object.values(m.sens).filter(v => v === 'R').length; { const short = shortOrg(m.org); strip.append(chip(short + (nR ? `  ${nR}R` : ''), nR ? 'res' : '', () => showSheet('shMicro'), !/^(MSSA|MRSA|HSV|VZV|CoNS)$/.test(short))); } });
+    else strip.append(chip(((S.microNotes || []).includes('Cultures pending') ? 'Cultures pending' : '+ Organism'), 'quiet', () => showSheet('shMicro')));
+    const lesions = S.objs.some(o => o.type === 'ulcer' || o.type === 'infiltrate');
+    if (lesions) { const n = $('#rule .crit.met') ? document.querySelectorAll('#rule .crit.met').length : 0; strip.append(chip(`1-2-3 · ${n}/3`, n ? 'warn' : 'ok', () => showSheet('shRule'))); }
+  }
+  function renderHypo() {
+    const box = $('#sHypo'); box.innerHTML = '';
+    const hypo = S.objs.find(o => o.type === 'hypopyon');
+    HYPO_OPTS.forEach(v => {
+      const b = el('button', { type: 'button', class: 'word', 'aria-pressed': String(hypo ? Math.abs(hypo.h - v) < .01 : v === 0) }); b.textContent = v ? v + ' mm' : 'None';
+      b.onclick = () => { checkpoint(); dismissExample(); if (!v) S.objs = S.objs.filter(o => o.type !== 'hypopyon'); else { const h = S.objs.find(o => o.type === 'hypopyon') || (() => { const n = makeObj('hypopyon'); S.objs.push(n); return n; })(); h.h = v; } commitView(); renderHypo(); };
+      box.append(b);
+    });
+  }
+  function renderEmpty() { const e = $('#sEmpty'); if (e) e.hidden = !!S.objs.length || tool !== 'select' || !!under; }
+  const _rf = renderFlow; renderFlow = function () { _rf(); $('#flow').classList.toggle('thin', !!flow && flow.step === 'thin'); };
+  const _commit = commitView; commitView = function (...a) { _commit(...a); clearTop.disabled = !(S.objs.length || (S.micro || []).length || (S.microNotes || []).length || S.ac !== '0'); renderStrip(); renderEmpty(); if (openId === 'shAc') renderHypo(); };
+
+  /* ---- first open: a blank chart, not the example ---- */
+  if (isExample) { S.objs = []; S.micro = []; S.microNotes = []; S.ac = '0'; isExample = false; syncAc(); }
+  commitView(false); syncDock();
+  window.addEventListener('resize', () => { scrim.hidden = !openId || openId === 'shEdit' || desk(); });
+})();
+
+/* ================= C/D versions and what changed, newest first (as in R/D) =================
+   The first entry is the version that runs. Numbering: a new feature goes up a step (2.0 → 2.1);
+   fixes and small touches add a third number (2.1 → 2.1.1). A new major number only when the owner
+   decides a release is big enough for it. Every published update adds an entry here; the build
+   refuses to publish the same version twice. */
+(() => {
+  const CHANGELOG = [
+    { v: '2.0', date: '2026-10-12', title: 'A simpler C/D', items: [
+      'A new, simpler layout: the chart fills the top of the screen, with one Trace an ulcer button and the four everyday tools below it. Everything else opens in panels that slide up, or beside the chart on a computer.',
+      'A strip under the chart sums up the exam (AC cells, hypopyon, organisms and the 1-2-3 rule); tap any of it to change it. The ⋯ menu holds photos, Scan QR, the 3 mm zone, the note, the findings list and the colour code.',
+      'Tracing shows the width and height beside your finger as you draw, then lets you check and adjust both before moving on. Only the outer border of a trace counts, and Same as defect copies the defect exactly.',
+      'The guide carries on by itself, from thinning to AC cells, hypopyon, organism and sensitivities, with the next thing to press glowing. A few sensitivities are enough to move on.',
+      'The last step offers the summary sheet to download straight away.',
+      'The guide never covers the chart, and the step hint sits in the bottom bar.',
+      'Clear is in the header and asks on a red card. C/D opens on a blank chart.',
+      'One set of measurements per lesion: a duplicate set no longer appears.',
+      'Version numbers, this update list, and a short note the first time a new version opens.',
+    ] },
+    { v: '1.2', date: '2026-10-11', title: 'Guided ulcer workup', items: [
+      'After the thinning, a step panel asks for AC cells, then hypopyon; a hypopyon leads straight to the organism.',
+      'One-tap common bacteria, fungi and other organisms in Microbiology.',
+      'QR codes carry everything, cultures and sensitivities included, and redraw identically.',
+    ] },
+    { v: '1.1', date: '2026-10-11', title: 'Tear-film colours', items: [
+      'C/D’s own teal and fluorescein palette, logo and app icon.',
+    ] },
+    { v: '1.0', date: '2026-10-11', title: 'First release on the web', items: [
+      'Corneal drawing in the standard slit-lamp colour code: trace the defect and infiltrate, carve thinning in cross-section, with width × height dimensions, the 1-2-3 rule and an automatically written note.',
+      'Microbiology with sensitivities, and a summary sheet with the cross-section and antibiogram.',
+      'QR codes that redraw a cornea on another device, even offline. Works offline and installs as an app.',
+    ] },
+  ];
+  const cmpVersion = (a, b) => { const A = String(a).split('.').map(Number), B = String(b).split('.').map(Number); for (let i = 0; i < Math.max(A.length, B.length); i++) { const d = (A[i] || 0) - (B[i] || 0); if (d) return d; } return 0; };
+  const VERSION = CHANGELOG[0].v;
+  window.CDChangelog = { CHANGELOG, VERSION, cmpVersion };
+
+  /* which version this browser last ran, read before anything is saved */
+  const get = k => { try { return localStorage.getItem(k); } catch (e) { return null; } };
+  const put = (k, v) => { try { localStorage.setItem(k, v); } catch (e) { /* storage unavailable */ } };
+  const SEEN_KEY = 'cd.seenVersion';
+  const LEGACY_VERSION = '1.2';     // browsers that used C/D before version notes existed ran 1.2 or earlier
+  const seenVersion = get(SEEN_KEY);
+  const usedBefore = get('cd.drawing.v1') != null;
+
+  const mk = (tag, attrs = {}, kids = []) => { const e = document.createElement(tag); for (const [k, v] of Object.entries(attrs)) { if (k === 'text') e.textContent = v; else if (k.startsWith('on')) e[k] = v; else e.setAttribute(k, v); } (Array.isArray(kids) ? kids : [kids]).forEach(c => c != null && e.append(c)); return e; };
+  const fmtDay = iso => { const [y, m, d] = iso.split('-').map(Number); return `${d} ${['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][m - 1]} ${y}`; };
+
+  /* the version chip and the update list, in the ⋯ panel */
+  const menu = $('#shMenu'), head = menu && menu.querySelector('.sh-head');
+  const chip = mk('a', { class: 'ver', id: 'verLink', href: '#updates', title: `Version ${VERSION}: see what changed`, text: `v${VERSION}` });
+  if (head) head.querySelector('h3').append(' ', chip);
+  const updates = mk('details', { class: 'card', id: 'updates' }, [
+    mk('summary', {}, [mk('h2', { text: 'Updates' }), mk('span', { class: 'count', text: `Version ${VERSION}` })]),
+    mk('ol', { class: 'updates', id: 'updatesList' }),
+  ]);
+  const about = menu && menu.querySelector('.intended');
+  if (about) menu.insertBefore(updates, about); else if (menu) menu.append(updates);
+  const list = updates.querySelector('#updatesList');
+  for (const r of CHANGELOG) list.append(mk('li', {}, [
+    mk('div', { class: 'up-h' }, [mk('strong', { text: `Version ${r.v}` }), mk('span', { class: 'up-t', text: r.title }), mk('time', { class: 'up-d', datetime: r.date, text: fmtDay(r.date) })]),
+    mk('ul', {}, r.items.map(t => mk('li', { text: t }))),
+  ]));
+  function openUpdates() {
+    $('#sMenuBtn') && document.querySelector('#shMenu:not(.open)') && $('#sMenuBtn').click();
+    updates.open = true;
+    setTimeout(() => smoothTo(updates, 'start'), 280);
+  }
+  chip.addEventListener('click', e => { e.preventDefault(); openUpdates(); });
+
+  /* the first time a new version opens in a browser that used an older one: say what changed */
+  const scrim = mk('div', { id: 'wnScrim', hidden: '' });
+  const box = mk('section', { class: 'whatsnew', id: 'whatsNew', role: 'dialog', 'aria-labelledby': 'wnH', hidden: '' });
+  const close = () => { box.hidden = true; scrim.hidden = true; };
+  scrim.onclick = close;
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !box.hidden) close(); });
+  ($('#sApp') || document.body).append(scrim, box);
+  function showWhatsNew(since) {
+    const news = CHANGELOG.filter(r => cmpVersion(r.v, since) > 0);
+    if (!news.length) return;
+    const items = [];
+    for (const r of news.slice(0, 3)) for (const t of r.items) items.push(mk('li', {}, news.length > 1 ? [mk('strong', { text: `${r.v}: ` }), t] : [t]));
+    box.replaceChildren(
+      mk('div', { class: 'wn-head' }, [mk('span', { class: 'wn-badge', text: 'Updated' }), mk('h2', { id: 'wnH', text: `C/D is now version ${VERSION}` }), mk('time', { class: 'up-d', datetime: news[0].date, text: fmtDay(news[0].date) })]),
+      mk('ul', { class: 'wn-list' }, items),
+      mk('div', { class: 'wn-actions' }, [
+        mk('button', { type: 'button', class: 'flow-next s-next', text: 'Got it', onclick: close }),
+        mk('button', { type: 'button', class: 'btn-line', text: 'All updates', onclick: () => { close(); openUpdates(); } }),
+      ]),
+    );
+    box.hidden = false; scrim.hidden = false;
+    setTimeout(() => { const b = box.querySelector('.flow-next'); if (b) b.focus({ preventScroll: true }); }, 30);
+  }
+
+  /* a page left open while a newer version is published: offer to load it (the website only) */
+  const bar = mk('div', { class: 'update-bar', id: 'updateBar', role: 'status', hidden: '' });
+  document.body.append(bar);
+  let lastCheck = 0;
+  async function checkForUpdate(force) {
+    if (!/^https?:$/.test(location.protocol) || !/github\.io$|^localhost$/.test(location.hostname) || !window.fetch) return;
+    if (!force && Date.now() - lastCheck < 15 * 60 * 1000) return;
+    lastCheck = Date.now();
+    try {
+      const res = await fetch(`version.json?t=${Date.now()}`, { cache: 'no-store' });
+      if (!res.ok) return;
+      const j = await res.json();
+      if (!j || typeof j.version !== 'string' || !/^[0-9.]{1,12}$/.test(j.version) || cmpVersion(j.version, VERSION) <= 0) return;
+      bar.replaceChildren(mk('span', { text: `Version ${j.version} of C/D is available.` }), mk('button', { type: 'button', class: 'flow-next', text: 'Refresh to update', onclick: () => location.reload() }), mk('button', { type: 'button', class: 'ub-x', 'aria-label': 'Not now', text: '×', onclick: () => { bar.hidden = true; } }));
+      bar.hidden = false;
+    } catch (e) { /* offline, or not served from the site */ }
+  }
+
+  const since = seenVersion || (usedBefore ? LEGACY_VERSION : null);
+  if (since && cmpVersion(VERSION, since) > 0) showWhatsNew(since);
+  put(SEEN_KEY, VERSION);
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') checkForUpdate(); });
+  setTimeout(() => checkForUpdate(true), 4000);
+})();
+
 })();
 </script>
 
