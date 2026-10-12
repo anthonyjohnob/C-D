@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>C/D</title>
 <meta name="description" content="Corneal drawing in the standard slit-lamp colour code: ulcers traced by finger, thinning carved in cross-section, width × height dimensions, the 1-2-3 rule, microbiology with sensitivities, QR codes that redraw a cornea on any device, and an auto-written note. Works offline.">
-<meta name="theme-color" content="#F6F5F2" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0E1620" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F2F7F6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0B1A1B" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="icons/icon-192.png" sizes="192x192" type="image/png">
@@ -26,7 +26,7 @@
 <style>
 :root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#F6F5F2;color:#13324F}
+body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#F2F7F6;color:#13324F}
 img{max-width:100%}
 [hidden]:not([hidden=until-found i]){display:none!important}
 @font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/atkinson-hyperlegible-latin-400-normal.woff2) format("woff2"); }
@@ -38,49 +38,51 @@ img{max-width:100%}
 </head>
 <body>
 <style>
-/* Layout: the R/D exam-room clipboard — corneal chart is the hero on the left, the dictation console on the right; stacks on phones. */
+/* Layout: exam-room clipboard — corneal chart is the hero on the left, the dictation console on the right; stacks on phones.
+   Palette "tear film": clear teal for the ocular surface, a fluorescein yellow-green glow as the accent. */
 :root {
-  --bg: #F6F5F2;
+  --bg: #F2F7F6;
   --surface: #FFFFFF;
-  --surface-2: #FAF9F6;
-  --ink: #13324F;
-  --ink-2: #44566A;
-  --muted: #6E7C8A;
-  --line: #E3E0D8;
-  --line-2: #EFECE6;
-  --navy: #124C78;
-  --coral: #EF7A5F;
-  --red-hi: #FF8E7A;
-  --red-lo: #DE4239;
-  --focus: #2C66C4;
+  --surface-2: #F8FBFA;
+  --ink: #0F3B40;
+  --ink-2: #3E5C60;
+  --muted: #687F81;
+  --line: #D9E5E2;
+  --line-2: #E7EFED;
+  --navy: #0D6E68;          /* primary: deep tear-film teal */
+  --coral: #C9A20E;         /* accent: fluorescein gold, for small marks */
+  --red-hi: #43C9BC;        /* glass buttons, top */
+  --red-lo: #0E8B83;        /* glass buttons, bottom */
+  --glow: #D8EE5A;          /* fluorescein glow */
+  --focus: #127C8C;
   --ok: #2F7A4B;
   --ok-bg: #E8F4EC;
   --warn: #9A5B0E;
   --warn-bg: #FFF4E2;
-  --chip-bg: #F2F6FB;
-  --sel-bg: #FFF1DC;
-  --sel-line: #E4A13E;
-  --sel-ink: #7A4A0B;
+  --chip-bg: #E9F5F2;
+  --sel-bg: #FBF8D9;
+  --sel-line: #C9B22A;
+  --sel-ink: #5E5208;
   --paper: #FFFDF8;
-  --logo-script: #124C78;
-  --shadow: 0 1px 2px rgba(19, 50, 79, 0.06), 0 8px 24px rgba(19, 50, 79, 0.06);
+  --logo-script: #0D5E59;
+  --shadow: 0 1px 2px rgba(13, 70, 66, 0.06), 0 8px 24px rgba(13, 70, 66, 0.07);
   --font-ui: "Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --radius: 14px;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0E1620; --surface: #15202C; --surface-2: #1A2735; --ink: #E8EFF6; --ink-2: #B9C6D3; --muted: #8C9BAA;
-    --line: #2A3847; --line-2: #223040; --navy: #9FD0F5; --focus: #7DB6F2; --ok: #7CC99A; --ok-bg: #16301F; --warn: #F0B866; --warn-bg: #2E2414;
-    --chip-bg: #1C2A39; --sel-bg: #3A2A12; --sel-line: #E4A13E; --sel-ink: #F6CF93; --logo-script: #CFE6FA;
+    --bg: #0B1A1B; --surface: #112628; --surface-2: #163033; --ink: #E4F3F1; --ink-2: #B4CECB; --muted: #86A2A0;
+    --line: #24413F; --line-2: #1C3634; --navy: #7FDCD1; --coral: #E3D25A; --focus: #6FD3E0; --ok: #7CC99A; --ok-bg: #16301F; --warn: #F0B866; --warn-bg: #2E2414;
+    --chip-bg: #183634; --sel-bg: #33300F; --sel-line: #D9C93A; --sel-ink: #F2E99A; --logo-script: #CFF3EE;
     --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.25);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #0E1620; --surface: #15202C; --surface-2: #1A2735; --ink: #E8EFF6; --ink-2: #B9C6D3; --muted: #8C9BAA;
-  --line: #2A3847; --line-2: #223040; --navy: #9FD0F5; --focus: #7DB6F2; --ok: #7CC99A; --ok-bg: #16301F; --warn: #F0B866; --warn-bg: #2E2414;
-  --chip-bg: #1C2A39; --sel-bg: #3A2A12; --sel-line: #E4A13E; --sel-ink: #F6CF93; --logo-script: #CFE6FA;
+  --bg: #0B1A1B; --surface: #112628; --surface-2: #163033; --ink: #E4F3F1; --ink-2: #B4CECB; --muted: #86A2A0;
+  --line: #24413F; --line-2: #1C3634; --navy: #7FDCD1; --coral: #E3D25A; --focus: #6FD3E0; --ok: #7CC99A; --ok-bg: #16301F; --warn: #F0B866; --warn-bg: #2E2414;
+  --chip-bg: #183634; --sel-bg: #33300F; --sel-line: #D9C93A; --sel-ink: #F2E99A; --logo-script: #CFF3EE;
   --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.25);
   color-scheme: dark;
 }
@@ -119,7 +121,7 @@ h2 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: 
 .tool:disabled { opacity: 0.45; cursor: default; }
 .tool svg { width: 17px; height: 17px; flex: none; }
 .tool[aria-pressed="true"] { background: var(--sel-bg); border-color: var(--sel-line); color: var(--sel-ink); }
-.tool.photo { background: linear-gradient(180deg, var(--red-hi), var(--red-lo)); color: #fff; border-color: rgba(255,255,255,0.5); font-weight: 700; box-shadow: 0 4px 12px rgba(222, 66, 57, 0.25); }
+.tool.photo { background: linear-gradient(180deg, var(--red-hi), var(--red-lo)); color: #fff; border-color: rgba(255,255,255,0.5); font-weight: 700; box-shadow: 0 4px 12px rgba(14, 139, 131, 0.25); }
 .tools-gap { flex: 1; }
 .tool { position: relative; }
 .vh { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; font-size: 0; }
@@ -129,7 +131,7 @@ h2 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: 
 .stage { position: relative; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
 #chart { width: 100%; max-width: 100%; aspect-ratio: 1; display: block; border-radius: 14px; touch-action: none; background: var(--paper); }
 .hint { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); z-index: 2; display: flex; align-items: center; gap: 8px; width: max-content; max-width: calc(100% - 20px);
-  background: rgba(18, 63, 102, 0.92); color: #fff; border-radius: 999px; padding: 6px 7px 6px 14px; font-size: 13.5px; font-weight: 700; line-height: 1.3; box-shadow: 0 4px 14px rgba(19, 50, 79, 0.2); pointer-events: none; }
+  background: rgba(9, 78, 74, 0.93); color: #fff; border-radius: 999px; padding: 6px 7px 6px 14px; font-size: 13.5px; font-weight: 700; line-height: 1.3; box-shadow: 0 4px 14px rgba(13, 70, 66, 0.2); pointer-events: none; }
 .hint button { pointer-events: auto; flex: none; border: 0; background: rgba(255, 255, 255, 0.2); color: #fff; border-radius: 999px; padding: 4px 11px; font-weight: 700; font-size: 13px; cursor: pointer; }
 
 .bar { border-radius: 12px; padding: 9px 10px 9px 14px; font-size: 14px; display: flex; gap: 10px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
@@ -212,7 +214,7 @@ h2 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: 
 .cmd-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
 .glass { position: relative; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.55); border-radius: 12px; padding: 10px 20px; min-height: 46px; color: #fff; font-weight: 700; font-size: 16px; cursor: pointer;
   display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(180deg, var(--red-hi) 0%, var(--red-lo) 100%);
-  box-shadow: 0 6px 18px rgba(222, 66, 57, 0.28), inset 0 -2px 6px rgba(120, 20, 10, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.6); text-shadow: 0 1px 1px rgba(120, 20, 10, 0.35); }
+  box-shadow: 0 6px 18px rgba(14, 139, 131, 0.28), inset 0 -2px 6px rgba(4, 64, 60, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.6); text-shadow: 0 1px 1px rgba(4, 64, 60, 0.35); }
 .glass::before { content: ""; position: absolute; inset: 1px 1px 52% 1px; border-radius: 11px 11px 40% 40% / 11px 11px 14px 14px; background: linear-gradient(180deg, rgba(255,255,255,0.5), rgba(255,255,255,0.06)); pointer-events: none; }
 .btn-line { border: 1px solid var(--line); background: var(--surface); border-radius: 12px; padding: 9px 14px; min-height: 44px; cursor: pointer; font-weight: 700; color: var(--navy); }
 .btn-line:hover { border-color: var(--focus); }
@@ -293,7 +295,7 @@ h2 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: 
 .scan-opts { display: grid; gap: 8px; }
 .scan-opt { position: relative; display: flex; align-items: center; gap: 14px; width: 100%; text-align: left; border: 1.5px solid var(--line); background: var(--surface-2); border-radius: 14px; padding: 14px 16px; cursor: pointer; color: var(--ink); }
 .scan-opt:hover, .scan-opt:focus-within { border-color: var(--focus); }
-.scan-opt svg { width: 30px; height: 30px; flex: none; color: var(--coral); }
+.scan-opt svg { width: 30px; height: 30px; flex: none; color: var(--navy); }
 .scan-opt span { display: grid; gap: 2px; min-width: 0; }
 .scan-opt b { font-size: 17px; }
 .scan-opt small { font-size: 13px; color: var(--muted); line-height: 1.35; }
@@ -308,7 +310,7 @@ kbd { font-family: var(--font-mono); font-size: 11.5px; border: 1px solid var(--
 .snip-bar .acts { display: flex; gap: 6px; }
 .snip-stage { position: relative; display: grid; place-items: center; overflow: hidden; padding: 0 16px 16px; min-height: 0; }
 #snipCv { max-width: 100%; max-height: 100%; cursor: crosshair; touch-action: none; box-shadow: 0 0 0 1px rgba(255,255,255,0.3); }
-.snip-box { position: absolute; border: 2px solid #FF8E7A; background: rgba(255, 142, 122, 0.15); pointer-events: none; }
+.snip-box { position: absolute; border: 2px solid #43C9BC; background: rgba(67, 201, 188, 0.15); pointer-events: none; }
 .qr-meta span { font-family: var(--font-mono); font-size: 12px; background: var(--chip-bg); color: var(--ink-2); border-radius: 999px; padding: 3px 10px; }
 </style>
 
@@ -317,13 +319,13 @@ kbd { font-family: var(--font-mono); font-size: 11.5px; border: 1px solid var(--
     <div class="brand">
       <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="-8 -4 300 192" role="img" aria-label="C/D">
         <defs>
-          <linearGradient id="cdG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D3EDFB"/><stop offset=".5" stop-color="#A3D3F2"/><stop offset="1" stop-color="#8CC3EA"/></linearGradient>
-          <radialGradient id="cdC" cx=".9" cy=".95" r=".7"><stop offset="0" stop-color="#FA8E72" stop-opacity=".9"/><stop offset=".6" stop-color="#F7A08C" stop-opacity=".3"/><stop offset="1" stop-color="#F7A08C" stop-opacity="0"/></radialGradient>
-          <linearGradient id="cdRim" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#78B7E2"/><stop offset=".78" stop-color="#6EAEDC"/><stop offset="1" stop-color="#E9775E"/></linearGradient>
-          <linearGradient id="cdLine" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F6866B"/><stop offset=".5" stop-color="#E9806C"/><stop offset="1" stop-color="#2B5E8C"/></linearGradient>
+          <linearGradient id="cdG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E4FBF7"/><stop offset=".5" stop-color="#A6E9DF"/><stop offset="1" stop-color="#6ED0C4"/></linearGradient>
+          <radialGradient id="cdC" cx=".9" cy=".95" r=".7"><stop offset="0" stop-color="#D6F04E" stop-opacity=".95"/><stop offset=".6" stop-color="#E6F58C" stop-opacity=".35"/><stop offset="1" stop-color="#E6F58C" stop-opacity="0"/></radialGradient>
+          <linearGradient id="cdRim" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4FBBB0"/><stop offset=".72" stop-color="#2FA197"/><stop offset="1" stop-color="#B7D33A"/></linearGradient>
+          <linearGradient id="cdLine" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#CFE74E"/><stop offset=".45" stop-color="#7CCB8C"/><stop offset="1" stop-color="#0D5E59"/></linearGradient>
           <linearGradient id="cdFerr" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7F8C99"/><stop offset=".42" stop-color="#EEF2F5"/><stop offset=".62" stop-color="#C7D0D8"/><stop offset="1" stop-color="#6F7C89"/></linearGradient>
-          <linearGradient id="cdBris" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#E35F45"/><stop offset=".55" stop-color="#F6866B"/><stop offset="1" stop-color="#F9B19E"/></linearGradient>
-          <filter id="cdSh" x="-10%" y="-10%" width="125%" height="140%"><feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#4F86B3" flood-opacity=".3"/></filter>
+          <linearGradient id="cdBris" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#A9C42C"/><stop offset=".55" stop-color="#D2E957"/><stop offset="1" stop-color="#EEF7B4"/></linearGradient>
+          <filter id="cdSh" x="-10%" y="-10%" width="125%" height="140%"><feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#2F8F87" flood-opacity=".3"/></filter>
         </defs>
         <g filter="url(#cdSh)" font-family="Atkinson Hyperlegible, Segoe UI, sans-serif" font-weight="700" font-size="146">
           <text x="2" y="151" fill="url(#cdG)" stroke="url(#cdRim)" stroke-width="5" paint-order="stroke" stroke-linejoin="round">C</text>
@@ -504,7 +506,7 @@ const COL = {
   defect: '#1E9B4A', defectFill: 'rgba(46,170,90,0.22)',
   inf: '#C98F12', infFill: 'rgba(244,196,48,0.55)',
   vessel: '#D3302A', edema: '#2E6FD1', pigment: '#8A5A2B', ink: '#1F2328', paper: '#FFFDF8',
-  hypo: 'rgba(242,198,56,0.88)', hyphema: 'rgba(196,36,36,0.8)', navy: '#124C78'
+  hypo: 'rgba(242,198,56,0.88)', hyphema: 'rgba(196,36,36,0.8)', navy: '#0D5E59'
 };
 
 /* ---------- object types ---------- */
@@ -798,7 +800,7 @@ function paint(g, Wd, dpr, interactive) {
   }
   g.setTransform(dpr * Kk, 0, 0, -dpr * Kk, dpr * Cc, dpr * Cc);
   // limbus & landmarks
-  g.beginPath(); g.arc(0, 0, LIM, 0, Math.PI * 2); g.strokeStyle = '#1F3A56'; g.lineWidth = px * 2.2; g.stroke();
+  g.beginPath(); g.arc(0, 0, LIM, 0, Math.PI * 2); g.strokeStyle = '#1C4A4D'; g.lineWidth = px * 2.2; g.stroke();
   g.beginPath(); g.arc(0, 0, LIM + .45, 0, Math.PI * 2); g.strokeStyle = 'rgba(31,58,86,0.18)'; g.lineWidth = px; g.stroke();
   if (showZone) {
     g.setLineDash([px * 3, px * 5]);
@@ -807,7 +809,7 @@ function paint(g, Wd, dpr, interactive) {
     g.setLineDash([]);
     g.beginPath(); g.moveTo(-.18, 0); g.lineTo(.18, 0); g.moveTo(0, -.18); g.lineTo(0, .18); g.strokeStyle = 'rgba(18,76,120,0.45)'; g.lineWidth = px * 1.2; g.stroke();
   }
-  for (let h = 1; h <= 12; h++) { const a = angOf(h); g.beginPath(); g.moveTo(Math.cos(a) * LIM, Math.sin(a) * LIM); g.lineTo(Math.cos(a) * (LIM + .3), Math.sin(a) * (LIM + .3)); g.strokeStyle = '#1F3A56'; g.lineWidth = px * 1.4; g.stroke(); }
+  for (let h = 1; h <= 12; h++) { const a = angOf(h); g.beginPath(); g.moveTo(Math.cos(a) * LIM, Math.sin(a) * LIM); g.lineTo(Math.cos(a) * (LIM + .3), Math.sin(a) * (LIM + .3)); g.strokeStyle = '#1C4A4D'; g.lineWidth = px * 1.4; g.stroke(); }
   const list = [...S.objs].sort((a, b) => (ORDER[a.type] ?? 5) - (ORDER[b.type] ?? 5));
   list.forEach(o => drawObj(g, o, px));
   if (wiz && interactive === true) {
@@ -823,19 +825,19 @@ function paint(g, Wd, dpr, interactive) {
   g.setTransform(dpr, 0, 0, dpr, 0, 0);
   const P = (x, y) => [Cc + x * Kk, Cc - y * Kk];
   g.font = '700 13px "IBM Plex Mono", ui-monospace, monospace'; g.textAlign = 'center'; g.textBaseline = 'middle';
-  for (let h = 1; h <= 12; h++) { const a = angOf(h), [x, y] = P(Math.cos(a) * (LIM + .95), Math.sin(a) * (LIM + .95)); g.fillStyle = '#3B5470'; g.fillText(String(h), x, y); }
+  for (let h = 1; h <= 12; h++) { const a = angOf(h), [x, y] = P(Math.cos(a) * (LIM + .95), Math.sin(a) * (LIM + .95)); g.fillStyle = '#2E5A5C'; g.fillText(String(h), x, y); }
   g.font = '700 12px "Atkinson Hyperlegible", system-ui, sans-serif';
   const nasalRight = S.eye === 'OD';
-  g.fillStyle = '#6E7C8A';
+  g.fillStyle = '#687F81';
   g.fillText(nasalRight ? 'temporal' : 'nasal', Wd * .09, Wd - 14); g.fillText(nasalRight ? 'nasal' : 'temporal', Wd * .91, Wd - 14);
-  g.textAlign = 'left'; g.font = '700 15px "Atkinson Hyperlegible", system-ui, sans-serif'; g.fillStyle = '#124C78';
+  g.textAlign = 'left'; g.font = '700 15px "Atkinson Hyperlegible", system-ui, sans-serif'; g.fillStyle = '#0D5E59';
   if (interactive === true) g.fillText(S.eye, 12, 18);
-  g.textAlign = 'right'; g.font = '400 11px "Atkinson Hyperlegible", system-ui, sans-serif'; g.fillStyle = '#6E7C8A';
+  g.textAlign = 'right'; g.font = '400 11px "Atkinson Hyperlegible", system-ui, sans-serif'; g.fillStyle = '#687F81';
   g.fillText(S.eye === 'OD' ? 'right eye, examiner view' : 'left eye, examiner view', Wd - 10, 16);
   // labels and thinning tags
   g.textAlign = 'center';
   S.objs.forEach(o => {
-    if (o.type === 'label') { const [x, y] = P(o.x, o.y); g.font = '700 14px "Atkinson Hyperlegible", system-ui, sans-serif'; pill(g, x, y, o.text || 'Label', '#124C78', 'rgba(255,253,248,0.9)'); }
+    if (o.type === 'label') { const [x, y] = P(o.x, o.y); g.font = '700 14px "Atkinson Hyperlegible", system-ui, sans-serif'; pill(g, x, y, o.text || 'Label', '#0D5E59', 'rgba(255,253,248,0.9)'); }
     if (o.type === 'perf' && o.seidel !== 'na') { const [x, y] = P(o.x, o.y + o.r + .55); g.font = '700 11px "IBM Plex Mono", monospace'; pill(g, x, y, o.seidel === 'pos' ? 'Seidel +' : 'Seidel −', '#111', 'rgba(255,253,248,0.92)'); }
     const tag = thinTag(o); if (tag) { const [mx, my] = tagPos(o); const [x, y] = P(mx, my); g.font = '700 12px "IBM Plex Mono", monospace'; pill(g, x, y, tag, '#fff', '#1F2328'); }
   });
@@ -938,7 +940,7 @@ function drawSelection(g, P, Kk) {
   handles(o).forEach(h => {
     const [x, y] = P(h.p[0], h.p[1]);
     g.beginPath(); g.arc(x, y, h.rot ? 8 : 9, 0, Math.PI * 2);
-    g.fillStyle = h.rot ? '#E4A13E' : '#fff'; g.fill(); g.lineWidth = 2.2; g.strokeStyle = h.color || '#124C78'; g.stroke();
+    g.fillStyle = h.rot ? '#E4A13E' : '#fff'; g.fill(); g.lineWidth = 2.2; g.strokeStyle = h.color || '#0D5E59'; g.stroke();
     if (h.rot) { g.beginPath(); g.arc(x, y, 3.5, -2.2, 1.6); g.strokeStyle = '#fff'; g.lineWidth = 1.6; g.stroke(); }
   });
   g.restore();
@@ -1154,17 +1156,17 @@ function iconCanvas(type) {
   const c = document.createElement('canvas'); const s = 34, d = 2; c.width = s * d; c.height = s * d; const g = c.getContext('2d');
   g.fillStyle = COL.paper; g.fillRect(0, 0, s * d, s * d);
   if (type === 'pen' || type === 'erase' || type === 'label') {
-    g.setTransform(d, 0, 0, d, 0, 0); g.strokeStyle = '#124C78'; g.lineWidth = 2; g.lineCap = 'round'; g.lineJoin = 'round';
+    g.setTransform(d, 0, 0, d, 0, 0); g.strokeStyle = '#0D5E59'; g.lineWidth = 2; g.lineCap = 'round'; g.lineJoin = 'round';
     g.beginPath();
     if (type === 'pen') { g.moveTo(8, 25); g.bezierCurveTo(12, 10, 18, 28, 26, 9); }
     else if (type === 'erase') { g.moveTo(9, 22); g.lineTo(18, 13); g.lineTo(25, 20); g.lineTo(19, 26); g.lineTo(12, 26); g.closePath(); g.moveTo(14, 26); g.lineTo(26, 26); }
-    else { g.font = '700 17px "Atkinson Hyperlegible", sans-serif'; g.fillStyle = '#124C78'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('Aa', 17, 18); }
+    else { g.font = '700 17px "Atkinson Hyperlegible", sans-serif'; g.fillStyle = '#0D5E59'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('Aa', 17, 18); }
     g.stroke(); return c;
   }
   const whole = ['lthin', 'vessels', 'hypopyon', 'hyphema'].includes(type);
   const k = whole ? (s / 2 - 2) / LIM : 9.5;
   g.setTransform(d * k, 0, 0, -d * k, d * s / 2, d * s / 2);
-  if (whole) { g.beginPath(); g.arc(0, 0, LIM, 0, Math.PI * 2); g.strokeStyle = '#1F3A56'; g.lineWidth = 1 / k; g.stroke(); }
+  if (whole) { g.beginPath(); g.arc(0, 0, LIM, 0, Math.PI * 2); g.strokeStyle = '#1C4A4D'; g.lineWidth = 1 / k; g.stroke(); }
   const o = makeObj(type, 0, 0); o.seed = 1234;
   const demo = { ulcer: { rx: 1.4, ry: 1.2, dRx: .95, dRy: .8, thin: 40 }, infiltrate: { rx: 1.2, ry: 1, edge: 'feathery', sat: 2 }, defect: { rx: 1.4, ry: 1.1 }, dendrite: { len: 3, rot: 25 }, thinning: { rx: 1.4, ry: 1.1, thin: 60 },
     lthin: { h1: 1, h2: 4, w: 1.6, thin: 60 }, scar: { rx: 1.4, ry: 1.1 }, edema: { rx: 1.5, ry: 1.3 }, folds: { rx: 1.5, ry: 1.3 }, kp: { rx: 1.5, ry: 1.3 }, vessels: { h1: 4, h2: 8, reach: 2.4 }, hypopyon: { h: 3 }, hyphema: { h: 3 },
@@ -1636,12 +1638,12 @@ function renderProfile(g, o, w, h, opt) {
   const line = (off, col, lw, dash, clipEx) => { g.beginPath(); let on = false; for (let x = 0; x <= w; x += 2) { const y = ant(x) + off; const cut = clipEx && floor(x) > y - .5; if (cut) { on = false; continue; } on ? g.lineTo(x, y) : g.moveTo(x, y); on = true; } g.strokeStyle = col; g.lineWidth = lw; g.setLineDash(dash || []); g.stroke(); g.setLineDash([]); };
   line(0, '#2EAA5A', 2.5, null, true);
   line(5, '#9FB3C4', 1, [3, 3], true);
-  if (o.perf) { const gap = Math.max(6, exPx * .35); g.save(); g.beginPath(); g.rect(0, 0, cx - gap, h); g.rect(cx + gap, 0, w - cx - gap, h); g.clip(); line(TH, '#1F3A56', 2.2); line(TH + 3, '#8A5A2B', 1.2); g.restore(); }
-  else { line(TH, '#1F3A56', 2.2); line(TH + 3, '#8A5A2B', 1.2); }
+  if (o.perf) { const gap = Math.max(6, exPx * .35); g.save(); g.beginPath(); g.rect(0, 0, cx - gap, h); g.rect(cx + gap, 0, w - cx - gap, h); g.clip(); line(TH, '#1C4A4D', 2.2); line(TH + 3, '#8A5A2B', 1.2); g.restore(); }
+  else { line(TH, '#1C4A4D', 2.2); line(TH + 3, '#8A5A2B', 1.2); }
   // excavation floor
   if (thinD > 0) { g.beginPath(); for (let x = cx - exPx; x <= cx + exPx; x += 2) { const y = Math.min(floor(x), ant(x) + TH); x === cx - exPx ? g.moveTo(x, y) : g.lineTo(x, y); } g.strokeStyle = '#1F2328'; g.lineWidth = 1.6; g.stroke(); }
   // labels
-  g.fillStyle = '#6E7C8A'; g.font = '700 10.5px "Atkinson Hyperlegible", sans-serif'; g.textAlign = 'right';
+  g.fillStyle = '#687F81'; g.font = '700 10.5px "Atkinson Hyperlegible", sans-serif'; g.textAlign = 'right';
   g.fillText('epithelium', w - 8, ant(w - 8) - 7); g.fillText('Descemet / endothelium', w - 8, ant(w - 8) + TH + 13);
   // scale ticks (25 / 50 / 75 %)
   g.textAlign = 'left'; g.font = '600 10px "IBM Plex Mono", monospace';
@@ -1651,7 +1653,7 @@ function renderProfile(g, o, w, h, opt) {
     const ip = 'infDepth' in o ? infW * kx : 0, y0 = ant(cx), yF = ant(cx) + Math.min(thinD, TH), yE = ant(cx) + TH;
     const bx = cx + Math.max(exPx, ip) + 14;
     if (thinD > 0) vBracket(g, bx, y0, o.perf ? yE : yF, '#1F2328', o.perf ? 'perforated' : o.thin >= 100 ? 'DMC' : o.thin + '% thinned', 1);
-    if (thinD > 0 && !o.perf && o.thin < 100) vBracket(g, bx + 4, yF, yE, '#6E7C8A', (100 - o.thin) + '% left', 1);
+    if (thinD > 0 && !o.perf && o.thin < 100) vBracket(g, bx + 4, yF, yE, '#687F81', (100 - o.thin) + '% left', 1);
     if ('infDepth' in o) vBracket(g, cx - Math.max(exPx, ip) - 14, y0, y0 + o.infDepth / 100 * TH, '#9A6B00', 'infiltrate ' + o.infDepth + '%', -1);
     if (exPx > 4 && thinD > 0) {
       const yT = T0 - 18; g.strokeStyle = '#1E7F3E'; g.fillStyle = '#1E7F3E'; g.lineWidth = 1.4;
@@ -2059,22 +2061,22 @@ function microPanel(g, x, y, w, draw) {
   const notes = S.microNotes || [], ms = S.micro || [];
   let cy = y;
   const T_ = (txt, font, col, xx, yy, align = 'left') => { if (!draw) return; g.font = font; g.fillStyle = col; g.textAlign = align; g.textBaseline = 'middle'; g.fillText(txt, xx, yy); };
-  T_('MICROBIOLOGY', '700 15px "Atkinson Hyperlegible", sans-serif', '#6E7C8A', x, cy + 10); cy += 30;
+  T_('MICROBIOLOGY', '700 15px "Atkinson Hyperlegible", sans-serif', '#687F81', x, cy + 10); cy += 30;
   if (notes.length) {
     g.font = '400 15px "Atkinson Hyperlegible", sans-serif';
-    wrapLines(g, notes.join(' · '), w).forEach(l => { T_(l, '400 15px "Atkinson Hyperlegible", sans-serif', '#13324F', x, cy + 8); cy += 22; });
+    wrapLines(g, notes.join(' · '), w).forEach(l => { T_(l, '400 15px "Atkinson Hyperlegible", sans-serif', '#0F3B40', x, cy + 8); cy += 22; });
     cy += 6;
   }
-  if (!ms.length && !notes.length) { T_('No organisms recorded.', '400 15px "Atkinson Hyperlegible", sans-serif', '#6E7C8A', x, cy + 8); cy += 26; }
+  if (!ms.length && !notes.length) { T_('No organisms recorded.', '400 15px "Atkinson Hyperlegible", sans-serif', '#687F81', x, cy + 8); cy += 26; }
   ms.forEach(m => {
     // organism line: name in italics, then group and method
     g.font = 'italic 700 17px "Atkinson Hyperlegible", sans-serif';
     const nameLines = wrapLines(g, m.org, w - 10);
-    nameLines.forEach(l => { T_(l, 'italic 700 17px "Atkinson Hyperlegible", sans-serif', '#13324F', x, cy + 10); cy += 24; });
-    T_(`${GRP[m.grp] || ''}${GRP[m.grp] ? ' · ' : ''}${METHODS[m.method || 0]}`, '400 14px "Atkinson Hyperlegible", sans-serif', '#44566A', x, cy + 7); cy += 24;
+    nameLines.forEach(l => { T_(l, 'italic 700 17px "Atkinson Hyperlegible", sans-serif', '#0F3B40', x, cy + 10); cy += 24; });
+    T_(`${GRP[m.grp] || ''}${GRP[m.grp] ? ' · ' : ''}${METHODS[m.method || 0]}`, '400 14px "Atkinson Hyperlegible", sans-serif', '#3E5C60', x, cy + 7); cy += 24;
     const list = drugsOf(m).filter(d => m.sens[d]);
-    if (!drugsOf(m).length) { T_('No routine susceptibility panel.', '400 14px "Atkinson Hyperlegible", sans-serif', '#6E7C8A', x, cy + 7); cy += 28; return; }
-    if (!list.length) { T_('Sensitivities pending.', '400 14px "Atkinson Hyperlegible", sans-serif', '#6E7C8A', x, cy + 7); cy += 28; return; }
+    if (!drugsOf(m).length) { T_('No routine susceptibility panel.', '400 14px "Atkinson Hyperlegible", sans-serif', '#687F81', x, cy + 7); cy += 28; return; }
+    if (!list.length) { T_('Sensitivities pending.', '400 14px "Atkinson Hyperlegible", sans-serif', '#687F81', x, cy + 7); cy += 28; return; }
     // resistant first, then intermediate, then susceptible, in two columns
     const order = { R: 0, I: 1, S: 2 }, sorted = [...list].sort((p, q) => order[m.sens[p]] - order[m.sens[q]]);
     const colW = (w - 12) / 2, rows = Math.ceil(sorted.length / 2), rh = 25;
@@ -2084,7 +2086,7 @@ function microPanel(g, x, y, w, draw) {
       if (draw) {
         g.fillStyle = SIR_COL[v]; g.beginPath(); g.roundRect ? g.roundRect(xx, yy + 2, 26, 20, 5) : g.rect(xx, yy + 2, 26, 20); g.fill();
         g.fillStyle = '#fff'; g.font = '700 13px "IBM Plex Mono", monospace'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(v, xx + 13, yy + 12.5);
-        g.font = (v === 'R' ? '700 ' : '400 ') + '14px "Atkinson Hyperlegible", sans-serif'; g.fillStyle = v === 'R' ? '#C8372D' : '#13324F'; g.textAlign = 'left';
+        g.font = (v === 'R' ? '700 ' : '400 ') + '14px "Atkinson Hyperlegible", sans-serif'; g.fillStyle = v === 'R' ? '#C8372D' : '#0F3B40'; g.textAlign = 'left';
         let name = SHORT_DRUG[d] || d; while (g.measureText(name).width > colW - 36 && name.length > 4) name = name.slice(0, -2) + '…';
         g.fillText(name, xx + 34, yy + 12.5);
       }
@@ -2097,7 +2099,7 @@ function microPanel(g, x, y, w, draw) {
       [['S', 'susceptible'], ['I', 'intermediate'], ['R', 'resistant']].forEach(([v, t]) => {
         g.fillStyle = SIR_COL[v]; g.beginPath(); g.roundRect ? g.roundRect(lx, cy, 18, 15, 4) : g.rect(lx, cy, 18, 15); g.fill();
         g.fillStyle = '#fff'; g.font = '700 10px "IBM Plex Mono", monospace'; g.textAlign = 'center'; g.fillText(v, lx + 9, cy + 8);
-        g.fillStyle = '#6E7C8A'; g.font = '400 13px "Atkinson Hyperlegible", sans-serif'; g.textAlign = 'left'; g.fillText(t, lx + 24, cy + 8);
+        g.fillStyle = '#687F81'; g.font = '400 13px "Atkinson Hyperlegible", sans-serif'; g.textAlign = 'left'; g.fillText(t, lx + 24, cy + 8);
         lx += 24 + g.measureText(t).width + 18;
       });
     }
@@ -2125,27 +2127,27 @@ async function exportPNG() {
   paint(art.getContext('2d'), size, 1, 'export-no-photo');
   g.drawImage(art, 0, 70);
   g.setTransform(1, 0, 0, 1, 0, 0); g.fillStyle = COL.paper; g.fillRect(0, 0, size, 70);
-  g.fillStyle = '#124C78'; g.font = '700 30px "Atkinson Hyperlegible", sans-serif'; g.textBaseline = 'middle'; g.fillText(`C/D · ${S.eye}`, 28, 38);
-  g.fillStyle = '#6E7C8A'; g.font = '400 20px "Atkinson Hyperlegible", sans-serif'; g.textAlign = 'right';
+  g.fillStyle = '#0D5E59'; g.font = '700 30px "Atkinson Hyperlegible", sans-serif'; g.textBaseline = 'middle'; g.fillText(`C/D · ${S.eye}`, 28, 38);
+  g.fillStyle = '#687F81'; g.font = '400 20px "Atkinson Hyperlegible", sans-serif'; g.textAlign = 'right';
   g.fillText(new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) + (S.ac !== '0' ? ` · AC ${S.ac}` : ''), size - 28, 38);
   if (band) {
-    const by = size + 70; g.fillStyle = COL.paper; g.fillRect(0, by, size, band); g.fillStyle = '#E3E0D8'; g.fillRect(28, by, size - 56, 2);
+    const by = size + 70; g.fillStyle = COL.paper; g.fillRect(0, by, size, band); g.fillStyle = '#D9E5E2'; g.fillRect(28, by, size - 56, 2);
     const drawProf = (o, x0, y0) => {
-      g.textAlign = 'left'; g.textBaseline = 'middle'; g.fillStyle = '#13324F'; g.font = '700 16px "Atkinson Hyperlegible", sans-serif';
+      g.textAlign = 'left'; g.textBaseline = 'middle'; g.fillStyle = '#0F3B40'; g.font = '700 16px "Atkinson Hyperlegible", sans-serif';
       g.fillText(`${T[o.type].name}${where(o) ? ' · ' + where(o) : ''}`, x0, y0 + 10);
-      g.fillStyle = '#44566A'; g.font = '400 14px "Atkinson Hyperlegible", sans-serif';
+      g.fillStyle = '#3E5C60'; g.font = '400 14px "Atkinson Hyperlegible", sans-serif';
       g.fillText(('thin' in o ? cap(thinWords(o)) : 'No thinning') + ('infDepth' in o ? ` · infiltrate ~${o.infDepth}% deep` : ''), x0, y0 + 30);
       const pc = document.createElement('canvas'); pc.width = cellW * 2; pc.height = 190 * 2; const pg = pc.getContext('2d'); pg.setTransform(2, 0, 0, 2, 0, 0);
       renderProfile(pg, o, cellW, 190, { handle: false });
       g.drawImage(pc, x0, y0 + 44, cellW, 190);
     };
-    const head = (txt, x) => { g.textAlign = 'left'; g.textBaseline = 'middle'; g.fillStyle = '#6E7C8A'; g.font = '700 15px "Atkinson Hyperlegible", sans-serif'; g.fillText(txt, x, by + 36); };
+    const head = (txt, x) => { g.textAlign = 'left'; g.textBaseline = 'middle'; g.fillStyle = '#687F81'; g.font = '700 15px "Atkinson Hyperlegible", sans-serif'; g.fillText(txt, x, by + 36); };
     if (hasMicro) {
       const mx = profs.length ? 28 + cellW + gutter : 28;
       if (profs.length) {
         head('THINNING AND DEPTH, IN CROSS-SECTION', 28);
         profs.forEach((o, i) => drawProf(o, 28, by + 56 + i * cellH));
-        g.fillStyle = '#E3E0D8'; g.fillRect(mx - gutter / 2, by + 24, 1.5, band - 34);
+        g.fillStyle = '#D9E5E2'; g.fillRect(mx - gutter / 2, by + 24, 1.5, band - 34);
       }
       microPanel(g, mx, by + 26, profs.length ? cellW : size - 56, true);
     } else {
@@ -2155,12 +2157,12 @@ async function exportPNG() {
   }
   // footer: the note on the left, the C/D code on the right
   const fy = size + 70 + band; g.fillStyle = COL.paper; g.fillRect(0, fy, size, foot);
-  g.fillStyle = '#E3E0D8'; g.fillRect(28, fy, size - 56, 2);
+  g.fillStyle = '#D9E5E2'; g.fillRect(28, fy, size - 56, 2);
   const q = makeQR(CD_URL + '#' + await encodeState());
   const qs = 250; let textW = size - 56;
   if (q) { const qc = qrCanvas(q, qs); g.imageSmoothingEnabled = false; g.drawImage(qc, size - 28 - qs, fy + 18, qs, qs); textW = size - 56 - qs - 24;
-    g.textAlign = 'center'; g.fillStyle = '#6E7C8A'; g.font = '700 15px "Atkinson Hyperlegible", sans-serif'; g.fillText('Scan to redraw in C/D', size - 28 - qs / 2, fy + qs + 30); }
-  g.textAlign = 'left'; g.textBaseline = 'top'; g.fillStyle = '#13324F'; g.font = '400 17px "Atkinson Hyperlegible", sans-serif';
+    g.textAlign = 'center'; g.fillStyle = '#687F81'; g.font = '700 15px "Atkinson Hyperlegible", sans-serif'; g.fillText('Scan to redraw in C/D', size - 28 - qs / 2, fy + qs + 30); }
+  g.textAlign = 'left'; g.textBaseline = 'top'; g.fillStyle = '#0F3B40'; g.font = '400 17px "Atkinson Hyperlegible", sans-serif';
   const lines = wrapLines(g, sheetNote, textW); const maxL = Math.floor((foot - 30) / 22);
   lines.slice(0, maxL).forEach((l, i) => g.fillText(i === maxL - 1 && lines.length > maxL ? l + ' …' : l, 28, fy + 18 + i * 22));
   const blob = await new Promise(r => cvs.toBlob(r, 'image/png'));
