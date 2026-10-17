@@ -538,6 +538,84 @@ body.simple #clearConfirm .acts button { min-height: 52px; border-radius: 14px; 
 .ub-x { border: 0; background: transparent; color: inherit; font-size: 20px; line-height: 1; width: 30px; height: 30px; border-radius: 8px; cursor: pointer; opacity: 0.8; }
 .ub-x:hover { opacity: 1; background: rgba(255,255,255,0.12); }
 @media (min-width: 1000px) { .whatsnew { top: 50%; bottom: auto; transform: translateY(-50%); } .update-bar { bottom: 24px; left: calc(104px + (100vw - 104px) / 2); } }
+
+/* ================= Follow-up visits (pilot) ================= */
+#sDock .fu-row { display: flex; gap: 8px; }
+#sDock .fu-row .s-trace { flex: 1; min-width: 0; }
+#sDock .hint:not([hidden]) ~ .fu-row { display: none; }
+.fu-dock { flex: none; width: auto; white-space: nowrap; height: 54px; border-radius: 15px; border: 1.5px solid color-mix(in srgb, var(--navy) 40%, var(--line)); background: var(--chip-bg); color: var(--navy); font: 700 15px var(--font-ui); display: flex; align-items: center; justify-content: center; gap: 7px; cursor: pointer; padding: 0 14px 0 12px; }
+.fu-dock svg { width: 22px; height: 22px; flex: none; }
+.fu-dock.on { background: var(--surface); }
+@media (min-width: 1000px) { #sDock .fu-row { flex-direction: column; } .fu-dock { width: 100%; height: 64px; flex-direction: column; gap: 4px; font-size: 12.5px; } }
+
+.fu-peek { position: absolute; right: 10px; bottom: 30px; z-index: 2; width: 46px; height: 46px; padding: 0; border-radius: 999px; border: 1px solid var(--line); background: color-mix(in srgb, var(--surface) 92%, transparent); color: var(--navy); display: grid; place-items: center; cursor: pointer; box-shadow: 0 2px 10px rgba(13, 70, 66, .12); }
+.fu-peek svg { width: 22px; height: 22px; }
+.fu-peek[aria-pressed="true"] { background: var(--navy); color: var(--surface); border-color: var(--navy); }
+.fu-peek[hidden] { display: none; }
+
+body.fu-size #shEdit #insp { display: none !important; }
+body.fu-thin #shEdit #insp > :not(.depth) { display: none !important; }
+body.fu-thin #shEdit .flow:not([hidden]) + .insp:not([hidden]) { border-top: 0; padding-top: 0; }
+
+.fu-cmp { display: flex; align-items: center; gap: 6px 12px; flex-wrap: wrap; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 8px 12px; }
+.fu-then, .fu-now { display: grid; }
+.fu-cmp small { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+.fu-cmp b { font: 600 16px var(--font-mono); color: var(--ink); white-space: nowrap; }
+.fu-then b { color: var(--ink-2); font-weight: 500; }
+.fu-arrow { color: var(--muted); font-weight: 700; }
+.fu-chg { margin-left: auto; font-weight: 700; font-size: 13.5px; padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+.fu-now small { display: flex; align-items: center; gap: 6px; }
+.fu-now small .fu-chg { margin: 0; font: 700 11px/1.5 var(--font-ui); font-style: normal; text-transform: none; letter-spacing: 0; padding: 0 7px; }
+.fu-chg.better { background: var(--ok-bg); color: var(--ok); }
+.fu-chg.worse { background: var(--danger-bg); color: var(--danger-ink); }
+.fu-chg.same { background: var(--surface-2, var(--chip-bg)); color: var(--muted); border: 1px solid var(--line); }
+.flow p.fu-sub { font-size: 13px; color: var(--muted); }
+.flow-opts button.was { position: relative; }
+.flow-opts button.was::after { content: "last"; position: absolute; top: -9px; right: -5px; font: 700 10px/1.4 var(--font-ui); background: var(--glow); color: #2F3A05; border-radius: 999px; padding: 1px 6px; letter-spacing: .02em; }
+.flow-opts.mono button { font-family: var(--font-mono); }
+.fu-density { align-items: center; }
+.fu-lab { font-size: 13px; font-weight: 700; color: var(--muted); margin-right: 2px; }
+.bs-was { font-weight: 600; color: var(--ink-2); margin-left: 8px; font-family: var(--font-mono); font-size: 12px; }
+.flow h3.fu-verdict { font-size: 22px; }
+.fu-verdict.ok { color: var(--ok); }
+.fu-verdict.bad { color: var(--danger); }
+.fu-verdict.mixed { color: var(--warn); }
+.fu-verdict.quiet { color: var(--ink-2); }
+.fu-rows { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.fu-rows li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 10px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 8px 12px; }
+.fu-rows .fu-l { font-weight: 700; font-size: 14px; }
+.fu-rows .fu-v { grid-column: 1; font: 500 13.5px var(--font-mono); color: var(--ink-2); display: flex; gap: 6px; flex-wrap: wrap; }
+.fu-rows .fu-v b { color: var(--ink); font-weight: 600; }
+.fu-rows .fu-chg { grid-column: 2; grid-row: 1 / span 2; margin: 0; }
+.fu-rows .fu-none { color: var(--muted); font-size: 14px; }
+.fu-meta { display: flex; align-items: center; gap: 6px 10px; flex-wrap: wrap; }
+.fu-date { display: flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--ink-2); font-weight: 700; }
+.fu-date input { font: 500 14px var(--font-mono); border: 1px solid var(--line); border-radius: 10px; padding: 6px 8px; background: var(--surface); color: var(--ink); min-height: 38px; }
+.fu-stop { margin-left: auto; }
+.s-chip.fu-chip { font-family: var(--font-ui); font-weight: 700; font-size: 13.5px; }
+.s-chip.fu-chip.bad { background: var(--danger-bg); color: var(--danger-ink); border-color: color-mix(in srgb, var(--danger) 40%, var(--line)); }
+.s-chip.fu-chip.mixed { background: var(--warn-bg); color: var(--warn); border-color: color-mix(in srgb, var(--warn) 40%, var(--line)); }
+.s-chip.fu-chip.quiet { border-style: solid; }
+#sEmpty { line-height: 1.45; }
+/* width and height steppers fit a 360 px phone */
+.bs-row button { width: 40px; }
+.bs-row input { font-size: 20px; }
+
+/* the panel stays short on a phone and its main button stays in view */
+.flow.fu { gap: 9px; padding: 10px 12px 0; }
+.flow.fu .flow-head h3 { font-size: 17px; }
+.flow.fu .fu-foot { position: sticky; bottom: 0; z-index: 1; margin: 0 -12px; padding: 8px 12px calc(10px + env(safe-area-inset-bottom, 0px)); background: var(--chip-bg); border-top: 1px solid color-mix(in srgb, var(--navy) 18%, transparent); flex-wrap: nowrap; }
+.flow.fu .fu-foot .flow-skip { padding: 6px 7px; white-space: nowrap; }
+.flow.fu .fu-foot .flow-next { white-space: nowrap; }
+.flow.fu .fu-rows li { padding: 6px 10px; }
+.flow.fu > :last-child:not(.fu-foot) { margin-bottom: 12px; }
+.flow.fu .flow-opts button { min-height: 44px; }
+.fu-thinrow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.fu-thinrow .flow-opts { flex: none; }
+body.fu-thin #insp .depth-head, body.fu-thin #insp .depth > .row, body.fu-thin #insp .depth-note { display: none !important; }
+body.fu-thin #insp .depth { gap: 6px; }
+/* desktop: the guide is a full-height panel beside the chart, like the other panels */
+@media (min-width: 1000px) { #sApp #shEdit { top: 56px; } }
 </style>
 
 <div class="app">
@@ -889,7 +967,8 @@ function drawObj(g, o, px) {
   switch (t) {
     case 'ulcer':
       drawInfiltrate(g, o, px);
-      defPath(g, o); g.fillStyle = COL.defectFill; g.fill(); g.strokeStyle = COL.defect; g.lineWidth = px * 2.4; g.stroke();
+      if (o.healed) { if (o.thin > 0 || o.perf) { defPath(g, o); g.setLineDash([px * 5, px * 4]); g.strokeStyle = '#111'; g.lineWidth = px * 1.4; g.stroke(); g.setLineDash([]); } }
+      else { defPath(g, o); g.fillStyle = COL.defectFill; g.fill(); g.strokeStyle = COL.defect; g.lineWidth = px * 2.4; g.stroke(); }
       drawThinCore(g, o.dRx, o.dRy, o, px, () => defPath(g, o), o.dOx || 0, o.dOy || 0);
       break;
     case 'infiltrate': drawInfiltrate(g, o, px); break;
@@ -1116,7 +1195,7 @@ function outlineWorld(o, part) {
   return { L: by((a, b) => a < b, 0), R: by((a, b) => a > b, 0), B: by((a, b) => a < b, 1), Tp: by((a, b) => a > b, 1) };
 }
 function dimSets(o) {
-  if (o.type === 'ulcer') return [{ ...outlineWorld(o, 'inf'), col: '#8A5E00' }, { ...outlineWorld(o, 'def'), col: '#1E7F3E' }];
+  if (o.type === 'ulcer') return o.healed ? [{ ...outlineWorld(o, 'inf'), col: '#8A5E00' }] : [{ ...outlineWorld(o, 'inf'), col: '#8A5E00' }, { ...outlineWorld(o, 'def'), col: '#1E7F3E' }];
   return [{ ...outlineWorld(o, 'inf'), col: o.type === 'defect' ? '#1E7F3E' : o.type === 'infiltrate' ? '#8A5E00' : '#2B2F34' }];
 }
 /* horizontal width and vertical height, measured on the page, drawn outside the lesion */
@@ -2068,7 +2147,8 @@ function renderProfile(g, o, w, h, opt) {
   }
   // layer lines
   const line = (off, col, lw, dash, clipEx) => { g.beginPath(); let on = false; for (let x = 0; x <= w; x += 2) { const y = ant(x) + off; const cut = clipEx && floor(x) > y - .5; if (cut) { on = false; continue; } on ? g.lineTo(x, y) : g.moveTo(x, y); on = true; } g.strokeStyle = col; g.lineWidth = lw; g.setLineDash(dash || []); g.stroke(); g.setLineDash([]); };
-  line(0, '#2EAA5A', 2.5, null, true);
+  if (o.healed && thinD > 0) { g.beginPath(); for (let x = 0; x <= w; x += 2) { const y = Math.min(floor(x), ant(x) + TH - 2); x ? g.lineTo(x, y) : g.moveTo(x, y); } g.strokeStyle = '#2EAA5A'; g.lineWidth = 2.5; g.stroke(); }
+  else line(0, '#2EAA5A', 2.5, null, true);
   line(5, '#9FB3C4', 1, [3, 3], true);
   if (o.perf) { const gap = Math.max(6, exPx * .35); g.save(); g.beginPath(); g.rect(0, 0, cx - gap, h); g.rect(cx + gap, 0, w - cx - gap, h); g.clip(); line(TH, '#1C4A4D', 2.2); line(TH + 3, '#8A5A2B', 1.2); g.restore(); }
   else { line(TH, '#1C4A4D', 2.2); line(TH + 3, '#8A5A2B', 1.2); }
@@ -2087,7 +2167,7 @@ function renderProfile(g, o, w, h, opt) {
     if (thinD > 0) vBracket(g, bx, y0, o.perf ? yE : yF, '#1F2328', o.perf ? 'perforated' : o.thin >= 100 ? 'DMC' : o.thin + '% thinned', 1);
     if (thinD > 0 && !o.perf && o.thin < 100) vBracket(g, bx + 4, yF, yE, '#687F81', (100 - o.thin) + '% left', 1);
     if ('infDepth' in o) vBracket(g, cx - Math.max(exPx, ip) - 14, y0, y0 + o.infDepth / 100 * TH, '#9A6B00', 'infiltrate ' + o.infDepth + '%', -1);
-    if (exPx > 4 && thinD > 0) {
+    if (exPx > 4 && thinD > 0 && !o.healed) {
       const yT = T0 - 18; g.strokeStyle = '#1E7F3E'; g.fillStyle = '#1E7F3E'; g.lineWidth = 1.4;
       g.beginPath(); g.moveTo(cx - exPx, yT); g.lineTo(cx + exPx, yT); g.moveTo(cx - exPx, yT - 5); g.lineTo(cx - exPx, yT + 5); g.moveTo(cx + exPx, yT - 5); g.lineTo(cx + exPx, yT + 5); g.stroke();
       g.font = '700 12px "IBM Plex Mono", monospace'; g.textAlign = 'center'; g.textBaseline = 'bottom'; g.fillText(mm(exW * 2) + ' mm', cx, yT - 4);
@@ -2540,6 +2620,7 @@ function microPanel(g, x, y, w, draw) {
   return cy - y;
 }
 
+let fuHooks = null;   // set by the follow-up layer
 async function exportPNG() {
   const profs = [...S.objs].sort((a, b) => NOTE_ORDER.indexOf(a.type) - NOTE_ORDER.indexOf(b.type)).filter(o => o.type === 'ulcer' || o.type === 'infiltrate' || (['thinning', 'scar', 'lthin'].includes(o.type) && (o.thin > 0 || o.perf)));
   const hasMicro = (S.micro || []).length || (S.microNotes || []).length;
@@ -2549,11 +2630,12 @@ async function exportPNG() {
   const profH = !profs.length ? 0 : hasMicro ? 30 + profs.length * cellH : 56 + Math.ceil(profs.length / 2) * cellH - 26;
   const microH = hasMicro ? microPanel(mg, 0, 0, cellW, false) : 0;
   const band = profs.length || hasMicro ? 26 + Math.max(profH, microH) + 10 : 0;
+  const fuB = fuHooks && S.prev ? fuHooks.band(mg, 0, 0, 1100, false) : 0;
   // the footer note leaves out microbiology when the panel above already shows it
-  const sheetNote = hasMicro ? $('#note').value.split('\n').filter((l, i, arr) => { const mStart = arr.findIndex(x => x.startsWith('Microbiology')); if (mStart < 0 || i < mStart) return true; const end = arr.findIndex((x, j) => j > mStart && !x.startsWith('- ')); return end >= 0 && i >= end; }).join('\n') : $('#note').value;
+  const sheetNote = (fuB ? fuHooks.stripNote : (x => x))(hasMicro ? $('#note').value.split('\n').filter((l, i, arr) => { const mStart = arr.findIndex(x => x.startsWith('Microbiology')); if (mStart < 0 || i < mStart) return true; const end = arr.findIndex((x, j) => j > mStart && !x.startsWith('- ')); return end >= 0 && i >= end; }).join('\n') : $('#note').value);
   mg.font = '400 17px "Atkinson Hyperlegible", sans-serif';
   const noteLines = wrapLines(mg, sheetNote, 1100 - 56 - 250 - 24);
-  const size = 1100, foot = Math.max(300, 40 + noteLines.length * 22), cvs = document.createElement('canvas'); cvs.width = size; cvs.height = size + 70 + band + foot;
+  const size = 1100, foot = Math.max(300, 40 + noteLines.length * 22), cvs = document.createElement('canvas'); cvs.width = size; cvs.height = size + 70 + fuB + band + foot;
   const g = cvs.getContext('2d');
   const art = document.createElement('canvas'); art.width = size; art.height = size;
   paint(art.getContext('2d'), size, 1, 'export-no-photo');
@@ -2561,9 +2643,10 @@ async function exportPNG() {
   g.setTransform(1, 0, 0, 1, 0, 0); g.fillStyle = COL.paper; g.fillRect(0, 0, size, 70);
   g.fillStyle = '#0D5E59'; g.font = '700 30px "Atkinson Hyperlegible", sans-serif'; g.textBaseline = 'middle'; g.fillText(`C/D · ${S.eye}`, 28, 38);
   g.fillStyle = '#687F81'; g.font = '400 20px "Atkinson Hyperlegible", sans-serif'; g.textAlign = 'right';
-  g.fillText(new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) + (S.ac !== '0' ? ` · AC ${S.ac}` : ''), size - 28, 38);
+  g.fillText((S.date ? new Date(S.date + 'T12:00:00') : new Date()).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) + (S.ac !== '0' ? ` · AC ${S.ac}` : ''), size - 28, 38);
+  if (fuB) fuHooks.band(g, 0, size + 70, size, true);
   if (band) {
-    const by = size + 70; g.fillStyle = COL.paper; g.fillRect(0, by, size, band); g.fillStyle = '#D9E5E2'; g.fillRect(28, by, size - 56, 2);
+    const by = size + 70 + fuB; g.fillStyle = COL.paper; g.fillRect(0, by, size, band); g.fillStyle = '#D9E5E2'; g.fillRect(28, by, size - 56, 2);
     const drawProf = (o, x0, y0) => {
       g.textAlign = 'left'; g.textBaseline = 'middle'; g.fillStyle = '#0F3B40'; g.font = '700 16px "Atkinson Hyperlegible", sans-serif';
       g.fillText(`${T[o.type].name}${where(o) ? ' · ' + where(o) : ''}`, x0, y0 + 10);
@@ -2588,7 +2671,7 @@ async function exportPNG() {
     }
   }
   // footer: the note on the left, the C/D code on the right
-  const fy = size + 70 + band; g.fillStyle = COL.paper; g.fillRect(0, fy, size, foot);
+  const fy = size + 70 + fuB + band; g.fillStyle = COL.paper; g.fillRect(0, fy, size, foot);
   g.fillStyle = '#D9E5E2'; g.fillRect(28, fy, size - 56, 2);
   const q = makeQR(CD_URL + '#' + await encodeState());
   const qs = 250; let textW = size - 56;
@@ -2598,7 +2681,7 @@ async function exportPNG() {
   const lines = wrapLines(g, sheetNote, textW); const maxL = Math.floor((foot - 30) / 22);
   lines.slice(0, maxL).forEach((l, i) => g.fillText(i === maxL - 1 && lines.length > maxL ? l + ' …' : l, 28, fy + 18 + i * 22));
   const blob = await new Promise(r => cvs.toBlob(r, 'image/png'));
-  const name = `cornea-${S.eye}-${new Date().toISOString().slice(0, 10)}.png`;
+  const name = `cornea-${S.eye}-${S.date || new Date().toISOString().slice(0, 10)}.png`;
   if (downloads) { try { await downloads.save({ filename: name, data: blob }); return; } catch (e) { if (e && e.code === 'declined') return; } }
   // on the website (not inside a frame) a normal download works
   let framed = true; try { framed = window.top !== window; } catch (e) { framed = true; }
@@ -2983,6 +3066,13 @@ claudeReady = initClaude();
    refuses to publish the same version twice. */
 (() => {
   const CHANGELOG = [
+    { v: '2.1', date: '2026-10-16', title: 'Follow-up visits', items: [
+      'Follow-up visits: scan last visit’s QR code, or press Follow-up beside Trace an ulcer, and C/D walks you through today’s defect, infiltrate, thinning, AC cells, hypopyon and cultures.',
+      'Healed, Smaller, Same and Larger buttons, width and height steppers, or trace today’s border on the chart; pinch to resize. A healed defect keeps its thinning, and an infiltrate can become a scar.',
+      'Last visit is one tap away in the corner of the chart. The note, the strip under the chart and the summary sheet show what changed and whether it is improving, with a table of every visit from the third one.',
+      'QR codes now carry the exam date, last visit and the course, so the next visit picks up where this one left off.',
+      'Fixes: the width and height boxes no longer cut off numbers on narrow phones, and on a computer the guide panel uses the full height of the screen.',
+    ] },
     { v: '2.0', date: '2026-10-12', title: 'A simpler C/D', items: [
       'A new, simpler layout: the chart fills the top of the screen, with one Trace an ulcer button and the four everyday tools below it. Everything else opens in panels that slide up, or beside the chart on a computer.',
       'A strip under the chart sums up the exam (AC cells, hypopyon, organisms and the 1-2-3 rule); tap any of it to change it. The ⋯ menu holds photos, Scan QR, the 3 mm zone, the note, the findings list and the colour code.',
@@ -3092,6 +3182,753 @@ claudeReady = initClaude();
   put(SEEN_KEY, VERSION);
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') checkForUpdate(); });
   setTimeout(() => checkForUpdate(true), 4000);
+})();
+
+/* ================= Follow-up visits (pilot) =================
+   Last visit's drawing becomes S.prev (kept whole: shown on request and measured against today).
+   Each finding today keeps o.pv, the index of the finding it came from. S.date is this exam's date
+   (null when unknown), S.hist the summaries of visits before the last one. All of it rides in the QR code
+   after the fields C/D 2.0 reads, so 2.0 still opens these codes. */
+(() => {
+  const DAY = 864e5, MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const isoToday = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
+  const isoToDay = iso => Math.round(Date.UTC(+iso.slice(0, 4), +iso.slice(5, 7) - 1, +iso.slice(8, 10)) / DAY);
+  const dayToIso = n => new Date(n * DAY).toISOString().slice(0, 10);
+  const okIso = v => typeof v === 'string' && /^\d{4}-\d\d-\d\d$/.test(v);
+  const fmtD = (iso, yr) => { if (!okIso(iso)) return ''; const [y, m, d] = iso.split('-').map(Number); return `${d} ${MON[m - 1]}${yr ? ' ' + y : ''}`; };
+  const gap = () => S.prev && okIso(S.prev.date) && okIso(S.date) ? isoToDay(S.date) - isoToDay(S.prev.date) : null;
+  const daysTxt = n => n == null ? '' : n === 0 ? 'same day' : n === 1 ? '1 day' : `${n} days`;
+  const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+  const clone = o => JSON.parse(JSON.stringify(o));
+  const r1 = v => Math.round(v * 10) / 10, r3 = v => Math.round(v * 1000) / 1000;
+
+  const LESION = { ulcer: 1, infiltrate: 1, defect: 1, thinning: 1, scar: 1, lthin: 1 };
+  const PREV_TYPES = { ...LESION, hypopyon: 1 };
+
+  /* ---------- geometry ---------- */
+  function outlinePts(o, part) {
+    const def = part === 'def', poly = def ? o.dPoly : (o.type === 'scar' ? null : o.iPoly);
+    const rx = def ? o.dRx : o.rx, ry = def ? o.dRy : o.ry, ox = def ? (o.dOx || 0) : 0, oy = def ? (o.dOy || 0) : 0, pts = [];
+    if (poly && poly.length > 2) poly.forEach(p => pts.push(local2world(o, ox + p[0] * rx, oy + p[1] * ry)));
+    else for (let i = 0; i < 48; i++) { const t = i / 48 * Math.PI * 2; pts.push(local2world(o, ox + Math.cos(t) * rx, oy + Math.sin(t) * ry)); }
+    return pts;
+  }
+  const partWH = (o, part) => { const d = outlineWorld(o, part); return [d.R[0] - d.L[0], d.Tp[1] - d.B[1]]; };
+  const shoelace = p => { let a = 0; for (let i = 0; i < p.length; i++) { const q = p[(i + 1) % p.length]; a += p[i][0] * q[1] - q[0] * p[i][1]; } return Math.abs(a) / 2; };
+  const partArea = (o, part) => shoelace(outlinePts(o, part));
+  const defPartOf = o => o.type === 'ulcer' ? 'def' : 'inf';
+  const defOpen = o => !!o && (o.type === 'ulcer' ? !o.healed : o.type === 'defect');
+  const hasInf = o => !!o && (o.type === 'ulcer' || o.type === 'infiltrate' || o.type === 'scar');
+  const curOf = pv => S.objs.find(o => o.pv === pv) || null;
+  const prevOf = pv => S.prev && S.prev.objs[pv] || null;
+
+  // a traced (world) outline becomes the lesion's defect, kept in the lesion's own frame
+  function setDefFromWorld(o, world) {
+    const L = world.map(p => world2local(o, p[0], p[1])), b = bboxOf(L);
+    o.dOx = (b[0] + b[2]) / 2; o.dOy = (b[1] + b[3]) / 2; o.dRx = Math.max(.05, (b[2] - b[0]) / 2); o.dRy = Math.max(.05, (b[3] - b[1]) / 2);
+    const P = L.length > 28 ? resample([...L, L[0]], 28) : L;
+    o.dPoly = P.map(p => [r3((p[0] - o.dOx) / o.dRx), r3((p[1] - o.dOy) / o.dRy)]);
+    o.healed = false;
+  }
+  function setInfFromWorld(o, world) {
+    const keepDef = o.type === 'ulcer' ? outlinePts(o, 'def') : null, healed = !!o.healed;
+    const b = bboxOf(world);
+    o.x = (b[0] + b[2]) / 2; o.y = (b[1] + b[3]) / 2; o.rot = 0;
+    o.rx = clamp((b[2] - b[0]) / 2, .1, LIM); o.ry = clamp((b[3] - b[1]) / 2, .1, LIM);
+    if (o.type === 'scar') return;
+    const P = world.length > 28 ? resample([...world, world[0]], 28) : world;
+    o.iPoly = P.map(p => [r3((p[0] - o.x) / o.rx), r3((p[1] - o.y) / o.ry)]);
+    if (keepDef) { setDefFromWorld(o, keepDef); o.healed = healed; }
+  }
+  function fitEll(o, world) { const b = bboxOf(world); o.x = (b[0] + b[2]) / 2; o.y = (b[1] + b[3]) / 2; o.rot = 0; o.rx = clamp((b[2] - b[0]) / 2, .1, LIM); o.ry = clamp((b[3] - b[1]) / 2, .1, LIM); }
+  function applyWorld(o, part, world) {
+    if (part === 'def' && o.type === 'ulcer') setDefFromWorld(o, world);
+    else if (o.type === 'ulcer' || o.type === 'infiltrate') setInfFromWorld(o, world);
+    else fitEll(o, world);
+  }
+  // uniform scale about the part's own centre (the shape is kept)
+  function scaleUniform(o, part, k, from) {
+    const s = from || o;
+    if (part === 'def' && o.type === 'ulcer') { o.dRx = clamp(s.dRx * k, .05, LIM); o.dRy = clamp(s.dRy * k, .05, LIM); }
+    else { o.rx = clamp(s.rx * k, .1, LIM); o.ry = clamp(s.ry * k, .1, LIM); }
+  }
+  // set the width or height measured on the page
+  function setPageSize(o, part, axis, v) {
+    const pts = outlinePts(o, part), b = bboxOf(pts), i = axis === 'w' ? 0 : 1, c = (b[i] + b[i + 2]) / 2, old = b[i + 2] - b[i];
+    if (old < 1e-6) return;
+    const k = clamp(v, .1, 11) / old;
+    if (part !== 'def' && o.type !== 'ulcer' && o.type !== 'infiltrate') {   // plain ellipses keep their tilt
+      const along = Math.abs(Math.cos(rad(o.rot || 0))) >= .7071;
+      const key = (axis === 'w') === along ? 'rx' : 'ry'; o[key] = clamp(o[key] * k, .1, LIM); return;
+    }
+    applyWorld(o, part, pts.map(p => { const q = p.slice(); q[i] = c + (p[i] - c) * k; return q; }));
+  }
+  // the finding as it was at the last visit, put back
+  function restorePart(it) {
+    const p = prevOf(it.pv); if (!p) return null;
+    let o = curOf(it.pv);
+    if (!o || (it.k === 'inf' && o.type === 'scar' && p.type !== 'scar')) {
+      const c = clone(p); c.id = o ? o.id : uid(); c.pv = it.pv;
+      if (o) { if ('thin' in o) { c.thin = o.thin; c.perf = o.perf; } if (o.type === 'scar' && p.type === 'ulcer') c.healed = !defOpen(o) && true; S.objs = S.objs.map(q => q === o ? c : q); }
+      else S.objs.push(c);
+      return c;
+    }
+    if (it.k === 'def') { if (o.type === 'ulcer') setDefFromWorld(o, outlinePts(p, defPartOf(p))); else Object.assign(o, { x: p.x, y: p.y, rx: p.rx, ry: p.ry, rot: p.rot }); }
+    else if (o.type === 'ulcer' || o.type === 'infiltrate') { const healed = !!o.healed; setInfFromWorld(o, outlinePts(p, 'inf')); if (o.type === 'ulcer') o.healed = healed; }
+    else Object.assign(o, { x: p.x, y: p.y, rx: p.rx, ry: p.ry, rot: p.rot });
+    return o;
+  }
+
+  /* ---------- what changed ---------- */
+  const whTxt = wh => `${mm(wh[0])} × ${mm(wh[1])} mm`;
+  const thinVal = o => o && ('thin' in o) ? (o.perf ? 110 : o.thin || 0) : 0;
+  const thinTxt = o => !o || !('thin' in o) ? 'none' : o.perf ? 'perforated' : o.thin >= 100 ? 'descemetocele' : o.thin ? `~${o.thin}%` : 'none';
+  function areaChange(a, b) {
+    if (!a) return b ? ['worse', 'new'] : ['same', ''];
+    const r = b / a, pct = Math.round(Math.abs(r - 1) * 100);
+    return r < .9 ? ['better', `${pct}% smaller`] : r > 1.1 ? ['worse', `${pct}% larger`] : ['same', 'about the same'];
+  }
+  function compare() {
+    const P = S.prev; if (!P) return null;
+    const rows = [], lesions = P.objs.filter(p => LESION[p.type]);
+    const tag = p => lesions.length > 1 && T[p.type].kind !== 'arc' ? ` (${fmtH(hourOf(p.x, p.y))} o’clock)` : '';
+    P.objs.forEach((p, k) => {
+      if (!LESION[p.type]) return;
+      const c = curOf(k), t = tag(p);
+      if (defOpen(p)) {
+        const aT = partArea(p, defPartOf(p)), then = whTxt(partWH(p, defPartOf(p)));
+        if (defOpen(c)) { const [dir, ch] = areaChange(aT, partArea(c, defPartOf(c))); rows.push({ key: 'def', label: 'Epithelial defect' + t, then, now: whTxt(partWH(c, defPartOf(c))), change: ch, dir }); }
+        else rows.push({ key: 'def', label: 'Epithelial defect' + t, then, now: 'healed', change: '', dir: 'better' });
+      } else if (p.type === 'ulcer' && defOpen(c)) rows.push({ key: 'def', label: 'Epithelial defect' + t, then: 'healed', now: whTxt(partWH(c, 'def')), change: 'reopened', dir: 'worse' });
+      if (p.type === 'ulcer' || p.type === 'infiltrate') {
+        const then = whTxt(partWH(p, 'inf')), aT = partArea(p, 'inf');
+        if (c && (c.type === 'ulcer' || c.type === 'infiltrate')) { const [dir, ch] = areaChange(aT, partArea(c, 'inf')); rows.push({ key: 'inf', label: 'Infiltrate' + t, then, now: whTxt(partWH(c, 'inf')), change: ch, dir }); }
+        else if (c && c.type === 'scar') rows.push({ key: 'inf', label: 'Infiltrate' + t, then, now: `scar ${whTxt(partWH(c, 'inf'))}`, change: { nebula: 'faint', macula: 'moderate', leukoma: 'dense' }[c.density] + ' scar', dir: 'better' });
+        else if (!c || c.type === 'defect') rows.push({ key: 'inf', label: 'Infiltrate' + t, then, now: 'resolved', change: '', dir: 'better' });
+      }
+      if (p.type === 'scar' && c && c.type === 'scar') { const [dir, ch] = areaChange(partArea(p, 'inf'), partArea(c, 'inf')); if (dir !== 'same') rows.push({ key: 'scar', label: 'Scar' + t, then: whTxt(partWH(p, 'inf')), now: whTxt(partWH(c, 'inf')), change: ch, dir }); }
+      const tT = thinVal(p), tN = thinVal(c);
+      if (tT || tN) {
+        const d = tN - tT, dir = d >= 5 ? 'worse' : d <= -5 ? 'better' : 'same';
+        rows.push({ key: 'thin', label: 'Thinning' + t, then: thinTxt(p), now: thinTxt(c), change: tN === 110 && tT < 110 ? 'perforated' : dir === 'same' ? 'unchanged' : dir === 'worse' ? 'deeper' : 'shallower', dir });
+      }
+    });
+    S.objs.filter(o => LESION[o.type] && !(Number.isInteger(o.pv) && P.objs[o.pv])).forEach(o => {
+      const size = T[o.type].kind === 'arc' ? `${fmtH(o.h1)}–${fmtH(o.h2)} o’clock` : whTxt(partWH(o, 'inf'));
+      rows.push({ key: 'new', label: `New ${T[o.type].name.toLowerCase()}`, then: '—', now: size, change: 'new', dir: o.type === 'scar' ? 'same' : 'worse' });
+    });
+    const ai = AC_GRADES.indexOf(P.ac || '0'), bi = AC_GRADES.indexOf(S.ac || '0');
+    if (ai > 0 || bi > 0) rows.push({ key: 'ac', label: 'AC cells', then: P.ac === '0' ? 'none' : P.ac, now: S.ac === '0' ? 'none' : S.ac, change: bi < ai ? 'fewer' : bi > ai ? 'more' : 'unchanged', dir: bi < ai ? 'better' : bi > ai ? 'worse' : 'same' });
+    const hT = (P.objs.find(o => o.type === 'hypopyon') || {}).h || 0, hN = (S.objs.find(o => o.type === 'hypopyon') || {}).h || 0;
+    if (hT || hN) {
+      const d = hN - hT, dir = d <= -.15 ? 'better' : d >= .15 ? 'worse' : 'same';
+      rows.push({ key: 'hypo', label: 'Hypopyon', then: hT ? `${mm(hT)} mm` : 'none', now: hN ? `${mm(hN)} mm` : hT ? 'resolved' : 'none', change: !hN ? '' : !hT ? 'new' : dir === 'same' ? 'unchanged' : dir === 'better' ? 'smaller' : 'larger', dir });
+    }
+    const better = rows.some(r => r.dir === 'better'), worse = rows.some(r => r.dir === 'worse');
+    const verdict = better && worse ? 'Mixed' : worse ? 'Worsening' : better ? 'Improving' : 'Unchanged';
+    return { rows, verdict, days: gap() };
+  }
+  const VCOL = { Improving: '#2F7A4B', Worsening: '#C8372D', Mixed: '#9A5B0E', Unchanged: '#687F81' };
+  const VCLS = { Improving: 'ok', Worsening: 'bad', Mixed: 'mixed', Unchanged: 'quiet' };
+  const VARROW = { Improving: '↓', Worsening: '↑', Mixed: '↕', Unchanged: '=' };
+
+  /* ---------- the course: one line per earlier visit ---------- */
+  function primaryOf(objs) {
+    const ls = objs.filter(o => LESION[o.type] && T[o.type].kind !== 'arc'); if (!ls.length) return null;
+    const rank = o => ({ ulcer: 4, infiltrate: 3, defect: 2, scar: 1.5, thinning: 1 }[o.type] || 0) * 1000 + partArea(o, 'inf');
+    return ls.sort((a, b) => rank(b) - rank(a))[0];
+  }
+  function summaryOf(st) {
+    const o = primaryOf(st.objs), hy = st.objs.find(q => q.type === 'hypopyon');
+    const r = { d: okIso(st.date) ? st.date : null, ac: st.ac || '0', hy: hy ? r1(hy.h) : 0, def: null, inf: null, thin: null, kind: o ? o.type : null };
+    if (o) {
+      if (defOpen(o)) r.def = partWH(o, defPartOf(o)).map(r1);
+      if (hasInf(o)) r.inf = partWH(o, 'inf').map(r1);
+      if ('thin' in o) r.thin = o.perf ? 110 : o.thin || 0;
+    }
+    return r;
+  }
+  const packHist = h => [h.d ? isoToDay(h.d) : 0, Math.max(0, AC_GRADES.indexOf(h.ac)), Math.round((h.hy || 0) * 10), ...(h.def ? h.def.map(v => Math.round(v * 10)) : [-1, -1]), ...(h.inf ? h.inf.map(v => Math.round(v * 10)) : [-1, -1]), h.thin == null ? -1 : h.thin, h.kind ? TYPE_KEYS.indexOf(h.kind) : -1];
+  const unpackHist = r => !Array.isArray(r) ? null : { d: r[0] > 0 ? dayToIso(r[0]) : null, ac: AC_GRADES[r[1]] || '0', hy: (+r[2] || 0) / 10, def: r[3] >= 0 ? [r[3] / 10, r[4] / 10] : null, inf: r[5] >= 0 ? [r[5] / 10, r[6] / 10] : null, thin: r[7] >= 0 ? +r[7] : null, kind: TYPE_KEYS[r[8]] || null };
+  const courseVisits = () => !S.prev || !(S.hist || []).length ? [] : [...S.hist, summaryOf(S.prev), summaryOf({ date: S.date, ac: S.ac, objs: S.objs })].slice(-6);
+
+  /* ---------- QR code: date, last visit and course after the fields 2.0 reads ---------- */
+  function packRows(objs) {
+    return objs.map(o => {
+      const keys = Object.keys(T[o.type].d);
+      const row = [TYPE_KEYS.indexOf(o.type), r2(o.x || 0), r2(o.y || 0), ...keys.map(k => {
+        const v = o[k];
+        if (k === 'iPoly' || k === 'dPoly') return Array.isArray(v) && v.length > 2 ? (v.length > 28 ? resample([...v, v[0]], 28) : v).flatMap(p => [Math.round(p[0] * 100), Math.round(p[1] * 100)]) : 0;
+        if (k === 'pts') return [];
+        return typeof v === 'number' ? r2(v) : typeof v === 'boolean' ? (v ? 1 : 0) : v;
+      }), o.seed >>> 0];
+      if (o.healed) row.push(-1, 1);
+      return row;
+    });
+  }
+  function applyExtras(rows, objs, withPv) {
+    let j = 0;
+    rows.forEach(row => { const type = TYPE_KEYS[row[0]]; if (!type || !Array.isArray(row)) return; const o = objs[j++]; if (!o) return;
+      const n = Object.keys(T[type].d).length, pv = row[4 + n], fl = row[5 + n];
+      if (withPv && Number.isInteger(pv) && pv >= 0) o.pv = pv; if (+fl & 1) o.healed = true; });
+  }
+  const _pack = packState;
+  packState = function () {
+    const a = _pack();
+    a[3].forEach((row, i) => { const o = S.objs[i]; const pv = S.prev && Number.isInteger(o.pv) ? o.pv : -1; if (pv >= 0 || o.healed) row.push(pv, o.healed ? 1 : 0); });
+    const P = S.prev;
+    a[6] = [okIso(S.date) ? isoToDay(S.date) : isoToDay(isoToday()), P ? [okIso(P.date) ? isoToDay(P.date) : 0, Math.max(0, AC_GRADES.indexOf(P.ac)), packRows(P.objs)] : 0, (S.hist || []).map(packHist)];
+    return a;
+  };
+  const _unpack = unpackState;
+  unpackState = function (a) {
+    const st = _unpack(a), f = a[6];
+    applyExtras(a[3], st.objs, true);
+    st.date = Array.isArray(f) && f[0] > 0 ? dayToIso(f[0]) : null;   // codes from 2.0 carry no date
+    if (Array.isArray(f) && Array.isArray(f[1]) && Array.isArray(f[1][2])) {
+      const ps = _unpack([2, 0, +f[1][1] || 0, f[1][2]]); applyExtras(f[1][2], ps.objs, false);
+      st.prev = { date: f[1][0] > 0 ? dayToIso(f[1][0]) : null, ac: ps.ac, objs: ps.objs };
+    }
+    st.hist = Array.isArray(f) && Array.isArray(f[2]) ? f[2].map(unpackHist).filter(Boolean) : [];
+    if (!st.prev) st.objs.forEach(o => { delete o.pv; });
+    return st;
+  };
+
+  /* ---------- note ---------- */
+  function noteBlock() {
+    const c = compare(); if (!c) return [];
+    const P = S.prev, d = c.days;
+    const when = okIso(P.date) ? ` (${fmtD(P.date, true)}${d != null && d > 0 ? `, ${daysTxt(d)} ago` : ''})` : '';
+    const out = [`Since last visit${when}: ${c.verdict.toLowerCase()}.`];
+    c.rows.forEach(r => out.push(`- ${r.label}: ${r.then} → ${r.now}${r.change && r.change !== 'new' ? ` (${r.change})` : ''}.`));
+    return out;
+  }
+  const _bn = buildNote;
+  buildNote = function (r) {
+    _bn(r);
+    if (!S.prev) return;
+    const lines = noteBlock(), n = $('#note'), arr = n.value.split('\n'), at = arr.findIndex(l => l.startsWith('1-2-3 rule'));
+    arr.splice(at < 0 ? arr.length : at, 0, ...lines); n.value = arr.join('\n');
+  };
+  const _desc = describe;
+  describe = function (o) {
+    if (o.type !== 'ulcer' || !o.healed) return _desc(o);
+    const sec = sector(o) ? `${sector(o)} ` : '';
+    return `${cap(zone(o))} ${sec}corneal ulcer (${where(o)}), now re-epithelialized: stromal infiltrate ${wh(o, 'inf')}${o.edge === 'feathery' ? ' with feathery margins' : o.edge === 'ring' ? ', ring-shaped' : ''}${o.sat ? `, ${o.sat} satellite lesion${o.sat > 1 ? 's' : ''}` : ''}, ~${o.infDepth}% depth (${depthWord(o.infDepth)}); ${thinWords(o)}.`;
+  };
+  SPECS.ulcer.push(['check', 'healed', 'Epithelium healed']);
+
+  /* ---------- chart: today only; last visit is one tap away (peek), and today's border can be traced ---------- */
+  let peek = false, prevPaint = false, stroke = null;
+  const _paint = paint;
+  function paintPrev(g, Wd, dpr, mode) {
+    const keep = S.objs, ac = S.ac; prevPaint = true; S.objs = S.prev.objs; S.ac = S.prev.ac;
+    try { _paint(g, Wd, dpr, mode); } finally { S.objs = keep; S.ac = ac; prevPaint = false; }
+  }
+  paint = function (g, Wd, dpr, interactive) {
+    if (peek && S.prev && interactive === true) {
+      paintPrev(g, Wd, dpr, 'peek');
+      g.setTransform(dpr, 0, 0, dpr, 0, 0);
+      badge(g, 12, 12, `Last visit${S.prev.date ? ' · ' + fmtD(S.prev.date) : ''}`, '#fff', '#0D5E59', 14);
+      return;
+    }
+    const it0 = interactive === true ? item() : null, keepSel = sel;
+    if (it0 && it0.k === 'thin') sel = null;
+    try { _paint(g, Wd, dpr, interactive); } finally { sel = keepSel; }
+    if (!S.prev || prevPaint || interactive !== true) return;
+    const Cc = Wd / 2, Kk = Wd * .405 / LIM;
+    g.save(); g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    {
+      const it = item();
+      if (it && (it.k === 'def' || it.k === 'inf')) {
+        const o = curOf(it.pv); let d = o;
+        if (o && o.type === 'ulcer' && it.k === 'def') { if (o.healed) d = null; else { const [wx, wy] = local2world(o, o.dOx || 0, o.dOy || 0); d = { type: 'defect', x: wx, y: wy, rot: o.rot || 0, rx: o.dRx, ry: o.dRy, iPoly: o.dPoly }; } }
+        else if (o && o.type === 'ulcer') d = { ...o, type: 'infiltrate' };
+        if (d) drawDims(g, d, (x, y) => [Cc + x * Kk, Cc - y * Kk], Kk, true);
+      }
+      if (stroke && stroke.pts.length > 1) drawStroke(g, Cc, Kk, Wd);
+    }
+    g.restore();
+  };
+  function badge(g, x, y, text, fg, bg, size) {
+    g.font = `700 ${size}px "Atkinson Hyperlegible", system-ui, sans-serif`; g.textAlign = 'left'; g.textBaseline = 'middle';
+    const w = g.measureText(text).width + 20, h = size + 14;
+    g.fillStyle = bg; g.beginPath(); g.roundRect ? g.roundRect(x, y, w, h, h / 2) : g.rect(x, y, w, h); g.fill();
+    g.fillStyle = fg; g.fillText(text, x + 10, y + h / 2 + .5);
+  }
+  function drawStroke(g, Cc, Kk, Wd) {
+    const c = stroke.pts, P = (x, y) => [Cc + x * Kk, Cc - y * Kk], col = stroke.k === 'def' ? '#1E7F3E' : '#8A5E00';
+    g.beginPath(); c.forEach((p, i) => { const [x, y] = P(p[0], p[1]); i ? g.lineTo(x, y) : g.moveTo(x, y); });
+    g.strokeStyle = stroke.k === 'def' ? COL.defect : '#D9A21B'; g.lineWidth = 3; g.lineCap = 'round'; g.lineJoin = 'round'; g.stroke();
+    const b = bboxOf(c), [x1, y1] = P(b[2], b[3]), [x0, y0] = P(b[0], b[1]);
+    const txt = `${mm(b[2] - b[0])} × ${mm(b[3] - b[1])} mm`;
+    g.font = '700 16px "IBM Plex Mono", ui-monospace, monospace'; g.textAlign = 'center'; g.textBaseline = 'middle';
+    const tw = g.measureText(txt).width + 20; let x = x1 + tw / 2 + 10, y = y1 - 16;
+    if (x + tw / 2 > Wd - 4) x = x0 - tw / 2 - 10; if (x - tw / 2 < 4) x = Math.min(Wd - tw / 2 - 4, Math.max(tw / 2 + 4, (x0 + x1) / 2)); if (y < 16) y = y0 + 22;
+    g.fillStyle = col; g.beginPath(); g.roundRect ? g.roundRect(x - tw / 2, y - 15, tw, 30, 15) : g.rect(x - tw / 2, y - 15, tw, 30); g.fill();
+    g.fillStyle = '#fff'; g.fillText(txt, x, y + 1);
+  }
+
+  const cvEl = $('#chart'), stage = cvEl.closest('.stage');
+  const ICON = {
+    peek: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1"/><path d="M3.5 4.5v4h4"/><circle cx="12.5" cy="12" r="3.2" stroke-dasharray="2 1.6"/></svg>',
+    fu: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8" stroke-dasharray="3 2.6"/><circle cx="12" cy="12" r="3.6"/><path d="m15 9 3.5-3.5M18.5 9V5.5H15"/></svg>',
+  };
+  const peekBtn = el('button', 'fu-peek'); peekBtn.type = 'button'; peekBtn.id = 'fuPeekBtn'; peekBtn.hidden = true; peekBtn.setAttribute('aria-pressed', 'false');
+  peekBtn.innerHTML = ICON.peek; peekBtn.setAttribute('aria-label', 'Show last visit'); peekBtn.title = 'Show last visit';
+  stage.append(peekBtn);
+  function setPeek(v) { peek = !!v && !!S.prev; peekBtn.setAttribute('aria-pressed', String(peek)); peekBtn.setAttribute('aria-label', peek ? 'Back to today' : 'Show last visit'); peekBtn.title = peek ? 'Back to today' : 'Show last visit'; render(); }
+  peekBtn.onclick = () => setPeek(!peek);
+
+  // during the size steps one finger traces today's border and two fingers resize; touches never edit last visit
+  const touch = new Map(); let pinch = null;
+  const posOf = e => { const r = cvEl.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  stage.addEventListener('pointerdown', e => {
+    if (e.target !== cvEl) return;
+    if (peek) { e.stopPropagation(); setPeek(false); return; }
+    const it = item(); if (!it || !['def', 'inf', 'thin'].includes(it.k)) return;
+    e.stopPropagation(); e.preventDefault();
+    if (it.k === 'thin') return;
+    try { cvEl.setPointerCapture(e.pointerId); } catch (err) { /* already released */ }
+    touch.set(e.pointerId, posOf(e));
+    if (touch.size === 1) { stroke = { k: it.k, pts: [toMm(...posOf(e))] }; pinch = null; }
+    else if (touch.size === 2) {
+      stroke = null; checkpoint(); let o = curOf(it.pv); if (!o) o = restorePart(it); if (!o) return;
+      if (it.k === 'def' && o.type === 'ulcer' && o.healed) o.healed = false;
+      const [a, b] = [...touch.values()];
+      pinch = { o, part: it.k === 'def' ? defPartOf(o) : 'inf', d0: Math.max(10, Math.hypot(a[0] - b[0], a[1] - b[1])), snap: clone(o) };
+    }
+    render();
+  }, true);
+  stage.addEventListener('pointermove', e => {
+    if (!touch.has(e.pointerId)) return; e.stopPropagation();
+    touch.set(e.pointerId, posOf(e));
+    if (pinch && touch.size >= 2) { const [a, b] = [...touch.values()]; scaleUniform(pinch.o, pinch.part, Math.hypot(a[0] - b[0], a[1] - b[1]) / pinch.d0, pinch.snap); render(); return; }
+    if (stroke) { const [x, y] = toMm(...posOf(e)), l = stroke.pts[stroke.pts.length - 1]; if (Math.hypot(l[0] - x, l[1] - y) > .04) { stroke.pts.push([x, y]); render(); } }
+  }, true);
+  const endTouch = e => {
+    if (!touch.has(e.pointerId)) return; e.stopPropagation(); touch.delete(e.pointerId);
+    if (pinch) { if (!touch.size) { pinch = null; mark(); commitView(); } return; }
+    if (touch.size || !stroke) return;
+    const c = stroke.pts, it = item(); stroke = null;
+    let len = 0; for (let i = 1; i < c.length; i++) len += Math.hypot(c[i][0] - c[i - 1][0], c[i][1] - c[i - 1][1]);
+    if (!it || len < .6) { render(); return; }
+    checkpoint();
+    let o = curOf(it.pv); if (!o) o = restorePart(it);
+    if (o) applyWorld(o, it.k === 'def' ? defPartOf(o) : 'inf', outerEnvelope(c));
+    mark(); commitView();
+  };
+  stage.addEventListener('pointerup', endTouch, true); stage.addEventListener('pointercancel', endTouch, true);
+
+  const _rp = renderProfile;
+  renderProfile = function (g, o, w, h, opt) {
+    _rp(g, o, w, h, opt);
+    const p = S.prev && Number.isInteger(o.pv) ? prevOf(o.pv) : null;
+    if (!p || !('thin' in p)) return;
+    const tT = thinVal(p); if (!tT && !thinVal(o)) return;
+    const geo = profGeo(w), T0 = geo.top, TH = geo.T, cx = w / 2, ant = x => T0 + Math.pow((x - cx) / (w / 2), 2) * 14;
+    const hw = (ob, part) => { const d = outlineWorld(ob, part); return (d.R[0] - d.L[0]) / 2; };
+    const bedW = ob => ob.type === 'ulcer' ? hw(ob, 'def') : ob.type === 'lthin' ? ob.w / 2 : hw(ob, 'inf');
+    const exW = bedW(o), infW = o.type === 'lthin' ? exW : hw(o, 'inf');
+    const kx = (w - 20) / (2 * Math.max(Math.max(exW, infW) * 2.1, 2.6)), pPx = Math.max(6, bedW(p) * kx), d = p.perf ? TH + 6 : tT / 100 * TH;
+    g.save(); g.setLineDash([5, 4]); g.strokeStyle = '#0D5E59'; g.lineWidth = 1.8; g.beginPath();
+    for (let x = cx - pPx; x <= cx + pPx + .1; x += 2) { const dx = Math.abs(x - cx), y = Math.min(ant(x) + d * (.5 + .5 * Math.cos(Math.PI * dx / pPx)), ant(x) + TH + 6); x === cx - pPx ? g.moveTo(x, y) : g.lineTo(x, y); }
+    g.stroke(); g.setLineDash([]);
+    g.font = '700 11px "IBM Plex Mono", monospace'; g.textAlign = 'right'; g.textBaseline = 'middle';
+    const txt = `last ${p.perf ? 'perf' : tT >= 100 ? 'DMC' : tT + '%'}`, lx = cx - pPx * .45 - 6, ly = ant(cx) + d * .7;
+    g.fillStyle = 'rgba(255,253,248,0.9)'; g.fillRect(lx - g.measureText(txt).width - 4, ly - 8, g.measureText(txt).width + 8, 16);
+    g.fillStyle = '#0D5E59'; g.fillText(txt, lx, ly + .5);
+    g.restore();
+  };
+
+  /* ---------- the guided follow-up ---------- */
+  let timer = 0;
+  const item = () => flow && flow.step === 'fu' ? flow.list[flow.i] || null : null;
+  const mark = () => { const it = item(); if (it) flow.touched[flow.i] = true; };
+  function buildSteps() {
+    const L = [], pairs = S.prev.objs.map((p, k) => ({ p, k })).filter(x => LESION[x.p.type]);
+    pairs.sort((a, b) => NOTE_ORDER.indexOf(a.p.type) - NOTE_ORDER.indexOf(b.p.type));
+    pairs.forEach(({ p, k }) => {
+      if (defOpen(p)) L.push({ k: 'def', pv: k });
+      if (p.type === 'ulcer' || p.type === 'infiltrate') L.push({ k: 'inf', pv: k });
+      if ('thin' in p && (p.type !== 'scar' || p.thin || p.perf)) L.push({ k: 'thin', pv: k });
+    });
+    L.push({ k: 'ac' }, { k: 'hypo' }, { k: 'micro' }, { k: 'done' });
+    return { step: 'fu', list: L, i: 0, touched: {} };
+  }
+  function startFollowUp() {
+    checkpoint(); clearTimeout(timer); setPeek(false);
+    const today = isoToday(), hist = (S.hist || []).slice();
+    if (S.prev) hist.push(summaryOf(S.prev));
+    S.objs.forEach(normalizeObj);
+    const keep = S.objs.filter(o => PREV_TYPES[o.type]);
+    S.prev = { date: okIso(S.date) ? S.date : null, ac: S.ac, objs: keep.map(o => { const c = clone(o); delete c.pv; return c; }) };
+    S.objs.forEach(o => { const k = keep.indexOf(o); if (k >= 0) o.pv = k; else delete o.pv; });
+    S.hist = hist.slice(-8); S.date = today;
+    $('#reviewBar').hidden = true;
+    flow = buildSteps(); enter(1);
+  }
+  function enter(dir) {
+    clearTimeout(timer);
+    for (;;) {
+      const it = flow.list[flow.i]; if (!it) { flow.i = flow.list.length - 1; break; }
+      if (it.k === 'thin') { const o = curOf(it.pv); if (!o || !('thin' in o)) { flow.i += dir; if (flow.i < 0) { flow.i = 0; dir = 1; } continue; } }
+      break;
+    }
+    const it = item(); sel = null;
+    if (it && it.k === 'thin') { sel = curOf(it.pv).id; profMode = 'thin'; }
+    setTool('select'); $('#hint').hidden = true;
+    commitView();
+    const f = $('#flow'); if (f) f.scrollTop = 0; const sh = f && f.closest('.sheet'); if (sh) sh.scrollTop = 0;
+  }
+  const go = d => { if (!item()) return; flow.i = clamp(flow.i + d, 0, flow.list.length - 1); enter(d); };
+  const later = (fn, ms) => { clearTimeout(timer); const at = flow && flow.i; timer = setTimeout(() => { if (item() && flow.i === at) fn(); }, ms); };
+  const _tc = thinChosen;
+  thinChosen = function (delay) { const it = item(); if (it && it.k === 'thin') { mark(); renderFlow(); later(() => go(1), delay); return; } return _tc(delay); };
+  $('#insp').addEventListener('pointerdown', e => { if (e.target.id === 'prof') clearTimeout(timer); }, true);
+
+  function offer() {
+    if (!S.objs.some(o => LESION[o.type])) return;
+    if (wanted) { wanted = false; startFollowUp(); return; }
+    if (okIso(S.date) && S.date >= isoToday()) { addReviewButton(); return; }
+    $('#reviewBar').hidden = true; sel = null; flow = { step: 'fuOffer' }; renderFlow();
+  }
+  function addReviewButton() {
+    const acts = $('#reviewBar .acts'); if (!acts || acts.querySelector('.fu-rb')) return;
+    const b = el('button', 'fu-rb', 'Follow-up visit'); b.type = 'button'; b.onclick = () => { $('#reviewBar').hidden = true; startFollowUp(); };
+    acts.prepend(b);
+  }
+  let wanted = false;
+  const _sr = showReview;
+  showReview = function (text, undoable) {
+    $('#reviewBar .fu-rb') && $('#reviewBar .fu-rb').remove();
+    _sr(text, undoable);
+    if (/^Drawing loaded from a C\/D/.test(text)) { setPeek(false); setTimeout(offer, 0); }
+  };
+  $('#scanClose').addEventListener('click', () => { wanted = false; });
+
+  // the panel
+  const _rf = renderFlow;
+  renderFlow = function () {
+    if (flow && flow.step === 'fu' && !S.prev) flow = null;
+    const it = item();
+    document.body.classList.toggle('fu-size', !!it && (it.k === 'def' || it.k === 'inf'));
+    document.body.classList.toggle('fu-thin', !!it && it.k === 'thin');
+    _rf();
+    const box = $('#flow'); if (!box || !flow) return;
+    box.classList.toggle('fu', flow.step === 'fu' || flow.step === 'fuOffer');
+    if (flow.step === 'fuOffer') return renderOffer(box);
+    if (flow.step === 'fu' && it) return renderStep(box, it);
+  };
+  function head(box, step, title, onEnd) {
+    const h = el('div', 'flow-head');
+    const t = el('div'); t.append(el('div', 'flow-step', step), el('h3', null, title));
+    const end = el('button', 'flow-skip', 'End'); end.type = 'button';
+    end.onclick = onEnd || (() => { flow = null; clearTimeout(timer); setPeek(false); sel = null; commitView(false); });
+    h.append(t, end); box.append(h);
+  }
+  function acts(box, ...btns) { const d = el('div', 'flow-acts'); btns.filter(Boolean).forEach(([label, fn, cls]) => { const b = el('button', cls || 'flow-next', label); b.type = 'button'; b.onclick = fn; d.append(b); }); box.append(d); return d; }
+  function opts(box, list, on, pick, was) {
+    const d = el('div', 'flow-opts');
+    list.forEach(([v, label]) => { const b = el('button', 'word', label); b.type = 'button'; b.setAttribute('aria-pressed', String(!!on(v))); if (was && was(v)) b.classList.add('was'); b.onclick = () => pick(v); d.append(b); });
+    box.append(d); return d;
+  }
+  function cmpLine(box, then, now, dir, change) {
+    const d = el('div', 'fu-cmp');
+    const a = el('span', 'fu-then'); a.append(el('small', null, 'Last visit'), el('b', null, then));
+    const b = el('span', 'fu-now'), sm = el('small', null, 'Today'); if (change) sm.append(el('em', `fu-chg ${dir}`, change));
+    b.append(sm, el('b', null, now));
+    d.append(a, el('span', 'fu-arrow', '→'), b);
+    box.append(d);
+  }
+  function sizer(box, o, part, p, pPart) {
+    const [w, h] = partWH(o, part), [pw, ph] = p ? partWH(p, pPart) : [null, null];
+    const g = el('div', 'big-steps');
+    [['w', 'Width', w, pw], ['h', 'Height', h, ph]].forEach(([ax, label, val, was]) => {
+      const f = el('div', 'big-step');
+      f.innerHTML = `<span class="bs-l">${label}${was != null ? `<span class="bs-was">was ${mm(was)}</span>` : ''}</span><div class="bs-row"><button type="button" aria-label="${label} smaller">−</button><input inputmode="decimal" aria-label="${label} in mm"><span class="bs-u">mm</span><button type="button" aria-label="${label} larger">+</button></div>`;
+      const inp = f.querySelector('input'); inp.value = mm(val);
+      const set = v => { if (!isFinite(v)) { inp.value = mm(val); return; } checkpoint(); setPageSize(o, part, ax, Math.round(clamp(v, .1, 11) * 10) / 10); mark(); commitView(); };
+      const [minus, plus] = f.querySelectorAll('button');
+      minus.onclick = () => set(Math.round(val * 10) / 10 - .1); plus.onclick = () => set(Math.round(val * 10) / 10 + .1);
+      inp.onchange = () => set(parseFloat(inp.value));
+      g.append(f);
+    });
+    box.append(g);
+  }
+  function lesionWord(p) {
+    const many = S.prev.objs.filter(q => LESION[q.type]).length > 1;
+    return many && T[p.type].kind !== 'arc' ? ` · ${fmtH(hourOf(p.x, p.y))} o’clock` : '';
+  }
+  function stepLabel(name) { const n = flow.list.length - 1; return `${Math.min(flow.i + 1, n)} of ${n} · ${name}`; }
+  function nextLabel() {
+    const nx = flow.list[flow.i + 1]; if (!nx) return 'Next →';
+    return { def: 'Next: defect →', inf: 'Next: infiltrate →', thin: 'Next: thinning →', ac: 'Next: AC cells →', hypo: 'Next: hypopyon →', micro: 'Next: cultures →', done: 'Next: compare →' }[nx.k];
+  }
+  function navActs(box, touched) {
+    const a = acts(box, [nextLabel(), () => go(1), 'flow-next' + (touched ? ' s-next' : '')], flow.i > 0 && ['Back', () => go(-1), 'flow-skip']);
+    a.classList.add('fu-foot'); return a;
+  }
+
+  function renderOffer(box) {
+    const P = { date: S.date, ac: S.ac, objs: S.objs }, sm = summaryOf(P), hy = S.objs.find(o => o.type === 'hypopyon');
+    const when = okIso(S.date) ? `${fmtD(S.date)} · ${daysTxt(isoToDay(isoToday()) - isoToDay(S.date))} ago` : 'date not recorded';
+    head(box, `Last visit · ${when}`, 'Is this a follow-up visit?', () => { flow = null; commitView(false); });
+    const parts = [];
+    if (sm.kind) parts.push(`${T[sm.kind].name}${sm.def ? `: defect ${whTxt(sm.def)}` : ''}${sm.inf ? `${sm.def ? ',' : ':'} infiltrate ${whTxt(sm.inf)}` : ''}${sm.thin ? `, ${sm.thin >= 110 ? 'perforated' : sm.thin + '% thin'}` : ''}`);
+    parts.push(S.ac === '0' ? 'no AC cells' : `AC ${S.ac}`);
+    if (hy) parts.push(`hypopyon ${mm(hy.h)} mm`);
+    (S.micro || []).forEach(m => parts.push(m.org));
+    box.append(el('p', null, cap(parts.join(' · ')) + '.'));
+    box.append(el('p', 'fu-sub', 'Update it to today. Last visit is kept, one tap away on the chart, and compared at the end.'));
+    acts(box, ['Start today’s follow-up →', startFollowUp, 'flow-next s-next'], ['Just view it', () => { flow = null; commitView(false); }, 'flow-skip']);
+  }
+
+  function renderStep(box, it) {
+    const P = S.prev, p = it.pv != null ? prevOf(it.pv) : null, o = it.pv != null ? curOf(it.pv) : null, touched = !!flow.touched[flow.i];
+    if (it.k === 'def') {
+      const open = defOpen(o), part = o ? defPartOf(o) : 'inf';
+      head(box, stepLabel('Epithelial defect' + lesionWord(p)), 'How is the defect today?');
+      const aT = partArea(p, defPartOf(p)), aN = open ? partArea(o, part) : 0, [dir, ch] = open ? areaChange(aT, aN) : ['better', 'healed'];
+      cmpLine(box, whTxt(partWH(p, defPartOf(p))), open ? whTxt(partWH(o, part)) : 'healed', dir, touched || !open ? ch : '');
+      const same = open && Math.abs(aN / aT - 1) < .03;
+      const g = opts(box, [['healed', 'Healed'], ['smaller', 'Smaller'], ['same', 'Same'], ['larger', 'Larger']], v => v === 'healed' ? touched && !open : v === 'same' ? touched && same : false, v => {
+        checkpoint();
+        if (v === 'healed') { if (o && o.type === 'ulcer') o.healed = true; else if (o) S.objs = S.objs.filter(q => q !== o); mark(); commitView(); later(() => go(1), 650); return; }
+        let c = o;
+        if (v === 'same' || !open) { c = restorePart(it); if (c && c.type === 'ulcer') c.healed = false; }
+        if (c && v !== 'same') scaleUniform(c, defPartOf(c), v === 'smaller' ? .85 : 1.15);
+        mark(); commitView(); if (v === 'same') later(() => go(1), 650);
+      });
+      if (!touched) g.classList.add('pulse-group');
+      if (open) sizer(box, o, part, p, defPartOf(p));
+      box.append(el('p', 'fu-sub', 'Or trace today’s border on the chart.'));
+      navActs(box, touched);
+    } else if (it.k === 'inf') {
+      const isScar = o && o.type === 'scar', present = hasInf(o);
+      head(box, stepLabel('Infiltrate' + lesionWord(p)), isScar ? 'The scar today' : 'How is the infiltrate today?');
+      const aT = partArea(p, 'inf'), aN = present ? partArea(o, 'inf') : 0;
+      let [dir, ch] = present ? areaChange(aT, aN) : ['better', 'resolved'];
+      if (isScar) { dir = 'better'; ch = 'scarred'; }
+      cmpLine(box, whTxt(partWH(p, 'inf')), present ? (isScar ? 'scar ' : '') + whTxt(partWH(o, 'inf')) : 'resolved', dir, touched || !present ? ch : '');
+      const canScar = !o || o.type !== 'ulcer' || o.healed;
+      const list = [];
+      if (p.type === 'infiltrate') list.push(['resolved', 'Resolved']);
+      if (canScar && !isScar) list.push(['scar', 'Now a scar']);
+      list.push(['smaller', 'Smaller'], ['same', 'Same'], ['larger', 'Larger']);
+      const same = present && !isScar && Math.abs(aN / aT - 1) < .03;
+      const g = opts(box, list, v => v === 'resolved' ? touched && !present : v === 'same' ? touched && same : false, v => {
+        checkpoint();
+        if (v === 'resolved') { if (o) S.objs = S.objs.filter(q => q !== o); mark(); commitView(); later(() => go(1), 650); return; }
+        if (v === 'scar') {
+          const base = o || restorePart(it); if (!base) return;
+          const sc = makeObj('scar', base.x, base.y);
+          Object.assign(sc, { id: base.id, seed: base.seed, x: base.x, y: base.y, rot: base.rot || 0, rx: base.rx, ry: base.ry, density: 'macula', thin: base.thin || 0, perf: !!base.perf, pv: it.pv });
+          S.objs = S.objs.map(q => q === base ? sc : q); mark(); commitView(); return;
+        }
+        let c = o;
+        if (v === 'same' || !present) c = restorePart(it);
+        if (c && v !== 'same') scaleUniform(c, 'inf', v === 'smaller' ? .85 : 1.15);
+        mark(); commitView(); if (v === 'same') later(() => go(1), 650);
+      });
+      if (!touched) g.classList.add('pulse-group');
+      if (isScar) {
+        const d = opts(box, [['nebula', 'Faint'], ['macula', 'Moderate'], ['leukoma', 'Dense']], v => o.density === v, v => { checkpoint(); o.density = v; mark(); commitView(); });
+        d.classList.add('fu-density'); d.prepend(el('span', 'fu-lab', 'Scar density'));
+      }
+      if (present) sizer(box, o, 'inf', p, 'inf');
+      box.append(el('p', 'fu-sub', isScar ? 'Undo brings the infiltrate back.' : 'Or trace today’s border on the chart.'));
+      navActs(box, touched);
+    } else if (it.k === 'thin') {
+      const tT = thinVal(p), tN = thinVal(o);
+      head(box, stepLabel('Thinning' + lesionWord(p)), `Thinning today? Last visit ${thinTxt(p)}`);
+      const row = el('div', 'fu-thinrow'); box.append(row);
+      const g = opts(row, [['same', 'Same as last visit']], () => touched && tN === tT, () => { checkpoint(); o.thin = p.thin || 0; o.perf = !!p.perf; mark(); commitView(); later(() => go(1), 550); });
+      if (!touched) g.classList.add('pulse-group');
+      const a = acts(row, ['Next →', () => go(1), 'flow-next' + (touched ? ' s-next' : '')], ['Back', () => go(-1), 'flow-skip']); void a;
+    } else if (it.k === 'ac') {
+      head(box, stepLabel('Anterior chamber'), 'AC cells today?');
+      box.append(el('p', null, `Last visit: ${P.ac === '0' ? 'no cells' : P.ac}. Tap today’s grade.`));
+      const g = opts(box, AC_GRADES.map(v => [v, v]), v => touched && S.ac === v, v => { checkpoint(); S.ac = v; syncAc(); mark(); go(1); }, v => v === (P.ac || '0'));
+      g.classList.add('mono'); if (!touched) g.classList.add('pulse-group');
+      navActs(box, touched);
+    } else if (it.k === 'hypo') {
+      const hT = (P.objs.find(q => q.type === 'hypopyon') || {}).h || 0, hy = S.objs.find(q => q.type === 'hypopyon');
+      head(box, stepLabel('Hypopyon'), 'Hypopyon today?');
+      box.append(el('p', null, `Last visit: ${hT ? mm(hT) + ' mm' : 'none'}.`));
+      const g = opts(box, HYPO_OPTS.map(h => [h, h ? h + ' mm' : 'None']), v => touched && (hy ? Math.abs(hy.h - v) < .01 : v === 0), v => {
+        checkpoint();
+        if (!v) S.objs = S.objs.filter(q => q.type !== 'hypopyon');
+        else { const h = S.objs.find(q => q.type === 'hypopyon') || (() => { const n = makeObj('hypopyon'); S.objs.push(n); return n; })(); h.h = v; }
+        mark(); go(1);
+      }, v => hT ? Math.abs(hT - v) < .01 : v === 0);
+      if (!touched) g.classList.add('pulse-group');
+      navActs(box, touched);
+    } else if (it.k === 'micro') {
+      const ms = S.micro || [], notes = S.microNotes || [];
+      head(box, stepLabel('Cultures'), 'Any news from the lab?');
+      const carried = ms.map(m => { const n = Object.keys(m.sens).length; return `${m.org}${drugsOf(m).length ? n ? ` (${n} sensitivit${n > 1 ? 'ies' : 'y'})` : ' (sensitivities pending)' : ''}`; });
+      box.append(el('p', null, ms.length ? `Carried over: ${carried.join('; ')}.` : notes.length ? `Carried over: ${notes.join(', ').toLowerCase()}.` : 'No cultures were recorded at the last visit.'));
+      const a = acts(box, ['Next: compare →', () => go(1), 'flow-next s-next'], [ms.length || notes.length ? 'Update cultures' : 'Add a result', () => goMicro(), 'flow-skip'], ['Back', () => go(-1), 'flow-skip']);
+      void a;
+    } else if (it.k === 'done') renderDone(box);
+  }
+
+  function renderDone(box) {
+    const c = compare(); if (!c) { flow = null; return; }
+    const P = S.prev;
+    head(box, `Since ${P.date ? fmtD(P.date, true) : 'last visit'}${c.days != null && c.days > 0 ? ` · ${daysTxt(c.days)}` : ''}`, `${VARROW[c.verdict]} ${c.verdict}`, () => { flow = null; commitView(false); });
+    box.querySelector('h3').classList.add('fu-verdict', VCLS[c.verdict]);
+    const ul = el('ul', 'fu-rows');
+    c.rows.forEach(r => {
+      const li = el('li');
+      li.append(el('span', 'fu-l', r.label));
+      const v = el('span', 'fu-v'); v.append(el('span', null, r.then), el('span', 'fu-arrow', '→'), el('b', null, r.now)); li.append(v);
+      if (r.change) li.append(el('span', `fu-chg ${r.dir}`, r.change));
+      ul.append(li);
+    });
+    if (!c.rows.length) ul.append(el('li', 'fu-none', 'Nothing measurable to compare.'));
+    box.append(ul);
+    const download = () => { flow.saved = true; renderFlow(); exportPNG(); };
+    const finish = () => { flow = null; renderFlow(); document.dispatchEvent(new Event('cd:finish')); };
+    const share = () => { flow = null; renderFlow(); openShare(); };
+    const foot = !flow.saved ? acts(box, ['Download summary ↓', download, 'flow-next s-next'], ['QR code', share, 'flow-skip'], ['Finish', finish, 'flow-skip'])
+      : acts(box, ['Finish', finish, 'flow-next s-next'], ['Download again', download, 'flow-skip'], ['QR code', share, 'flow-skip']);
+    const row = el('div', 'fu-meta');
+    const lab = el('label', 'fu-date'); lab.append(el('span', null, 'Last visit on'));
+    const inp = el('input'); inp.type = 'date'; inp.value = P.date || ''; inp.max = S.date || isoToday();
+    inp.onchange = () => { checkpoint(); P.date = okIso(inp.value) ? inp.value : null; commitView(); };
+    lab.append(inp); row.append(lab);
+    if (item() && flow.i > 0) { const back = el('button', 'flow-skip', 'Back'); back.type = 'button'; back.onclick = () => go(-1); row.append(back); }
+    const stop = el('button', 'flow-skip fu-stop', 'Stop comparing'); stop.type = 'button';
+    stop.onclick = () => { checkpoint(); delete S.prev; S.hist = []; S.objs.forEach(o => { delete o.pv; }); flow = null; setPeek(false); commitView(); };
+    row.append(stop); box.append(row);
+    box.append(foot); foot.classList.add('fu-foot');
+  }
+  function showComparison() { setPeek(false); sel = null; flow = { step: 'fu', list: [{ k: 'done' }], i: 0, touched: {} }; commitView(false); }
+
+  /* ---------- entry points: the dock, the ⋯ menu, the empty chart ---------- */
+  const comparingToday = () => !!S.prev && okIso(S.date) && S.date >= isoToday();
+  function followUp() {
+    if (comparingToday()) { showComparison(); return; }
+    if (S.objs.some(o => LESION[o.type])) { startFollowUp(); return; }
+    wanted = true; openScan();
+    const m = $('#scanMsg'); if (m) { m.hidden = false; m.className = 'cmd-out'; m.textContent = 'Scan last visit’s C/D code. Today’s follow-up starts as soon as it opens.'; }
+  }
+  const dock = $('#sDock'), trace = dock && dock.querySelector('.s-trace');
+  const dockBtn = el('button', 'fu-dock'); dockBtn.type = 'button'; dockBtn.id = 'fuDockBtn'; dockBtn.innerHTML = ICON.fu + '<span>Follow-up</span>';
+  dockBtn.setAttribute('aria-label', 'Follow-up visit: compare with last visit');
+  dockBtn.onclick = followUp;
+  if (trace) { const row = el('div', 'fu-row'); trace.replaceWith(row); row.append(trace, dockBtn); }
+  const menuGrid = $('#shMenu .s-menu');
+  if (menuGrid) {
+    const t = el('button', 'tool s-mi'); t.type = 'button'; t.id = 'fuMenuBtn'; t.innerHTML = ICON.fu + '<span class="lbl">Follow-up visit</span>';
+    t.onclick = followUp; menuGrid.insertBefore(t, $('#redo'));
+  }
+  const empty = $('#sEmpty');
+  if (empty) {
+    empty.innerHTML = '<b>Trace an ulcer</b>, or press <b>Follow-up</b> to update a returning one.';
+  }
+
+  /* ---------- after every change ---------- */
+  const _cv = commitView;
+  commitView = function (...a) {
+    if (S.date === undefined && S.objs.length) S.date = isoToday();    // a new drawing is dated today; a code without a date stays unknown
+    _cv(...a);
+    peekBtn.hidden = !S.prev; if (!S.prev && peek) setPeek(false);
+    dockBtn.classList.toggle('on', comparingToday());
+    dockBtn.querySelector('span').textContent = comparingToday() ? 'Compare' : 'Follow-up';
+    const strip = $('#sStrip'); if (strip && S.prev) {
+      const c = compare(), b = el('button', `s-chip fu-chip ${VCLS[c.verdict]}`); b.type = 'button';
+      b.textContent = `${VARROW[c.verdict]} ${c.verdict}${c.days ? ` · ${c.days} d` : ''}`; b.title = 'Compare with last visit';
+      b.onclick = showComparison; strip.prepend(b);
+    }
+  };
+  const clearAll = () => { delete S.prev; delete S.date; S.hist = []; setPeek(false); };
+  $('#clearYes').addEventListener('click', () => { clearAll(); commitView(); });
+  $('#exampleClear').addEventListener('click', () => { clearAll(); commitView(); });
+
+  /* ---------- summary sheet: last visit beside a table of what changed ---------- */
+  function sheetBand(g, x0, y0, W, draw) {
+    const c = compare(); if (!c) return 0;
+    const P = S.prev, mini = 320, tx = 28 + mini + 34, rowH = 44;
+    const visits = courseVisits();
+    const tableH = 64 + 26 + c.rows.length * rowH + 44;
+    const top = Math.max(mini + 104, tableH);
+    const courseH = visits.length >= 3 ? 60 + 5 * 30 + 6 : 0;
+    const H = top + courseH + 12;
+    if (!draw) return H;
+    g.save(); g.setTransform(1, 0, 0, 1, 0, 0);
+    g.fillStyle = COL.paper; g.fillRect(x0, y0, W, H); g.fillStyle = '#D9E5E2'; g.fillRect(x0 + 28, y0, W - 56, 2);
+    g.textBaseline = 'middle'; g.textAlign = 'left';
+    g.fillStyle = '#687F81'; g.font = '700 15px "Atkinson Hyperlegible", sans-serif'; g.fillText('SINCE LAST VISIT', x0 + 28, y0 + 36);
+    const tw = g.measureText('SINCE LAST VISIT').width;
+    g.font = '700 15px "Atkinson Hyperlegible", sans-serif'; const vt = `${VARROW[c.verdict]}  ${c.verdict.toUpperCase()}`, vw = g.measureText(vt).width + 24;
+    g.fillStyle = VCOL[c.verdict]; g.beginPath(); g.roundRect ? g.roundRect(x0 + 28 + tw + 14, y0 + 22, vw, 28, 14) : g.rect(x0 + 28 + tw + 14, y0 + 22, vw, 28); g.fill();
+    g.fillStyle = '#fff'; g.fillText(vt, x0 + 28 + tw + 26, y0 + 36.5);
+    g.textAlign = 'right'; g.fillStyle = '#3E5C60'; g.font = '400 17px "Atkinson Hyperlegible", sans-serif';
+    g.fillText(`${P.date ? fmtD(P.date, true) : 'Last visit (date not recorded)'}  →  ${fmtD(S.date || isoToday(), true)}${c.days != null && c.days > 0 ? `  ·  ${daysTxt(c.days)}` : ''}`, x0 + W - 28, y0 + 36);
+    // last visit, small
+    const mc = document.createElement('canvas'); mc.width = mini * 2; mc.height = mini * 2;
+    paintPrev(mc.getContext('2d'), mini, 2, 'export-no-photo');
+    const my = y0 + 64;
+    g.save(); g.beginPath(); g.roundRect ? g.roundRect(x0 + 28, my, mini, mini, 14) : g.rect(x0 + 28, my, mini, mini); g.clip(); g.drawImage(mc, x0 + 28, my, mini, mini); g.restore();
+    g.strokeStyle = '#D9E5E2'; g.lineWidth = 1.5; g.beginPath(); g.roundRect ? g.roundRect(x0 + 28, my, mini, mini, 14) : g.rect(x0 + 28, my, mini, mini); g.stroke();
+    g.textAlign = 'center'; g.fillStyle = '#0F3B40'; g.font = '700 16px "Atkinson Hyperlegible", sans-serif';
+    g.fillText(`Last visit${P.date ? ' · ' + fmtD(P.date, true) : ''}`, x0 + 28 + mini / 2, my + mini + 22);
+    g.fillStyle = '#687F81'; g.font = '400 14px "Atkinson Hyperlegible", sans-serif';
+    g.fillText(`AC ${P.ac === '0' ? 'none' : P.ac}${(P.objs.find(o => o.type === 'hypopyon') || {}).h ? ` · hypopyon ${mm(P.objs.find(o => o.type === 'hypopyon').h)} mm` : ''}`, x0 + 28 + mini / 2, my + mini + 44);
+    // the table
+    const cols = [tx, tx + 214, tx + 400, tx + 586];
+    let y = y0 + 64 + 12;
+    g.textAlign = 'left'; g.fillStyle = '#687F81'; g.font = '700 13px "Atkinson Hyperlegible", sans-serif';
+    ['', 'LAST VISIT', 'TODAY', 'CHANGE'].forEach((t, i) => g.fillText(t, x0 + cols[i], y));
+    y += 26;
+    c.rows.forEach((r, i) => {
+      if (i % 2 === 0) { g.fillStyle = 'rgba(13,110,104,0.05)'; g.fillRect(x0 + tx - 10, y - 4, W - tx - 28 + 10, rowH); }
+      const cy = y + rowH / 2 - 4;
+      g.fillStyle = '#0F3B40'; g.font = '700 16px "Atkinson Hyperlegible", sans-serif';
+      let lab = r.label; while (g.measureText(lab).width > 200 && lab.length > 6) lab = lab.slice(0, -2) + '…';
+      g.fillText(lab, x0 + cols[0], cy);
+      const fit = (t, wmax) => { while (g.measureText(t).width > wmax && t.length > 4) t = t.slice(0, -2) + '…'; return t; };
+      g.font = '500 15px "IBM Plex Mono", monospace'; g.fillStyle = '#3E5C60'; g.fillText(fit(r.then, 178), x0 + cols[1], cy);
+      g.font = '600 15px "IBM Plex Mono", monospace'; g.fillStyle = '#0F3B40'; g.fillText(fit(r.now, 178), x0 + cols[2], cy);
+      const col = r.dir === 'better' ? '#2F7A4B' : r.dir === 'worse' ? '#C8372D' : '#687F81';
+      const txt = (r.dir === 'better' ? '↓ ' : r.dir === 'worse' ? '↑ ' : '') + (r.change || r.now);
+      g.font = '700 15px "Atkinson Hyperlegible", sans-serif'; g.fillStyle = col; g.fillText(fit(txt, W - 28 - cols[3] - x0), x0 + cols[3], cy);
+      y += rowH;
+    });
+    g.fillStyle = '#687F81'; g.font = '400 14px "Atkinson Hyperlegible", sans-serif'; g.textAlign = 'left';
+    wrapLines(g, `Change is judged from the drawn sizes: smaller defect, infiltrate and hypopyon, fewer cells and no deeper thinning count as improving.`, W - tx - 28).forEach((l, i) => g.fillText(l, x0 + tx, y + 18 + i * 19));
+    // the course, when there are three visits or more
+    if (courseH) {
+      let cy = y0 + top + 10;
+      g.fillStyle = '#D9E5E2'; g.fillRect(x0 + 28, cy, W - 56, 1.5);
+      g.fillStyle = '#687F81'; g.font = '700 15px "Atkinson Hyperlegible", sans-serif'; g.textAlign = 'left'; g.fillText('COURSE', x0 + 28, cy + 28);
+      const cx0 = x0 + 230, cw = (W - 28 - 230) / visits.length;
+      g.font = '700 14px "Atkinson Hyperlegible", sans-serif'; g.textAlign = 'center';
+      visits.forEach((v, i) => { g.fillStyle = i === visits.length - 1 ? '#0D5E59' : '#3E5C60'; g.fillText(i === visits.length - 1 ? `Today · ${fmtD(v.d)}` : v.d ? fmtD(v.d) : `Visit ${i + 1}`, cx0 + cw * (i + .5), cy + 28); });
+      const lines = [['Defect', v => v.def ? `${mm(v.def[0])}×${mm(v.def[1])}` : v.kind ? '—' : ''], ['Infiltrate', v => v.inf ? `${v.kind === 'scar' ? 'scar ' : ''}${mm(v.inf[0])}×${mm(v.inf[1])}` : '—'], ['Thinning', v => v.thin == null ? '—' : v.thin >= 110 ? 'perf' : v.thin >= 100 ? 'DMC' : v.thin + '%'], ['AC cells', v => v.ac === '0' ? '0' : v.ac], ['Hypopyon', v => v.hy ? mm(v.hy) + ' mm' : '—']];
+      lines.forEach(([lab, f], k) => {
+        const ly = cy + 60 + k * 30;
+        if (k % 2 === 0) { g.fillStyle = 'rgba(13,110,104,0.05)'; g.fillRect(x0 + 28, ly - 14, W - 56, 30); }
+        g.textAlign = 'left'; g.fillStyle = '#0F3B40'; g.font = '700 15px "Atkinson Hyperlegible", sans-serif'; g.fillText(lab, x0 + 36, ly + 1);
+        g.textAlign = 'center'; g.font = '500 14px "IBM Plex Mono", monospace';
+        visits.forEach((v, i) => { g.fillStyle = i === visits.length - 1 ? '#0F3B40' : '#3E5C60'; g.fillText(f(v), cx0 + cw * (i + .5), ly + 1); });
+      });
+    }
+    g.restore();
+    return H;
+  }
+  function stripNote(text) {
+    const arr = text.split('\n'), s = arr.findIndex(l => l.startsWith('Since last visit')); if (s < 0) return text;
+    let e = s + 1; while (e < arr.length && arr[e].startsWith('- ')) e++;
+    arr.splice(s, e - s); return arr.join('\n');
+  }
+  fuHooks = { band: sheetBand, stripNote };
+
+  commitView(false);
+  window.CDFollowUp = { start: startFollowUp, compare, summaryOf, followUp };   // for testing
 })();
 
 })();
